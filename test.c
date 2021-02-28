@@ -19,6 +19,7 @@ int main() {
 	quo_Window window;
 
 	quo_init_window(&window, 640, 480);
+	quo_set_window_title(&window, "quo example program");
 
 	unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);

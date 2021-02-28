@@ -5,7 +5,7 @@
 
 /* Windows */
 #if defined(_WIN32)
-#error Windows is not supported yet
+#define QUO_PLATFORM_WINDOWS
 #endif
 
 /* X11 */
@@ -21,13 +21,42 @@
 #include <GL/gl.h>
 #endif
 
+#if defined(QUO_PLATFORM_WINDOWS)
+#include <windows.h>
+#include <dwmapi.h>
+#include <GL/gl.h>
+
+#if _MSC_VER >= 1500
+#pragma comment(lib, "user32.lib")
+#pragma comment(lib, "gdi32.lib")
+#pragma comment(lib, "opengl32.lib")
+#endif
+#endif
+
 /* Platform-specific aliases & macros */
 #if defined(QUO_PLATFORM_X11)
 typedef GLXContext quo_GLDeviceContext;
 typedef GLXContext quo_GLRenderContext;
 
 #define CALLSTYLE
-#define QUO_LOAD_GL_FUNC(t, n) (t*)glXGetProcAddress((unsigned char*)n);
+#define QUO_LOAD_GL_FUNC(t, n) (t*)glXGetProcAddress((unsigned char*)n)
+#endif
+
+#if defined (QUO_PLATFORM_WINDOWS)
+typedef HDC quo_GLDeviceContext;
+typedef HGLRC quo_GLRenderContext;
+
+#define CALLSTYLE __stdcall
+#define QUO_LOAD_GL_FUNC(t, n) (t*)wglGetProcAddress(n)
+
+/* X11 already defines these, we have to do it manually on Windows */
+#define GL_VERTEX_SHADER 0x8B31
+#define GL_COMPILE_STATUS 0x8B81
+#define GL_LINK_STATUS 0x8B82
+#define GL_FRAGMENT_SHADER 0x8B30
+#define GL_VERTEX_SHADER 0x8B31
+#define GL_ARRAY_BUFFER 0x8892
+#define GL_STATIC_DRAW 0x88E4
 #endif
 
 /* GL load types */
@@ -95,12 +124,18 @@ typedef struct quo_Window {
 	Colormap color_map;
 	XSetWindowAttributes set_window_attribs;
 #endif
+
+#if defined(QUO_PLATFORM_WINDOWS)
+	HWND hwnd;
+#endif
 } quo_Window;
 
 void quo_init_window(quo_Window* window, int w, int h);
+void quo_set_window_title(quo_Window* window, const char* title);
 void quo_clear_window(quo_Window* window, int r, int g, int b);
 void quo_update_window(quo_Window* window);
 void quo_free_window(quo_Window* window);
+
 /* -----------------------
  * END WINDOW
  * -----------------------*/
@@ -109,8 +144,8 @@ void quo_free_window(quo_Window* window);
  * START RENDERER
  * -----------------------*/
 
-typedef struct quo_Renderer {
-} quo_Renderer;
+// typedef struct quo_Renderer {
+// } quo_Renderer;
 
  /* -----------------------
  * END RENDERER
@@ -149,11 +184,28 @@ void quo_load_gl() {
  * START WINDOW
  * -----------------------*/
 
+/* Win32 event callback */
+#if defined(QUO_PLATFORM_WINDOWS)
+static LRESULT CALLBACK quo_win32_event_callback(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
+	LONG_PTR lpUserData = GetWindowLongPtr(hwnd, GWLP_USERDATA);
+	quo_Window* q_window = (quo_Window*)lpUserData;
+
+	switch (msg) {
+		case WM_DESTROY: PostQuitMessage(0); DestroyWindow(hwnd); q_window->is_open = false; return 0;
+		default:
+			break;
+	}
+
+	return DefWindowProc(hwnd, msg, wparam, lparam);
+}
+#endif
+
 void quo_init_window(quo_Window* window, int w, int h) {
 	assert(window != NULL);
 
 	window->is_open = true;
 
+	/* Open X11 window */
 #if defined(QUO_PLATFORM_X11)
 	window->display = XOpenDisplay(NULL);
 	window->window_root = DefaultRootWindow(window->display);
@@ -190,7 +242,59 @@ void quo_init_window(quo_Window* window, int w, int h) {
 	window->height = gwa.height;
 #endif
 
+#if defined(QUO_PLATFORM_WINDOWS)
+	WNDCLASS wc;
+	wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
+	wc.hInstance = GetModuleHandle(NULL);
+	wc.lpfnWndProc = quo_win32_event_callback;
+	wc.cbClsExtra = 0;
+	wc.cbWndExtra = 0;
+	wc.lpszMenuName = NULL;
+	wc.hbrBackground = NULL;
+	wc.lpszClassName = "quo";
+	RegisterClass(&wc);
+
+	/* Window styling */
+	DWORD dwExStyle = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;
+	DWORD dwStyle = WS_CAPTION | WS_SYSMENU | WS_VISIBLE | WS_THICKFRAME;
+
+	RECT rWndRect = { 0, 0, w, h };
+	AdjustWindowRectEx(&rWndRect, dwStyle, FALSE, dwExStyle);
+	int width = rWndRect.right - rWndRect.left;
+	int height = rWndRect.bottom - rWndRect.top;
+
+	window->hwnd = CreateWindowEx(dwExStyle, "quo", "", dwStyle, 0, 0, width, height, NULL, NULL, GetModuleHandle(NULL), window);
+
+	SetWindowLongPtr(window->hwnd, GWLP_USERDATA, (LONG_PTR)window);
+
+	/* Set up OpenGL */
+	window->device_context = GetDC((HWND)window->hwnd);
+	PIXELFORMATDESCRIPTOR pfd = {
+		sizeof(PIXELFORMATDESCRIPTOR), 1,
+		PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,
+		PFD_TYPE_RGBA, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		PFD_MAIN_PLANE, 0, 0, 0, 0
+	};
+
+	int pf = 0;
+	if (!(pf = ChoosePixelFormat(window->device_context, &pfd))) { return; }
+	SetPixelFormat(window->device_context, pf, &pfd);
+
+	if (!(window->render_context = wglCreateContext(window->device_context))) { return; }
+	wglMakeCurrent(window->device_context, window->render_context);
+#endif
+
 	quo_load_gl();
+}
+
+void quo_set_window_title(quo_Window* window, const char* title) {
+	assert(window != NULL);
+
+#if defined(QUO_PLATFORM_WINDOWS)
+	SetWindowText(window->hwnd, title);
+#endif
 }
 
 void quo_clear_window(quo_Window* window, int r, int g, int b) {
@@ -227,6 +331,17 @@ void quo_update_window(quo_Window* window) {
 		}
 	}
 #endif
+
+#if defined(QUO_PLATFORM_WINDOWS)
+	SwapBuffers(window->device_context);
+
+	/* Poll for events, handled in quo_win32_event_callback */
+	MSG msg;
+	while (GetMessage(&msg, NULL, 0, 0) > 0) {
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+#endif
 }
 
 void quo_free_window(quo_Window* window) {
@@ -239,6 +354,10 @@ void quo_free_window(quo_Window* window) {
 
 	XDestroyWindow(window->display, window->window);
 	XCloseDisplay(window->display);
+#endif
+
+#if defined(QUO_PLATFORM_WINDOWS)
+	wglDeleteContext(window->render_context);
 #endif
 }
 /* -----------------------
