@@ -83,7 +83,7 @@ int main() {
     glBindVertexArray(0);
 
 
-	while (quo_is_window_open(&window)) {
+	while (window.is_open) {
 		quo_clear_window(&window, 100, 100, 100);
 
 		        glUseProgram(shaderProgram);

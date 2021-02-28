@@ -42,9 +42,9 @@ typedef void CALLSTYLE quo_gl_delete_shader(unsigned int);
 typedef void CALLSTYLE quo_gl_enable_vertex_attrib_array(unsigned int);
 typedef void CALLSTYLE quo_gl_gen_buffers(unsigned int, unsigned int*);
 typedef void CALLSTYLE quo_gl_gen_vertex_arrays(unsigned int, unsigned int*);
+typedef void CALLSTYLE quo_gl_get_program_info_log(unsigned int, int, int, char*);
 typedef void CALLSTYLE quo_gl_get_program_iv(unsigned int, unsigned int, int*);
 typedef void CALLSTYLE quo_gl_get_shader_info_log(unsigned int, int, int, char*);
-typedef void CALLSTYLE quo_gl_get_program_info_log(unsigned int, int, int, char*);
 typedef void CALLSTYLE quo_gl_get_shader_iv(unsigned int, unsigned int, int*);
 typedef void CALLSTYLE quo_gl_link_program(unsigned int);
 typedef void CALLSTYLE quo_gl_shader_source(unsigned int, int, const char**, const int*);
@@ -63,9 +63,9 @@ quo_gl_delete_shader* glDeleteShader = NULL;
 quo_gl_enable_vertex_attrib_array* glEnableVertexAttribArray = NULL;
 quo_gl_gen_buffers* glGenBuffers = NULL;
 quo_gl_gen_vertex_arrays* glGenVertexArrays = NULL;
+quo_gl_get_program_info_log* glGetProgramInfoLog = NULL;
 quo_gl_get_program_iv* glGetProgramiv = NULL;
 quo_gl_get_shader_info_log* glGetShaderInfoLog = NULL;
-quo_gl_get_program_info_log* glGetProgramInfoLog = NULL;
 quo_gl_get_shader_iv* glGetShaderiv = NULL;
 quo_gl_link_program* glLinkProgram = NULL;
 quo_gl_shader_source* glShaderSource = NULL;
@@ -75,12 +75,17 @@ quo_gl_vertex_attrib_pointer* glVertexAttribPointer = NULL;
 /* Load all OpenGL functions */
 void quo_load_gl();
 
+/* -----------------------
+ * START WINDOW
+ * -----------------------*/
+
 /* Window struct */
 typedef struct quo_Window {
 	quo_GLDeviceContext device_context;
 	quo_GLRenderContext render_context;
 
 	bool is_open;
+	int width, height;
 
 #if defined(QUO_PLATFORM_X11)
 	Display* display;
@@ -93,10 +98,23 @@ typedef struct quo_Window {
 } quo_Window;
 
 void quo_init_window(quo_Window* window, int w, int h);
-bool quo_is_window_open(quo_Window* window);
 void quo_clear_window(quo_Window* window, int r, int g, int b);
 void quo_update_window(quo_Window* window);
 void quo_free_window(quo_Window* window);
+/* -----------------------
+ * END WINDOW
+ * -----------------------*/
+
+ /* -----------------------
+ * START RENDERER
+ * -----------------------*/
+
+typedef struct quo_Renderer {
+} quo_Renderer;
+
+ /* -----------------------
+ * END RENDERER
+ * -----------------------*/
 
 /* Implementation */
 #ifdef QUO_IMPL
@@ -117,15 +135,19 @@ void quo_load_gl() {
 	glEnableVertexAttribArray = QUO_LOAD_GL_FUNC(quo_gl_enable_vertex_attrib_array, "glEnableVertexAttribArray");
 	glGenBuffers = QUO_LOAD_GL_FUNC(quo_gl_gen_buffers, "glGenBuffers");
 	glGenVertexArrays = QUO_LOAD_GL_FUNC(quo_gl_gen_vertex_arrays, "glGenVertexArrays");
+	glGetProgramInfoLog = QUO_LOAD_GL_FUNC(quo_gl_get_program_info_log, "glGetProgramInfoLog");
 	glGetProgramiv = QUO_LOAD_GL_FUNC(quo_gl_get_program_iv, "glGetProgramiv");
 	glGetShaderInfoLog = QUO_LOAD_GL_FUNC(quo_gl_get_shader_info_log, "glGetShaderInfoLog");
-	glGetProgramInfoLog = QUO_LOAD_GL_FUNC(quo_gl_get_program_info_log, "glGetProgramInfoLog");
 	glGetShaderiv = QUO_LOAD_GL_FUNC(quo_gl_get_shader_iv, "glGetShaderiv");
 	glLinkProgram = QUO_LOAD_GL_FUNC(quo_gl_link_program, "glLinkProgram");
 	glShaderSource = QUO_LOAD_GL_FUNC(quo_gl_shader_source, "glShaderSource");
 	glUseProgram = QUO_LOAD_GL_FUNC(quo_gl_use_program, "glUseProgram");
 	glVertexAttribPointer = QUO_LOAD_GL_FUNC(quo_gl_vertex_attrib_pointer, "glVertexAttribPointer");
 }
+
+/* -----------------------
+ * START WINDOW
+ * -----------------------*/
 
 void quo_init_window(quo_Window* window, int w, int h) {
 	assert(window != NULL);
@@ -163,15 +185,12 @@ void quo_init_window(quo_Window* window, int w, int h) {
 	XWindowAttributes gwa;
 	XGetWindowAttributes(window->display, window->window, &gwa);
 	glViewport(0, 0, gwa.width, gwa.height);
+
+	window->width = gwa.width;
+	window->height = gwa.height;
 #endif
 
 	quo_load_gl();
-}
-
-bool quo_is_window_open(quo_Window* window) {
-	assert(window != NULL);
-
-	return window->is_open;
 }
 
 void quo_clear_window(quo_Window* window, int r, int g, int b) {
@@ -198,6 +217,13 @@ void quo_update_window(quo_Window* window) {
 		XNextEvent(window->display, &e);
 		if (e.type == ClientMessage) {
 			window->is_open = false;
+		} else if (e.type == Expose) {
+			XWindowAttributes gwa;
+			XGetWindowAttributes(window->display, window->window, &gwa);
+			glViewport(0, 0, gwa.width, gwa.height);
+
+			window->width = gwa.width;
+			window->height = gwa.height;
 		}
 	}
 #endif
@@ -215,5 +241,16 @@ void quo_free_window(quo_Window* window) {
 	XCloseDisplay(window->display);
 #endif
 }
+/* -----------------------
+ * END WINDOW
+ * -----------------------*/
+
+ /* -----------------------
+ * START RENDERER
+ * -----------------------*/
+
+ /* -----------------------
+ * END RENDERER
+ * -----------------------*/
 
 #endif
