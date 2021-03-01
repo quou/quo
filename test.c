@@ -13,7 +13,7 @@ int main() {
 	while (window.is_open) {
 		quo_clear_renderer(0x000000);
 
-		quo_draw_quad(&renderer, (quo_Rect){}, (quo_Rect){100, 100, 50, 50}, 0xbd4d4d);
+		quo_draw_quad(&renderer, (quo_Rect){0, 0, 0, 0}, (quo_Rect){100, 100, 50, 50}, 0xbd4d4d);
 
 		quo_update_renderer(&renderer);
 		quo_update_window(&window);

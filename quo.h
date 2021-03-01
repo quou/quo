@@ -153,10 +153,10 @@ void quo_update_window(quo_Window* window);
 void quo_free_window(quo_Window* window);
 
 /* -----------------------
- * END WINDOW
+ * END MATHS
  * -----------------------*/
 
- /* -----------------------
+/* -----------------------
  * START MATHS
  * -----------------------*/
 /* A 4x4 matrix structure, and it's operational functions */
@@ -169,8 +169,8 @@ quo_Matrix quo_translate(quo_Matrix m, float x, float y, float z);
 quo_Matrix quo_scale(quo_Matrix m, float x, float y, float z);
 quo_Matrix quo_orthographic(float left, float right, float bottom, float top, float near, float far);
 /* -----------------------
-* END MATHS
-* -----------------------*/
+ * END MATHS
+ * -----------------------*/
 
 /* Generic rectangle struct */
 typedef struct quo_Rect {
@@ -451,7 +451,7 @@ void quo_free_window(quo_Window* window) {
  * END WINDOW
  * -----------------------*/
 
- /* -----------------------
+/* -----------------------
  * START MATHS
  * -----------------------*/
 quo_Matrix quo_identity() {
@@ -496,13 +496,13 @@ quo_Matrix quo_orthographic(float left, float right, float bottom, float top, fl
 
 	return result;
 }
- /* -----------------------
+/* -----------------------
  * END MATHS
  * -----------------------*/
 
  /* -----------------------
- * START RENDERER
- * -----------------------*/
+  * START RENDERER
+  * -----------------------*/
 
 static const char* g_quad_shader_vertex = "#version 330 core\n"
 "layout (location = 0) in vec4 vertex;\n"
