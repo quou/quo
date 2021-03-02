@@ -5,7 +5,7 @@ a.out
 *.lib
 *.sln
 *.user
-*.vcproj
+*.vcxproj
 *.filters
 *.o
 .vs
