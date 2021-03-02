@@ -25,8 +25,6 @@ int main() {
 
 		quo_update_renderer(&renderer);
 		quo_update_window(&window);
-
-		printf("%d, %d\n", window.width, window.height);
 	}
 
 	quo_free_texture(&texture);

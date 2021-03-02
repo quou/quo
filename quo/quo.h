@@ -119,7 +119,11 @@ typedef void CALLSTYLE quo_gl_uniform_4_f(int, float, float, float, float);
 typedef void CALLSTYLE quo_gl_uniform_matrix_4_f_v(int, int, bool, float*);
 typedef void CALLSTYLE quo_gl_use_program(unsigned int);
 typedef void CALLSTYLE quo_gl_vertex_attrib_pointer(unsigned int, int, unsigned int, bool, int, const void*);
+
+#ifdef QUO_PLATFORM_WINDOWS
+/* X11 already defines this, on Windows it has to be done manually */
 typedef void CALLSTYLE quo_gl_active_texture(unsigned int);
+#endif
 
 /* OpenGL functions */
 quo_gl_attach_shader* glAttachShader = NULL;
@@ -149,7 +153,11 @@ quo_gl_uniform_4_f* glUniform4f = NULL;
 quo_gl_uniform_matrix_4_f_v* glUniformMatrix4fv = NULL;
 quo_gl_use_program* glUseProgram = NULL;
 quo_gl_vertex_attrib_pointer* glVertexAttribPointer = NULL;
+
+#ifdef QUO_PLATFORM_WINDOWS
+/* X11 already defines this, on Windows it has to be done manually */
 quo_gl_active_texture* glActiveTexture = NULL;
+#endif
 
 /* Load all OpenGL functions */
 void quo_load_gl();
@@ -329,7 +337,11 @@ void quo_load_gl() {
 	glUniformMatrix4fv = QUO_LOAD_GL_FUNC(quo_gl_uniform_matrix_4_f_v, "glUniformMatrix4fv");
 	glUseProgram = QUO_LOAD_GL_FUNC(quo_gl_use_program, "glUseProgram");
 	glVertexAttribPointer = QUO_LOAD_GL_FUNC(quo_gl_vertex_attrib_pointer, "glVertexAttribPointer");
+
+#ifdef QUO_PLATFORM_WINDOWS
+	/* X11 already defines this, on Windows it has to be done manually */
 	glActiveTexture = QUO_LOAD_GL_FUNC(quo_gl_active_texture, "glActiveTexture");
+#endif
 }
 
 /* -----------------------

@@ -15,15 +15,13 @@ project "sbox"
 		"src/sbox.c"
 	}
 
+	links {
+ 		"GL",
+ 		"X11"
+	}
+
 	filter "configurations:debug"
 		symbols "on"
 
 	filter "configurations:release"
 		optimize "on"
-
-
-	filter "platforms:linux"
-		links {
-	 		"GL",
-	 		"X11"
-		}
