@@ -57,6 +57,38 @@ typedef HGLRC quo_GLRenderContext;
 #define GL_VERTEX_SHADER 0x8B31
 #define GL_ARRAY_BUFFER 0x8892
 #define GL_STATIC_DRAW 0x88E4
+#define GL_TEXTURE0 0x84C0
+#define GL_TEXTURE1 0x84C1
+#define GL_TEXTURE2 0x84C2
+#define GL_TEXTURE3 0x84C3
+#define GL_TEXTURE4 0x84C4
+#define GL_TEXTURE5 0x84C5
+#define GL_TEXTURE6 0x84C6
+#define GL_TEXTURE7 0x84C7
+#define GL_TEXTURE8 0x84C8
+#define GL_TEXTURE9 0x84C9
+#define GL_TEXTURE10 0x84CA
+#define GL_TEXTURE11 0x84CB
+#define GL_TEXTURE12 0x84CC
+#define GL_TEXTURE13 0x84CD
+#define GL_TEXTURE14 0x84CE
+#define GL_TEXTURE15 0x84CF
+#define GL_TEXTURE16 0x84D0
+#define GL_TEXTURE17 0x84D1
+#define GL_TEXTURE18 0x84D2
+#define GL_TEXTURE19 0x84D3
+#define GL_TEXTURE20 0x84D4
+#define GL_TEXTURE21 0x84D5
+#define GL_TEXTURE22 0x84D6
+#define GL_TEXTURE23 0x84D7
+#define GL_TEXTURE24 0x84D8
+#define GL_TEXTURE25 0x84D9
+#define GL_TEXTURE26 0x84DA
+#define GL_TEXTURE27 0x84DB
+#define GL_TEXTURE28 0x84DC
+#define GL_TEXTURE29 0x84DD
+#define GL_TEXTURE30 0x84DE
+#define GL_TEXTURE31 0x84DF
 #endif
 
 /* GL load types */
@@ -87,6 +119,7 @@ typedef void CALLSTYLE quo_gl_uniform_4_f(int, float, float, float, float);
 typedef void CALLSTYLE quo_gl_uniform_matrix_4_f_v(int, int, bool, float*);
 typedef void CALLSTYLE quo_gl_use_program(unsigned int);
 typedef void CALLSTYLE quo_gl_vertex_attrib_pointer(unsigned int, int, unsigned int, bool, int, const void*);
+typedef void CALLSTYLE quo_gl_active_texture(unsigned int);
 
 /* OpenGL functions */
 quo_gl_attach_shader* glAttachShader = NULL;
@@ -116,6 +149,7 @@ quo_gl_uniform_4_f* glUniform4f = NULL;
 quo_gl_uniform_matrix_4_f_v* glUniformMatrix4fv = NULL;
 quo_gl_use_program* glUseProgram = NULL;
 quo_gl_vertex_attrib_pointer* glVertexAttribPointer = NULL;
+quo_gl_active_texture* glActiveTexture = NULL;
 
 /* Load all OpenGL functions */
 void quo_load_gl();
@@ -295,6 +329,7 @@ void quo_load_gl() {
 	glUniformMatrix4fv = QUO_LOAD_GL_FUNC(quo_gl_uniform_matrix_4_f_v, "glUniformMatrix4fv");
 	glUseProgram = QUO_LOAD_GL_FUNC(quo_gl_use_program, "glUseProgram");
 	glVertexAttribPointer = QUO_LOAD_GL_FUNC(quo_gl_vertex_attrib_pointer, "glVertexAttribPointer");
+	glActiveTexture = QUO_LOAD_GL_FUNC(quo_gl_active_texture, "glActiveTexture");
 }
 
 /* -----------------------
@@ -308,7 +343,17 @@ static LRESULT CALLBACK quo_win32_event_callback(HWND hwnd, UINT msg, WPARAM wpa
 	quo_Window* q_window = (quo_Window*)lpUserData;
 
 	switch (msg) {
-		case WM_DESTROY: PostQuitMessage(0); DestroyWindow(hwnd); q_window->is_open = false; return 0;
+		case WM_DESTROY:
+			PostQuitMessage(0);
+			DestroyWindow(hwnd);
+			q_window->is_open = false;
+			return 0;
+		case WM_SIZE:
+			if (q_window) {
+				q_window->width = lparam & 0xFFFF;
+				q_window->height = (lparam >> 16) & 0xFFFF;
+				return 0;
+			}
 		default:
 			break;
 	}
@@ -375,7 +420,10 @@ void quo_init_window(quo_Window* window, int w, int h) {
 
 	/* Window styling */
 	DWORD dwExStyle = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;
-	DWORD dwStyle = WS_CAPTION | WS_SYSMENU | WS_VISIBLE | WS_THICKFRAME;
+	DWORD dwStyle = WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_VISIBLE | WS_THICKFRAME;
+
+	window->width = w;
+	window->height = h;
 
 	RECT rWndRect = { 0, 0, w, h };
 	AdjustWindowRectEx(&rWndRect, dwStyle, FALSE, dwExStyle);
@@ -410,7 +458,10 @@ void quo_set_window_title(quo_Window* window, const char* title) {
 	assert(window != NULL);
 
 #if defined(QUO_PLATFORM_WINDOWS)
-	SetWindowText(window->hwnd, title);
+	wchar_t wchar_title[1024];
+	MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, title, -1, wchar_title, 1024);
+
+	SetWindowText(window->hwnd, wchar_title);
 #endif
 
 #if defined(QUO_PLATFORM_X11)
@@ -447,7 +498,7 @@ void quo_update_window(quo_Window* window) {
 
 	/* Poll for events, handled in quo_win32_event_callback */
 	MSG msg;
-	while (GetMessage(&msg, NULL, 0, 0) > 0) {
+	while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) > 0) {
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}

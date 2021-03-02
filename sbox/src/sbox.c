@@ -21,10 +21,12 @@ int main() {
 	while (window.is_open) {
 		quo_clear_renderer(0x000000);
 
-		quo_draw_texture(&renderer, &texture, (quo_Rect){100, 100, 50, 50}, 0xffffff);
+		quo_draw_texture(&renderer, &texture, (quo_Rect){100, 100, 50, 50}, 0xeb4034);
 
 		quo_update_renderer(&renderer);
 		quo_update_window(&window);
+
+		printf("%d, %d\n", window.width, window.height);
 	}
 
 	quo_free_texture(&texture);
