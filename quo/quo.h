@@ -167,7 +167,7 @@ typedef struct quo_Matrix {
 quo_Matrix quo_identity();
 quo_Matrix quo_translate(quo_Matrix m, float x, float y, float z);
 quo_Matrix quo_scale(quo_Matrix m, float x, float y, float z);
-quo_Matrix quo_orthographic(float left, float right, float bottom, float top, float near, float far);
+quo_Matrix quo_orthographic(float left, float right, float bottom, float top, float near_plane, float far_plane);
 /* -----------------------
  * END MATHS
  * -----------------------*/
@@ -182,6 +182,27 @@ typedef struct quo_Rect {
  * -----------------------*/
 
 #define QUO_MAX_SHADERS 10
+
+/* Data for a bitmap file */
+typedef struct quo_BitmapImage {
+	int width, height;
+	unsigned char* pixels;
+} quo_BitmapImage;
+
+/* Load a bitmap from a file. Returnes true on success */
+bool quo_load_bitmap_from_file(const char* filename, quo_BitmapImage* image, unsigned int components);
+void quo_free_bitmap(quo_BitmapImage* image);
+
+/* A GPU texture */
+typedef struct quo_Texture {
+	int width, height;
+	unsigned int id;
+} quo_Texture;
+
+void quo_init_texture_from_bmp(quo_BitmapImage* bitmap, quo_Texture* texture);
+void quo_free_texture(quo_Texture* texture);
+void quo_bind_texture(quo_Texture* texture, unsigned int unit);
+void quo_unbind_texture();
 
 /* To be used as an index into the renderer's shader array */
 typedef unsigned int quo_ShaderHandle;
@@ -210,7 +231,8 @@ void quo_update_renderer(quo_Renderer* renderer);
 
 /* Draw functions */
 void quo_clear_renderer(unsigned long color);
-void quo_draw_quad(quo_Renderer* renderer, quo_Rect src, quo_Rect dest, unsigned long color);
+void quo_draw_rect(quo_Renderer* renderer, quo_Rect rect, unsigned long color);
+void quo_draw_texture(quo_Renderer* renderer, quo_Texture* texture, quo_Rect rect, unsigned long color);
 
 /* Shader management */
 quo_ShaderHandle quo_create_shader(quo_Renderer* renderer, const char* vertex_source, const char* fragment_source);
@@ -242,6 +264,7 @@ void quo_shader_set_vec4(quo_Renderer* renderer, quo_ShaderHandle shader, const 
 /* C standard includes */
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 void quo_load_gl() {
@@ -483,16 +506,16 @@ quo_Matrix quo_scale(quo_Matrix m, float x, float y, float z) {
 	return m;
 }
 
-quo_Matrix quo_orthographic(float left, float right, float bottom, float top, float near, float far) {
+quo_Matrix quo_orthographic(float left, float right, float bottom, float top, float near_plane, float far_plane) {
 	quo_Matrix result = quo_identity();
 
 	result.elements[0 + 0 * 4] = 2.0f / (right - left);
 	result.elements[1 + 1 * 4] = 2.0f / (top - bottom);
-	result.elements[2 + 2 * 4] = 2.0f / (near - far);
+	result.elements[2 + 2 * 4] = 2.0f / (near_plane - far_plane);
 
 	result.elements[3 + 0 * 4] = (left + right) / (left - right);
 	result.elements[3 + 1 * 4] = (bottom + top) / (bottom - top);
-	result.elements[3 + 2 * 4] = (far + near) / (far - near);
+	result.elements[3 + 2 * 4] = (far_plane + near_plane) / (far_plane - near_plane);
 
 	return result;
 }
@@ -504,20 +527,193 @@ quo_Matrix quo_orthographic(float left, float right, float bottom, float top, fl
   * START RENDERER
   * -----------------------*/
 
+#define LOADBMP_RGB  3
+#define LOADBMP_RGBA 4
+
+bool quo_load_bitmap_from_file(const char* filename, quo_BitmapImage* image, unsigned int components) {
+	assert(image != NULL);
+
+	FILE *f = fopen(filename, "rb");
+
+	if (!f) {
+		printf("%s not found\n", filename);
+		return false;
+	}
+
+	unsigned char bmp_file_header[14];
+	unsigned char bmp_info_header[40];
+	unsigned char bmp_pad[3];
+
+	unsigned int w, h;
+	unsigned char *data = NULL;
+
+	unsigned int x, y, i, padding;
+
+	memset(bmp_file_header, 0, sizeof(bmp_file_header));
+	memset(bmp_info_header, 0, sizeof(bmp_info_header));
+
+	if (fread(bmp_file_header, sizeof(bmp_file_header), 1, f) == 0) {
+		fclose(f);
+		printf("%s not a valid bmp file\n", filename);
+		return false;
+	}
+
+	if (fread(bmp_info_header, sizeof(bmp_info_header), 1, f) == 0) {
+		fclose(f);
+		printf("%s not a valid bmp file\n", filename);
+		return false;
+	}
+
+	if ((bmp_file_header[0] != 'B') || (bmp_file_header[1] != 'M')) {
+		fclose(f);
+		printf("%s has an invalid signature\n", filename);
+		return false;
+	}
+
+	if ((bmp_info_header[14] != 24) && (bmp_info_header[14] != 32)) {
+		fclose(f);
+		printf("%s has invalid bits-per-pixel data\n", filename);
+		return false;
+	}
+
+	w = (bmp_info_header[4] + (bmp_info_header[5] << 8) + (bmp_info_header[6] << 16) + (bmp_info_header[7] << 24));
+	h = (bmp_info_header[8] + (bmp_info_header[9] << 8) + (bmp_info_header[10] << 16) + (bmp_info_header[11] << 24));
+
+	if ((w > 0) && (h > 0)) {
+		data = (unsigned char*)malloc(w * h * components);
+
+		if (!data) {
+			fclose(f);
+			printf("Not enough memory to load %s\n", filename);
+			return false;
+		}
+
+		for (y = (h - 1); y != -1; y--) {
+			for (x = 0; x < w; x++) {
+				i = (x + y * w) * components;
+
+				if (fread(data + i, 3, 1, f) == 0) {
+					free(data);
+
+					fclose(f);
+					printf("%s not a valid bmp file\n", filename);
+					return false;
+				}
+
+				data[i] ^= data[i + 2] ^= data[i] ^= data[i + 2]; // BGR -> RGB
+
+				if (components == LOADBMP_RGBA) {
+					data[i + 3] = 255;
+				}
+			}
+
+			padding = ((4 - (w * 3) % 4) % 4);
+
+			if (fread(bmp_pad, 1, padding, f) != padding) {
+				free(data);
+
+				printf("%s not a valid bmp file\n", filename);
+				return false;
+			}
+		}
+	}
+
+	image->width = w;
+	image->height = h;
+	image->pixels = data;
+
+	fclose(f);
+
+	return true;
+}
+
+void quo_free_bitmap(quo_BitmapImage* image) {
+	assert(image != NULL);
+
+	if (image->pixels) {
+		free(image->pixels);
+	}
+
+	image->width = 0;
+	image->height = 0;
+}
+
+
+void quo_init_texture_from_bmp(quo_BitmapImage* bitmap, quo_Texture* texture) {
+	assert(texture != NULL);
+	assert(bitmap != NULL);
+
+	texture->width = bitmap->width;
+	texture->height = bitmap->height;
+
+	if (bitmap->pixels == NULL) {
+		return;
+	}
+
+	glGenTextures(1, &texture->id);
+	glBindTexture(GL_TEXTURE_2D, texture->id);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+	int mode = GL_RGB;
+
+	glTexImage2D(GL_TEXTURE_2D, 0, mode, texture->width, texture->height, 0, mode, GL_UNSIGNED_BYTE, bitmap->pixels);
+}
+
+void quo_free_texture(quo_Texture* texture) {
+	assert(texture != NULL);
+
+	texture->width = 0;
+	texture->height = 0;
+
+	glDeleteTextures(1, &texture->id);
+}
+
+void quo_bind_texture(quo_Texture* texture, unsigned int unit) {
+	assert(texture != NULL);
+
+	glActiveTexture(GL_TEXTURE0 + unit);
+	glBindTexture(GL_TEXTURE_2D, texture->id);
+}
+
+void quo_unbind_texture() {
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
 static const char* g_quad_shader_vertex = "#version 330 core\n"
 "layout (location = 0) in vec4 vertex;\n"
+
 "uniform mat4 projection = mat4(1.0);\n"
 "uniform mat4 model = mat4(1.0);\n"
 "uniform mat4 view = mat4(1.0);\n"
+"out vec2 uv;\n"
+
 "void main() {\n"
-"gl_Position = projection * view * model * vec4(vertex.xy, 0.0, 1.0);\n"
+	"uv = vertex.zw;\n"
+	"gl_Position = projection * view * model * vec4(vertex.xy, 0.0, 1.0);\n"
 "}\n";
 
 static const char* g_quad_shader_fragment = "#version 330 core\n"
 "out vec4 out_color;\n"
+
+"in vec2 uv;\n"
+
 "uniform vec3 color = vec3(1.0);\n"
+"uniform sampler2D tex;\n"
+"uniform bool use_tex = false;"
+
 "void main() {\n"
-"out_color = vec4(color, 1.0);\n"
+	"vec4 tex_color = vec4(1.0f);"
+	"if (use_tex) {\n"
+		"tex_color = texture(tex, uv);\n"
+	"}\n"
+
+	"out_color = tex_color * vec4(color, 1.0);\n"
 "}\n";
 
 static void check_shader_errors(unsigned int shader) {
@@ -580,18 +776,41 @@ void quo_update_renderer(quo_Renderer* renderer) {
 	renderer->projection = quo_orthographic(0.0f, renderer->window->width, renderer->window->height, 0.0f, -1.0f, 1.0f);
 }
 
-void quo_draw_quad(quo_Renderer* renderer, quo_Rect src, quo_Rect dest, unsigned long color) {
+void quo_draw_rect(quo_Renderer* renderer, quo_Rect rect, unsigned long color) {
 	assert(renderer != NULL);
 
 	quo_Matrix model = quo_identity();
-	model = quo_translate(model, dest.x, dest.y, 0);
-	model = quo_scale(model, dest.w, dest.h, 1);
+	model = quo_translate(model, rect.x, rect.y, 0);
+	model = quo_scale(model, rect.w, rect.h, 1);
 
 	quo_bind_shader(renderer, renderer->sprite_shader);
 
 	quo_shader_set_matrix(renderer, renderer->sprite_shader, "model", model);
 	quo_shader_set_matrix(renderer, renderer->sprite_shader, "projection", renderer->projection);
 	quo_shader_set_color(renderer, renderer->sprite_shader, "color", color);
+
+	glBindVertexArray(renderer->quad_va);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glBindVertexArray(0);
+}
+
+void quo_draw_texture(quo_Renderer* renderer, quo_Texture* texture, quo_Rect rect, unsigned long color) {
+	assert(renderer != NULL);
+	assert(texture != NULL);
+
+	quo_Matrix model = quo_identity();
+	model = quo_translate(model, rect.x, rect.y, 0);
+	model = quo_scale(model, rect.w, rect.h, 1);
+
+	quo_bind_shader(renderer, renderer->sprite_shader);
+
+	quo_shader_set_matrix(renderer, renderer->sprite_shader, "model", model);
+	quo_shader_set_matrix(renderer, renderer->sprite_shader, "projection", renderer->projection);
+	quo_shader_set_color(renderer, renderer->sprite_shader, "color", color);
+	quo_shader_set_int(renderer, renderer->sprite_shader, "use_tex", 1);
+
+	quo_bind_texture(texture, 0);
+	quo_shader_set_int(renderer, renderer->sprite_shader, "tex", 0);
 
 	glBindVertexArray(renderer->quad_va);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
