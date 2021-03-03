@@ -1,3 +1,5 @@
+#include <time.h>
+
 #define QUO_IMPL
 #include <quo.h>
 
