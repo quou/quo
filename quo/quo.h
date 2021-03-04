@@ -119,6 +119,8 @@ typedef void CALLSTYLE quo_gl_uniform_4_f(int, float, float, float, float);
 typedef void CALLSTYLE quo_gl_uniform_matrix_4_f_v(int, int, bool, float*);
 typedef void CALLSTYLE quo_gl_use_program(unsigned int);
 typedef void CALLSTYLE quo_gl_vertex_attrib_pointer(unsigned int, int, unsigned int, bool, int, const void*);
+typedef void CALLSTYLE quo_gl_delete_vertex_arrays(unsigned int, unsigned int*);
+typedef void CALLSTYLE quo_gl_delete_buffers(unsigned int, unsigned int*);
 
 #ifdef QUO_PLATFORM_WINDOWS
 /* X11 already defines this, on Windows it has to be done manually */
@@ -153,6 +155,8 @@ quo_gl_uniform_4_f* glUniform4f = NULL;
 quo_gl_uniform_matrix_4_f_v* glUniformMatrix4fv = NULL;
 quo_gl_use_program* glUseProgram = NULL;
 quo_gl_vertex_attrib_pointer* glVertexAttribPointer = NULL;
+quo_gl_delete_buffers* glDeleteBuffers = NULL;
+quo_gl_delete_vertex_arrays* glDeleteVertexArrays = NULL;
 
 #ifdef QUO_PLATFORM_WINDOWS
 /* X11 already defines this, on Windows it has to be done manually */
@@ -161,6 +165,8 @@ quo_gl_active_texture* glActiveTexture = NULL;
 
 /* Load all OpenGL functions */
 void quo_load_gl();
+
+double quo_get_elapsed_time();
 
 /* -----------------------
  * START WINDOW
@@ -173,6 +179,12 @@ typedef struct quo_Window {
 
 	bool is_open;
 	int width, height;
+
+	double frame_time;
+	double now_time;
+	double old_time;
+
+	double fps;
 
 #if defined(QUO_PLATFORM_X11)
 	Display* display;
@@ -189,7 +201,7 @@ typedef struct quo_Window {
 } quo_Window;
 
 /* Window management */
-void quo_init_window(quo_Window* window, int w, int h);
+void quo_init_window(quo_Window* window, int w, int h, bool resizable);
 void quo_set_window_title(quo_Window* window, const char* title);
 void quo_update_window(quo_Window* window);
 void quo_free_window(quo_Window* window);
@@ -201,15 +213,52 @@ void quo_free_window(quo_Window* window);
 /* -----------------------
  * START MATHS
  * -----------------------*/
+
+#define QUO_PI 3.14159265358f
+
+typedef struct quo_vec2 {
+	float x, y;
+} quo_vec2;
+
+quo_vec2 quo_add_vec2(quo_vec2 a, quo_vec2 b);
+quo_vec2 quo_subtract_vec2(quo_vec2 a, quo_vec2 b);
+quo_vec2 quo_multiply_vec2(quo_vec2 a, quo_vec2 b);
+quo_vec2 quo_divide_vec2(quo_vec2 a, quo_vec2 b);
+
+quo_vec2 quo_normalise_vec2(quo_vec2 v);
+float quo_vec2_magnitude(quo_vec2 v);
+float quo_dot_vec2(quo_vec2 a, quo_vec2 b);
+
+typedef struct quo_vec3 {
+	float x, y, z;
+} quo_vec3;
+
+quo_vec3 quo_add_vec3(quo_vec3 a, quo_vec3 b);
+quo_vec3 quo_subtract_vec3(quo_vec3 a, quo_vec3 b);
+quo_vec3 quo_multiply_vec3(quo_vec3 a, quo_vec3 b);
+quo_vec3 quo_divide_vec3(quo_vec3 a, quo_vec3 b);
+
+quo_vec3 quo_normalise_vec3(quo_vec3 v);
+float quo_vec3_magnitude(quo_vec3 v);
+quo_vec3 quo_cross_vec3(quo_vec3 a, quo_vec3 b);
+float quo_dot_vec3(quo_vec3 a, quo_vec3 b);
+
 /* A 4x4 matrix structure, and it's operational functions */
 typedef struct quo_Matrix {
 	float elements[16];
 } quo_Matrix;
 
 quo_Matrix quo_identity();
-quo_Matrix quo_translate(quo_Matrix m, float x, float y, float z);
-quo_Matrix quo_scale(quo_Matrix m, float x, float y, float z);
+quo_Matrix quo_translate(quo_Matrix m, quo_vec3 translation);
+quo_Matrix quo_rotate(quo_Matrix m, float angle, quo_vec3 axis);
+quo_Matrix quo_scale(quo_Matrix m, quo_vec3 scale);
 quo_Matrix quo_orthographic(float left, float right, float bottom, float top, float near_plane, float far_plane);
+quo_Matrix quo_perspective(float fov, float aspect, float near_plane, float far_plane);
+
+inline static float quo_to_radians(float deg) {
+	return (float)(deg * (QUO_PI / 180.0f));
+}
+
 /* -----------------------
  * END MATHS
  * -----------------------*/
@@ -257,6 +306,7 @@ typedef struct quo_Renderer {
 	quo_ShaderHandle sprite_shader;
 
 	unsigned int quad_va;
+	unsigned int quad_vb;
 
 	unsigned int shaders[QUO_MAX_SHADERS];
 	unsigned int shader_count;
@@ -287,6 +337,24 @@ void quo_shader_set_vec2(quo_Renderer* renderer, quo_ShaderHandle shader, const 
 void quo_shader_set_vec3(quo_Renderer* renderer, quo_ShaderHandle shader, const char* uniform_name, float x, float y, float z);
 void quo_shader_set_vec4(quo_Renderer* renderer, quo_ShaderHandle shader, const char* uniform_name, float x, float y, float z, float w);
 
+/* 3D rendering */
+
+/* Represents a 3D mesh */
+typedef struct quo_3dMesh {
+	unsigned int va, vb, ib;
+	unsigned int index_count;
+} quo_3dMesh;
+
+typedef struct quo_Vertex {
+	quo_vec3 position;
+	quo_vec3 normal;
+	quo_vec2 uv;
+} quo_Vertex;
+
+/* Initialise a 3D mesh from raw data */
+void quo_init_3d_mesh(quo_3dMesh* mesh, quo_Vertex* vertices, unsigned int* indices, unsigned int index_count);
+void quo_free_3d_mesh(quo_3dMesh* mesh);
+
 /* -----------------------
  * END RENDERER
  * -----------------------*/
@@ -305,6 +373,7 @@ void quo_shader_set_vec4(quo_Renderer* renderer, quo_ShaderHandle shader, const 
 #ifdef QUO_IMPL
 /* C standard includes */
 #include <assert.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -337,11 +406,17 @@ void quo_load_gl() {
 	glUniformMatrix4fv = QUO_LOAD_GL_FUNC(quo_gl_uniform_matrix_4_f_v, "glUniformMatrix4fv");
 	glUseProgram = QUO_LOAD_GL_FUNC(quo_gl_use_program, "glUseProgram");
 	glVertexAttribPointer = QUO_LOAD_GL_FUNC(quo_gl_vertex_attrib_pointer, "glVertexAttribPointer");
+	glDeleteVertexArrays = QUO_LOAD_GL_FUNC(quo_gl_delete_vertex_arrays, "glDeleteVertexArrays");
+	glDeleteBuffers = QUO_LOAD_GL_FUNC(quo_gl_delete_buffers, "glDeleteBuffers");
 
 #ifdef QUO_PLATFORM_WINDOWS
 	/* X11 already defines this, on Windows it has to be done manually */
 	glActiveTexture = QUO_LOAD_GL_FUNC(quo_gl_active_texture, "glActiveTexture");
 #endif
+}
+
+double quo_get_elapsed_time() {
+	return ((double)clock() / (double)CLOCKS_PER_SEC);
 }
 
 /* -----------------------
@@ -374,49 +449,8 @@ static LRESULT CALLBACK quo_win32_event_callback(HWND hwnd, UINT msg, WPARAM wpa
 }
 #endif
 
-void quo_init_window(quo_Window* window, int w, int h) {
-	assert(window != NULL);
-
-	window->is_open = true;
-
-	/* Open X11 window */
-#if defined(QUO_PLATFORM_X11)
-	window->display = XOpenDisplay(NULL);
-	window->window_root = DefaultRootWindow(window->display);
-
-	/* Configure window */
-	int gl_attribs[] = { GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, None };
-	window->visual_info = glXChooseVisual(window->display, 0, gl_attribs);
-	window->color_map = XCreateColormap(window->display, window->window_root, window->visual_info->visual, AllocNone);
-	window->set_window_attribs.colormap = window->color_map;
-
-	/* Let X11 know which events we are interested in */
-	window->set_window_attribs.event_mask = ExposureMask | KeyPressMask | KeyReleaseMask | ButtonPressMask | ButtonReleaseMask | PointerMotionMask | FocusChangeMask | StructureNotifyMask;
-
-	/* Create the window */
-	window->window = XCreateWindow(window->display, window->window_root, 0, 0, w, h, 0, window->visual_info->depth, InputOutput, window->visual_info->visual, CWColormap | CWEventMask, &window->set_window_attribs);
-
-	/* Remap close event */
-	Atom atomWmDeleteWindow = XInternAtom(window->display, "WM_DELETE_WINDOW", False);
-	XSetWMProtocols(window->display, window->window, &atomWmDeleteWindow, 1);
-
-	/* Display the window */
-	XClearWindow(window->display, window->window);
-	XMapRaised(window->display, window->window);
-
-	/* Create OpenGL context */
-	window->device_context = glXCreateContext(window->display, window->visual_info, NULL, GL_TRUE);
-	glXMakeCurrent(window->display, window->window, window->device_context);
-
-	XWindowAttributes gwa;
-	XGetWindowAttributes(window->display, window->window, &gwa);
-	glViewport(0, 0, gwa.width, gwa.height);
-
-	window->width = gwa.width;
-	window->height = gwa.height;
-#endif
-
-#if defined(QUO_PLATFORM_WINDOWS)
+#ifdef QUO_PLATFORM_WINDOWS
+static void quo_init_window_windows(quo_Window* window, int w, int h, bool resizable) {
 	WNDCLASS wc;
 	wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
@@ -432,7 +466,11 @@ void quo_init_window(quo_Window* window, int w, int h) {
 
 	/* Window styling */
 	DWORD dwExStyle = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;
-	DWORD dwStyle = WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_VISIBLE | WS_THICKFRAME;
+	DWORD dwStyle = WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_VISIBLE;
+
+	if (resizable) {
+		dwStyle |= WS_THICKFRAME;
+	}
 
 	window->width = w;
 	window->height = h;
@@ -461,6 +499,110 @@ void quo_init_window(quo_Window* window, int w, int h) {
 
 	if (!(window->render_context = wglCreateContext(window->device_context))) { return; }
 	wglMakeCurrent(window->device_context, window->render_context);
+}
+
+static void quo_update_window_windows(quo_Window* window) {
+	SwapBuffers(window->device_context);
+
+	/* Poll for events, handled in quo_win32_event_callback */
+	MSG msg;
+	while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) > 0) {
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+}
+
+#endif /* QUO_PLATFORM_WINDOWS */
+
+#ifdef QUO_PLATFORM_X11
+static void quo_init_window_x11(quo_Window* window, int w, int h, bool resizable) {
+	window->display = XOpenDisplay(NULL);
+	window->window_root = DefaultRootWindow(window->display);
+
+	/* Configure window */
+	int gl_attribs[] = { GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, None };
+	window->visual_info = glXChooseVisual(window->display, 0, gl_attribs);
+	window->color_map = XCreateColormap(window->display, window->window_root, window->visual_info->visual, AllocNone);
+	window->set_window_attribs.colormap = window->color_map;
+
+	window->set_window_attribs.event_mask = ExposureMask | KeyPressMask | KeyReleaseMask | ButtonPressMask | ButtonReleaseMask | PointerMotionMask | FocusChangeMask | StructureNotifyMask;
+
+	/* Create the window */
+	window->window = XCreateWindow(window->display, window->window_root, 0, 0, w, h, 0, window->visual_info->depth, InputOutput, window->visual_info->visual, CWColormap | CWEventMask, &window->set_window_attribs);
+
+	if (!resizable) {
+		/* This works by setting the miniumum and maximum heights of the window
+		 * to the input width and height. I'm not sure if this is the correct
+		 * way to do it, but it works, and even removes the maximise button */
+		XSizeHints* hints = XAllocSizeHints();
+		hints->flags = PMinSize | PMaxSize;
+		hints->min_width = w;
+		hints->min_height = h;
+		hints->max_width = w;
+		hints->max_height = h;
+
+		XSetWMNormalHints(window->display, window->window, hints);
+
+		XFree(hints);
+	}
+
+	/* Remap close event */
+	Atom atomWmDeleteWindow = XInternAtom(window->display, "WM_DELETE_WINDOW", False);
+	XSetWMProtocols(window->display, window->window, &atomWmDeleteWindow, 1);
+
+	/* Display the window */
+	XClearWindow(window->display, window->window);
+	XMapRaised(window->display, window->window);
+
+	/* Create OpenGL context */
+	window->device_context = glXCreateContext(window->display, window->visual_info, NULL, GL_TRUE);
+	glXMakeCurrent(window->display, window->window, window->device_context);
+
+	/* Set width and height */
+	XWindowAttributes gwa;
+	XGetWindowAttributes(window->display, window->window, &gwa);
+	glViewport(0, 0, gwa.width, gwa.height);
+	window->width = gwa.width;
+	window->height = gwa.height;
+}
+
+static void quo_update_window_x11(quo_Window* window) {
+	/* Swap window */
+	glXSwapBuffers(window->display, window->window);
+
+	/* Handle events */
+	XEvent e;
+	while (XPending(window->display)) {
+		XNextEvent(window->display, &e);
+		if (e.type == ClientMessage) {
+			window->is_open = false;
+		} else if (e.type == Expose) {
+			XWindowAttributes gwa;
+			XGetWindowAttributes(window->display, window->window, &gwa);
+			glViewport(0, 0, gwa.width, gwa.height);
+
+			window->width = gwa.width;
+			window->height = gwa.height;
+		}
+	}
+}
+
+#endif /* QUO_PLATFORM_X11 */
+
+void quo_init_window(quo_Window* window, int w, int h, bool resizable) {
+	assert(window != NULL);
+
+	window->is_open = true;
+	window->frame_time = 0;
+	window->now_time = 0;
+	window->old_time = 0;
+
+#if defined(QUO_PLATFORM_X11)
+	quo_init_window_x11(window, w, h, resizable);
+#endif
+
+#if defined(QUO_PLATFORM_WINDOWS)
+	quo_init_window_windows(window, w, h, resizable);
 #endif
 
 	quo_load_gl();
@@ -485,36 +627,18 @@ void quo_update_window(quo_Window* window) {
 	assert(window != NULL);
 
 #if defined(QUO_PLATFORM_X11)
-	/* Swap window */
-	glXSwapBuffers(window->display, window->window);
-
-	/* Handle events */
-	XEvent e;
-	while (XPending(window->display)) {
-		XNextEvent(window->display, &e);
-		if (e.type == ClientMessage) {
-			window->is_open = false;
-		} else if (e.type == Expose) {
-			XWindowAttributes gwa;
-			XGetWindowAttributes(window->display, window->window, &gwa);
-			glViewport(0, 0, gwa.width, gwa.height);
-
-			window->width = gwa.width;
-			window->height = gwa.height;
-		}
-	}
+	quo_update_window_x11(window);
 #endif
 
 #if defined(QUO_PLATFORM_WINDOWS)
-	SwapBuffers(window->device_context);
-
-	/* Poll for events, handled in quo_win32_event_callback */
-	MSG msg;
-	while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) > 0) {
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-	}
+	quo_update_window_windows(window);
 #endif
+
+	window->now_time = quo_get_elapsed_time();
+	window->frame_time = window->now_time - window->old_time;
+	window->old_time = window->now_time;
+
+	window->fps = 1.0f / window->frame_time;
 }
 
 void quo_free_window(quo_Window* window) {
@@ -540,6 +664,70 @@ void quo_free_window(quo_Window* window) {
 /* -----------------------
  * START MATHS
  * -----------------------*/
+quo_vec2 quo_add_vec2(quo_vec2 a, quo_vec2 b) {
+	return (quo_vec2){a.x + b.x, a.y + b.y};
+}
+
+quo_vec2 quo_subtract_vec2(quo_vec2 a, quo_vec2 b) {
+	return (quo_vec2){a.x - b.x, a.y - b.y};
+}
+
+quo_vec2 quo_multiply_vec2(quo_vec2 a, quo_vec2 b) {
+	return (quo_vec2){a.x * b.x, a.y * b.y};
+}
+
+quo_vec2 quo_divide_vec2(quo_vec2 a, quo_vec2 b) {
+	return (quo_vec2){a.x / b.x, a.y / b.y};
+}
+
+float quo_vec2_magnitude(quo_vec2 v) {
+	sqrt(v.x * v.x + v.y * v.y);
+}
+
+float quo_dot_vec2(quo_vec2 a, quo_vec2 b) {
+	return a.x * b.x + a.y * b.y;
+}
+
+quo_vec2 quo_normalise_vec2(quo_vec2 v) {
+	float length = quo_vec2_magnitude(v);
+	return (quo_vec2){v.x / length, v.y / length};
+}
+
+quo_vec3 quo_add_vec3(quo_vec3 a, quo_vec3 b) {
+	return (quo_vec3){a.x + b.x, a.y + b.y, a.z + b.z};
+}
+
+quo_vec3 quo_subtract_vec3(quo_vec3 a, quo_vec3 b) {
+	return (quo_vec3){a.x - b.x, a.y - b.y, a.z - b.z};
+}
+
+quo_vec3 quo_multiply_vec3(quo_vec3 a, quo_vec3 b) {
+	return (quo_vec3){a.x * b.x, a.y * b.y, a.z * b.z};
+}
+
+quo_vec3 quo_divide_vec3(quo_vec3 a, quo_vec3 b) {
+	return (quo_vec3){a.x / b.x, a.y / b.y, a.z / b.z};
+}
+
+float quo_vec3_magnitude(quo_vec3 v) {
+	sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+}
+
+float quo_dot_vec3(quo_vec3 a, quo_vec3 b) {
+	return a.x * b.x + a.y * b.y + a.z * b.z;
+}
+
+quo_vec3 quo_normalise_vec3(quo_vec3 v) {
+	float length = quo_vec3_magnitude(v);
+	return (quo_vec3){v.x / length, v.y / length, v.z / length};
+}
+
+quo_vec3 quo_cross_vec3(quo_vec3 a, quo_vec3 b) {
+	return (quo_vec3){a.y * b.z - a.z * b.y,
+					  a.z * b.x - a.x * b.z,
+					  a.x * b.y - a.y * b.x};
+}
+
 quo_Matrix quo_identity() {
 	quo_Matrix result;
 
@@ -553,18 +741,43 @@ quo_Matrix quo_identity() {
 	return result;
 }
 
-quo_Matrix quo_translate(quo_Matrix m, float x, float y, float z) {
-	m.elements[3 + 0 * 4] = x;
-	m.elements[3 + 1 * 4] = y;
-	m.elements[3 + 2 * 4] = z;
+quo_Matrix quo_translate(quo_Matrix m, quo_vec3 translation) {
+	m.elements[3 + 0 * 4] = translation.x;
+	m.elements[3 + 1 * 4] = translation.y;
+	m.elements[3 + 2 * 4] = translation.z;
 
 	return m;
 }
 
-quo_Matrix quo_scale(quo_Matrix m, float x, float y, float z) {
-	m.elements[0 + 0 * 4] = x;
-	m.elements[1 + 1 * 4] = y;
-	m.elements[2 + 2 * 4] = z;
+quo_Matrix quo_rotate(quo_Matrix m, float angle, quo_vec3 axis) {
+	float r = quo_to_radians(angle);
+	float c = cos(r);
+	float s = sin(r);
+	float omc = 1.0f - c;
+
+	float x = axis.x;
+	float y = axis.y;
+	float z = axis.z;
+
+	m.elements[0 + 0 * 4] = x * x * omc + c;
+	m.elements[0 + 1 * 4] = y * x * omc + z * s;
+	m.elements[0 + 2 * 4] = x * z * omc - y * s;
+
+	m.elements[1 + 0 * 4] = x * y * omc - z * s;
+	m.elements[1 + 1 * 4] = y * y * omc + c;
+	m.elements[1 + 2 * 4] = y * z * omc + x * s;
+
+	m.elements[2 + 0 * 4] = x * z * omc + y * s;
+	m.elements[2 + 1 * 4] = y * z * omc - x * s;
+	m.elements[2 + 2 * 4] = z * z * omc + c;
+
+	return m;
+}
+
+quo_Matrix quo_scale(quo_Matrix m, quo_vec3 scale) {
+	m.elements[0 + 0 * 4] = scale.x;
+	m.elements[1 + 1 * 4] = scale.y;
+	m.elements[2 + 2 * 4] = scale.z;
 
 	return m;
 }
@@ -582,6 +795,25 @@ quo_Matrix quo_orthographic(float left, float right, float bottom, float top, fl
 
 	return result;
 }
+
+quo_Matrix quo_perspective(float fov, float aspect, float near_plane, float far_plane) {
+	quo_Matrix result = quo_identity();
+
+	float q = 1.0f / tan(quo_to_radians(0.5f * fov));
+	float a = q / aspect;
+
+	float b = (near_plane + far_plane) / (near_plane - far_plane);
+	float c = (2.0f * near_plane * far_plane) / (near_plane - far_plane);
+
+	result.elements[0 + 0 * 4] = a;
+	result.elements[1 + 1 * 4] = q;
+	result.elements[2 + 2 * 4] = b;
+	result.elements[2 + 3 * 4] = -1.0f;
+	result.elements[3 + 2 * 4] = c;
+
+	return result;
+}
+
 /* -----------------------
  * END MATHS
  * -----------------------*/
@@ -808,7 +1040,6 @@ void quo_init_renderer(quo_Renderer* renderer, quo_Window* window) {
 
 	renderer->sprite_shader = quo_create_shader(renderer, g_quad_shader_vertex, g_quad_shader_fragment);
 
-	unsigned int quad_vb;
 	float vertices[] = {
 		0.0f, 1.0f, 0.0f, 1.0f,
 		1.0f, 0.0f, 1.0f, 0.0f,
@@ -820,9 +1051,9 @@ void quo_init_renderer(quo_Renderer* renderer, quo_Window* window) {
 	};
 
 	glGenVertexArrays(1, &renderer->quad_va);
-	glGenBuffers(1, &quad_vb);
+	glGenBuffers(1, &renderer->quad_vb);
 
-	glBindBuffer(GL_ARRAY_BUFFER, quad_vb);
+	glBindBuffer(GL_ARRAY_BUFFER, renderer->quad_vb);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	glBindVertexArray(renderer->quad_va);
@@ -843,8 +1074,8 @@ void quo_draw_rect(quo_Renderer* renderer, quo_Rect rect, unsigned long color) {
 	assert(renderer != NULL);
 
 	quo_Matrix model = quo_identity();
-	model = quo_translate(model, rect.x, rect.y, 0);
-	model = quo_scale(model, rect.w, rect.h, 1);
+	model = quo_translate(model, (quo_vec3){rect.x, rect.y, 0});
+	model = quo_scale(model, (quo_vec3){rect.w, rect.h, 1});
 
 	quo_bind_shader(renderer, renderer->sprite_shader);
 
@@ -862,8 +1093,8 @@ void quo_draw_texture(quo_Renderer* renderer, quo_Texture* texture, quo_Rect rec
 	assert(texture != NULL);
 
 	quo_Matrix model = quo_identity();
-	model = quo_translate(model, rect.x, rect.y, 0);
-	model = quo_scale(model, rect.w, rect.h, 1);
+	model = quo_translate(model, (quo_vec3){rect.x, rect.y, 0});
+	model = quo_scale(model, (quo_vec3){rect.w, rect.h, 1});
 
 	quo_bind_shader(renderer, renderer->sprite_shader);
 
@@ -886,6 +1117,9 @@ void quo_free_renderer(quo_Renderer* renderer) {
 	for (unsigned int i = 0; i < renderer->shader_count; i++) {
 		glDeleteProgram(&renderer->shaders[i]);
 	}
+
+	glDeleteVertexArrays(1, &renderer->quad_va);
+	glDeleteBuffers(1, &renderer->quad_vb);
 }
 
 void quo_clear_renderer(unsigned long color) {
@@ -1011,6 +1245,42 @@ void quo_shader_set_vec4(quo_Renderer* renderer, quo_ShaderHandle shader, const 
 	unsigned int location = glGetUniformLocation(shader_id, uniform_name);
 
 	glUniform4f(location, x, y, z, w);
+}
+
+void quo_init_3d_mesh(quo_3dMesh* mesh, quo_Vertex* vertices, unsigned int* indices, unsigned int index_count) {
+	assert(mesh != NULL);
+
+	mesh->index_count = index_count;
+
+	glGenVertexArrays(1, &mesh->va);
+	glGenBuffers(1, &mesh->vb);
+	glGenBuffers(1, &mesh->ib);
+
+	glBindVertexArray(mesh->va);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->vb);
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->ib);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+	/* Vertex position */
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(quo_Vertex), NULL);
+
+	/* Vertex normal */
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(quo_Vertex), (void*)offsetof(quo_Vertex, normal));
+
+	/* Vertex UV */
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(quo_Vertex), (void*)offsetof(quo_Vertex, uv));
+}
+
+void quo_free_3d_mesh(quo_3dMesh* mesh) {
+	glDeleteVertexArrays(1, &mesh->va);
+	glDeleteBuffers(1, &mesh->vb);
+	glDeleteBuffers(1, &mesh->ib);
 }
 
 /* -----------------------
