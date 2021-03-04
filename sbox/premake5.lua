@@ -18,7 +18,7 @@ project "sbox"
 	links {
  		"GL",
  		"X11",
- 		"m"
+		"m"
 	}
 
 	filter "configurations:debug"

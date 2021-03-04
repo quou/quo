@@ -57,6 +57,7 @@ typedef HGLRC quo_GLRenderContext;
 #define GL_VERTEX_SHADER 0x8B31
 #define GL_ARRAY_BUFFER 0x8892
 #define GL_STATIC_DRAW 0x88E4
+#define GL_ELEMENT_ARRAY_BUFFER 0x8893
 #define GL_TEXTURE0 0x84C0
 #define GL_TEXTURE1 0x84C1
 #define GL_TEXTURE2 0x84C2
@@ -466,10 +467,10 @@ static void quo_init_window_windows(quo_Window* window, int w, int h, bool resiz
 
 	/* Window styling */
 	DWORD dwExStyle = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;
-	DWORD dwStyle = WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_VISIBLE;
+	DWORD dwStyle = WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE;
 
 	if (resizable) {
-		dwStyle |= WS_THICKFRAME;
+		dwStyle |= WS_THICKFRAME | WS_MAXIMIZEBOX;
 	}
 
 	window->width = w;
@@ -681,7 +682,7 @@ quo_vec2 quo_divide_vec2(quo_vec2 a, quo_vec2 b) {
 }
 
 float quo_vec2_magnitude(quo_vec2 v) {
-	sqrt(v.x * v.x + v.y * v.y);
+	return sqrt(v.x * v.x + v.y * v.y);
 }
 
 float quo_dot_vec2(quo_vec2 a, quo_vec2 b) {
