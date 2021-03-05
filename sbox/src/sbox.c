@@ -1,5 +1,3 @@
-#include <time.h>
-
 #define QUO_IMPL
 #include <quo.h>
 
@@ -23,7 +21,7 @@ int main() {
 	while (window.is_open) {
 		quo_clear_renderer(0x000000);
 
-		quo_draw_texture(&renderer, &texture, (quo_Rect){100, 100, 50, 50}, 0xeb4034);
+		quo_draw_texture(&renderer, &texture, (quo_Rect){0, 0, 16, 16}, (quo_Rect){100, 100, 50, 50}, 0xeb4034);
 
 		quo_update_renderer(&renderer);
 		quo_update_window(&window);

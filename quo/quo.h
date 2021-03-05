@@ -325,7 +325,7 @@ void quo_update_renderer(quo_Renderer* renderer);
 /* Draw functions */
 void quo_clear_renderer(unsigned long color);
 void quo_draw_rect(quo_Renderer* renderer, quo_Rect rect, unsigned long color);
-void quo_draw_texture(quo_Renderer* renderer, quo_Texture* texture, quo_Rect rect, unsigned long color);
+void quo_draw_texture(quo_Renderer* renderer, quo_Texture* texture, quo_Rect src, quo_Rect dest, unsigned long color);
 
 /* Shader management */
 quo_ShaderHandle quo_create_shader(quo_Renderer* renderer, const char* vertex_source, const char* fragment_source);
@@ -971,8 +971,15 @@ static const char* g_quad_shader_vertex = "#version 330 core\n"
 "uniform mat4 view = mat4(1.0);\n"
 "out vec2 uv;\n"
 
+"uniform vec2 image_size;\n"
+"uniform vec4 source_rect;\n"
+
 "void main() {\n"
-	"uv = vertex.zw;\n"
+"vec2 texPos = vertex.zw;\n"
+	"float widthPixel = 1.0f / image_size.x;\n"
+	"float heightPixel = 1.0f / image_size.y;\n"
+	"float startX = source_rect.x, startY = source_rect.y, width = source_rect.z, height = source_rect.w;\n"
+	"uv = vec2(widthPixel * startX + width * widthPixel * texPos.x, heightPixel * startY + height * heightPixel * texPos.y);\n"
 	"gl_Position = projection * view * model * vec4(vertex.xy, 0.0, 1.0);\n"
 "}\n";
 
@@ -1065,19 +1072,20 @@ void quo_draw_rect(quo_Renderer* renderer, quo_Rect rect, unsigned long color) {
 	quo_shader_set_matrix(renderer, renderer->sprite_shader, "model", model);
 	quo_shader_set_matrix(renderer, renderer->sprite_shader, "projection", renderer->projection);
 	quo_shader_set_color(renderer, renderer->sprite_shader, "color", color);
+	quo_shader_set_int(renderer, renderer->sprite_shader, "use_tex", 0);
 
 	glBindVertexArray(renderer->quad_va);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 	glBindVertexArray(0);
 }
 
-void quo_draw_texture(quo_Renderer* renderer, quo_Texture* texture, quo_Rect rect, unsigned long color) {
+void quo_draw_texture(quo_Renderer* renderer, quo_Texture* texture, quo_Rect src, quo_Rect dest, unsigned long color) {
 	assert(renderer != NULL);
 	assert(texture != NULL);
 
 	quo_Matrix model = quo_identity();
-	model = quo_translate(model, (quo_vec3){rect.x, rect.y, 0});
-	model = quo_scale(model, (quo_vec3){rect.w, rect.h, 1});
+	model = quo_translate(model, (quo_vec3){dest.x, dest.y, 0});
+	model = quo_scale(model, (quo_vec3){dest.w, dest.h, 1});
 
 	quo_bind_shader(renderer, renderer->sprite_shader);
 
@@ -1085,6 +1093,8 @@ void quo_draw_texture(quo_Renderer* renderer, quo_Texture* texture, quo_Rect rec
 	quo_shader_set_matrix(renderer, renderer->sprite_shader, "projection", renderer->projection);
 	quo_shader_set_color(renderer, renderer->sprite_shader, "color", color);
 	quo_shader_set_int(renderer, renderer->sprite_shader, "use_tex", 1);
+	quo_shader_set_vec2(renderer, renderer->sprite_shader, "image_size", texture->width, texture->height);
+	quo_shader_set_vec4(renderer, renderer->sprite_shader, "source_rect", src.x, src.y, src.w, src.h);
 
 	quo_bind_texture(texture, 0);
 	quo_shader_set_int(renderer, renderer->sprite_shader, "tex", 0);
