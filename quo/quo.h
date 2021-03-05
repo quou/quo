@@ -338,24 +338,6 @@ void quo_shader_set_vec2(quo_Renderer* renderer, quo_ShaderHandle shader, const 
 void quo_shader_set_vec3(quo_Renderer* renderer, quo_ShaderHandle shader, const char* uniform_name, float x, float y, float z);
 void quo_shader_set_vec4(quo_Renderer* renderer, quo_ShaderHandle shader, const char* uniform_name, float x, float y, float z, float w);
 
-/* 3D rendering */
-
-/* Represents a 3D mesh */
-typedef struct quo_3dMesh {
-	unsigned int va, vb, ib;
-	unsigned int index_count;
-} quo_3dMesh;
-
-typedef struct quo_Vertex {
-	quo_vec3 position;
-	quo_vec3 normal;
-	quo_vec2 uv;
-} quo_Vertex;
-
-/* Initialise a 3D mesh from raw data */
-void quo_init_3d_mesh(quo_3dMesh* mesh, quo_Vertex* vertices, unsigned int* indices, unsigned int index_count);
-void quo_free_3d_mesh(quo_3dMesh* mesh);
-
 /* -----------------------
  * END RENDERER
  * -----------------------*/
@@ -1246,42 +1228,6 @@ void quo_shader_set_vec4(quo_Renderer* renderer, quo_ShaderHandle shader, const 
 	unsigned int location = glGetUniformLocation(shader_id, uniform_name);
 
 	glUniform4f(location, x, y, z, w);
-}
-
-void quo_init_3d_mesh(quo_3dMesh* mesh, quo_Vertex* vertices, unsigned int* indices, unsigned int index_count) {
-	assert(mesh != NULL);
-
-	mesh->index_count = index_count;
-
-	glGenVertexArrays(1, &mesh->va);
-	glGenBuffers(1, &mesh->vb);
-	glGenBuffers(1, &mesh->ib);
-
-	glBindVertexArray(mesh->va);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->vb);
-
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->ib);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-	/* Vertex position */
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(quo_Vertex), NULL);
-
-	/* Vertex normal */
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(quo_Vertex), (void*)offsetof(quo_Vertex, normal));
-
-	/* Vertex UV */
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(quo_Vertex), (void*)offsetof(quo_Vertex, uv));
-}
-
-void quo_free_3d_mesh(quo_3dMesh* mesh) {
-	glDeleteVertexArrays(1, &mesh->va);
-	glDeleteBuffers(1, &mesh->vb);
-	glDeleteBuffers(1, &mesh->ib);
 }
 
 /* -----------------------
