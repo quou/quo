@@ -10,7 +10,8 @@ This library is standalone, meaning it doesn't depend on anything that doesn't c
  - Basic maths
 
 ## Planned features
- - Wayland and Android support
+ - Input
  - 3D rendering pipeline
+ - Wayland and Android support
  - Audio
  - MacOS support (This is going to take a while, as it will mean adding support for Metal as well as OpenGL, since MacOS's OpenGL support is pretty shaky).
