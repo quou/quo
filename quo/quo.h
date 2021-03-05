@@ -360,6 +360,7 @@ void quo_shader_set_vec4(quo_Renderer* renderer, quo_ShaderHandle shader, const 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 void quo_load_gl() {
 	glAttachShader = QUO_LOAD_GL_FUNC(quo_gl_attach_shader, "glAttachShader");
