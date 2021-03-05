@@ -6,7 +6,7 @@
 int main() {
 	quo_Window window;
 
-	quo_init_window(&window, 640, 480, true);
+	quo_init_window(&window, 640, 480, false);
 	quo_set_window_title(&window, "quo example program");
 
 	quo_BitmapImage image;
