@@ -8,9 +8,9 @@ This library is standalone, meaning it doesn't depend on anything that doesn't c
  - Window management for Windows and X11
  - 2D rendering
  - Basic maths
+ - Input
 
 ## Planned Features
- - Input
  - 3D rendering pipeline
  - Wayland and Android support
  - Audio
