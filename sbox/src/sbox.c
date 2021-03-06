@@ -34,8 +34,7 @@ int main() {
 	}
 
 	quo_free_texture(&texture);
-
 	quo_free_renderer(&renderer);
-
 	quo_free_window(&window);
 }
+
