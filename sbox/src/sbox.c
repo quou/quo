@@ -19,9 +19,15 @@ int main() {
 	quo_init_renderer(&renderer, &window);
 
 	while (window.is_open) {
+		quo_update_window_events(&window);
+
 		quo_clear_renderer(0x000000);
 
 		quo_draw_texture(&renderer, &texture, (quo_Rect){0, 0, 16, 16}, (quo_Rect){100, 100, 50, 50}, 0xeb4034);
+
+		if (quo_key_pressed(QUO_KEY_SPACE)) {
+			printf("hi\n");
+		}
 
 		quo_update_renderer(&renderer);
 		quo_update_window(&window);

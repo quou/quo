@@ -3,6 +3,136 @@
 /* Standard includes */
 #include <stdbool.h>
 
+/* We can't know for sure how many keys the platform offers,
+ * 2048 should be enough... Better than a heap allocation */
+#define QUO_MAX_KEY_COUNT 2048
+
+/* Keys */
+#define QUO_KEY_UNKNOWN            -1
+#define QUO_KEY_SPACE              32
+#define QUO_KEY_APOSTROPHE         39  /* ' */
+#define QUO_KEY_COMMA              44  /* , */
+#define QUO_KEY_MINUS              45  /* - */
+#define QUO_KEY_PERIOD             46  /* . */
+#define QUO_KEY_SLASH              47  /* / */
+#define QUO_KEY_0                  48
+#define QUO_KEY_1                  49
+#define QUO_KEY_2                  50
+#define QUO_KEY_3                  51
+#define QUO_KEY_4                  52
+#define QUO_KEY_5                  53
+#define QUO_KEY_6                  54
+#define QUO_KEY_7                  55
+#define QUO_KEY_8                  56
+#define QUO_KEY_9                  57
+#define QUO_KEY_SEMICOLON          59  /* ; */
+#define QUO_KEY_EQUAL              61  /* = */
+#define QUO_KEY_A                  65
+#define QUO_KEY_B                  66
+#define QUO_KEY_C                  67
+#define QUO_KEY_D                  68
+#define QUO_KEY_E                  69
+#define QUO_KEY_F                  70
+#define QUO_KEY_G                  71
+#define QUO_KEY_H                  72
+#define QUO_KEY_I                  73
+#define QUO_KEY_J                  74
+#define QUO_KEY_K                  75
+#define QUO_KEY_L                  76
+#define QUO_KEY_M                  77
+#define QUO_KEY_N                  78
+#define QUO_KEY_O                  79
+#define QUO_KEY_P                  80
+#define QUO_KEY_Q                  81
+#define QUO_KEY_R                  82
+#define QUO_KEY_S                  83
+#define QUO_KEY_T                  84
+#define QUO_KEY_U                  85
+#define QUO_KEY_V                  86
+#define QUO_KEY_W                  87
+#define QUO_KEY_X                  88
+#define QUO_KEY_Y                  89
+#define QUO_KEY_Z                  90
+#define QUO_KEY_LEFT_BRACKET       91  /* [ */
+#define QUO_KEY_BACKSLASH          92  /* \ */
+#define QUO_KEY_RIGHT_BRACKET      93  /* ] */
+#define QUO_KEY_GRAVE_ACCENT       96  /* ` */
+#define QUO_KEY_WORLD_1            161 /* non-US #1 */
+#define QUO_KEY_WORLD_2            162 /* non-US #2 */
+
+/* Function keys */
+#define QUO_KEY_ESCAPE             256
+#define QUO_KEY_ENTER              257
+#define QUO_KEY_TAB                258
+#define QUO_KEY_BACKSPACE          259
+#define QUO_KEY_INSERT             260
+#define QUO_KEY_DELETE             261
+#define QUO_KEY_RIGHT              262
+#define QUO_KEY_LEFT               263
+#define QUO_KEY_DOWN               264
+#define QUO_KEY_UP                 265
+#define QUO_KEY_PAGE_UP            266
+#define QUO_KEY_PAGE_DOWN          267
+#define QUO_KEY_HOME               268
+#define QUO_KEY_END                269
+#define QUO_KEY_CAPS_LOCK          280
+#define QUO_KEY_SCROLL_LOCK        281
+#define QUO_KEY_NUM_LOCK           282
+#define QUO_KEY_PRINT_SCREEN       283
+#define QUO_KEY_PAUSE              284
+#define QUO_KEY_F1                 290
+#define QUO_KEY_F2                 291
+#define QUO_KEY_F3                 292
+#define QUO_KEY_F4                 293
+#define QUO_KEY_F5                 294
+#define QUO_KEY_F6                 295
+#define QUO_KEY_F7                 296
+#define QUO_KEY_F8                 297
+#define QUO_KEY_F9                 298
+#define QUO_KEY_F10                299
+#define QUO_KEY_F11                300
+#define QUO_KEY_F12                301
+#define QUO_KEY_F13                302
+#define QUO_KEY_F14                303
+#define QUO_KEY_F15                304
+#define QUO_KEY_F16                305
+#define QUO_KEY_F17                306
+#define QUO_KEY_F18                307
+#define QUO_KEY_F19                308
+#define QUO_KEY_F20                309
+#define QUO_KEY_F21                310
+#define QUO_KEY_F22                311
+#define QUO_KEY_F23                312
+#define QUO_KEY_F24                313
+#define QUO_KEY_F25                314
+#define QUO_KEY_NP_0               320
+#define QUO_KEY_NP_1               321
+#define QUO_KEY_NP_2               322
+#define QUO_KEY_NP_3               323
+#define QUO_KEY_NP_4               324
+#define QUO_KEY_NP_5               325
+#define QUO_KEY_NP_6               326
+#define QUO_KEY_NP_7               327
+#define QUO_KEY_NP_8               328
+#define QUO_KEY_NP_9               329
+#define QUO_KEY_NP_DECIMAL         330
+#define QUO_KEY_NP_DIVIDE          331
+#define QUO_KEY_NP_MULTIPLY        332
+#define QUO_KEY_NP_SUBTRACT        333
+#define QUO_KEY_NP_ADD             334
+#define QUO_KEY_NP_ENTER           335
+#define QUO_KEY_NP_EQUAL           336
+#define QUO_KEY_LEFT_SHIFT         340
+#define QUO_KEY_LEFT_CONTROL       341
+#define QUO_KEY_LEFT_ALT           342
+#define QUO_KEY_LEFT_SUPER         343
+#define QUO_KEY_RIGHT_SHIFT        344
+#define QUO_KEY_RIGHT_CONTROL      345
+#define QUO_KEY_RIGHT_ALT          346
+#define QUO_KEY_RIGHT_SUPER        347
+#define QUO_KEY_MENU               348
+#define QUO_KEY_COUNT              QUO_KEY_MENU
+
 /* Windows */
 #if defined(_WIN32)
 #define QUO_PLATFORM_WINDOWS
@@ -173,6 +303,21 @@ double quo_get_elapsed_time();
  * START WINDOW
  * -----------------------*/
 
+/* INPUT HASHTABLE:
+ *	For storing system input map items */
+typedef struct quo_InputHashTableItem {
+	int key;
+	int value;
+} quo_InputHashTableItem;
+
+typedef struct quo_InputHashTable {
+	quo_InputHashTableItem hash_array[QUO_KEY_COUNT];
+} quo_InputHashTable;
+
+void quo_init_input_table(quo_InputHashTable* table);
+int quo_search_input_table(quo_InputHashTable* table, int key);
+void quo_insert_input_table(quo_InputHashTable* table, int key, int value);
+
 /* Window struct */
 typedef struct quo_Window {
 	quo_GLDeviceContext device_context;
@@ -186,6 +331,8 @@ typedef struct quo_Window {
 	double old_time;
 
 	double fps;
+
+	quo_InputHashTable key_map;
 
 #if defined(QUO_PLATFORM_X11)
 	Display* display;
@@ -205,6 +352,7 @@ typedef struct quo_Window {
 void quo_init_window(quo_Window* window, int w, int h, bool resizable);
 void quo_set_window_title(quo_Window* window, const char* title);
 void quo_update_window(quo_Window* window);
+void quo_update_window_events(quo_Window* window);
 void quo_free_window(quo_Window* window);
 
 /* -----------------------
@@ -342,6 +490,32 @@ void quo_shader_set_vec4(quo_Renderer* renderer, quo_ShaderHandle shader, const 
  * END RENDERER
  * -----------------------*/
 
+/* -----------------------
+ * START INPUT
+ * -----------------------*/
+
+typedef struct quo_InputSystem {
+	bool held_keys[QUO_KEY_COUNT];
+	bool down_keys[QUO_KEY_COUNT];
+	bool up_keys[QUO_KEY_COUNT];
+} quo_InputSystem;
+
+void quo_init_input_system();
+void quo_update_input_system();
+
+bool quo_key_pressed(int key);
+bool quo_key_just_pressed(int key);
+bool quo_key_just_released(int key);
+
+/* For internal use only */
+void i_quo_set_key_held_state(int key, bool status);
+void i_quo_set_key_down_state(int key, bool status);
+void i_quo_set_key_up_state(int key, bool status);
+
+/* -----------------------
+ * END INPUT
+ * -----------------------*/
+
 
 /*  _____                 _                           _        _   _
  * |_   _|               | |                         | |      | | (_)
@@ -406,6 +580,52 @@ double quo_get_elapsed_time() {
 /* -----------------------
  * START WINDOW
  * -----------------------*/
+
+static int quo_input_hash_code(int key) {
+	return key % QUO_KEY_COUNT;
+}
+
+void quo_init_input_table(quo_InputHashTable* table) {
+	assert(table != NULL);
+
+	for (unsigned int i = 0; i < QUO_KEY_COUNT; i++) {
+		table->hash_array[i] = (quo_InputHashTableItem){-1, 0};
+	}
+}
+
+int quo_search_input_table(quo_InputHashTable* table, int key) {
+	assert(table != NULL);
+
+	int hash_index = quo_input_hash_code(key);
+
+	while (table->hash_array[hash_index].key != -1) {
+		if (table->hash_array[hash_index].key == key) {
+			return table->hash_array[hash_index].value;
+		}
+
+		hash_index++;
+
+		hash_index %= QUO_KEY_COUNT;
+	}
+
+	return 0;
+}
+
+void quo_insert_input_table(quo_InputHashTable* table, int key, int value) {
+	assert(table != NULL);
+
+	quo_InputHashTableItem item = {key, value};
+
+	int hash_index = quo_input_hash_code(key);
+
+	while (table->hash_array[hash_index].key != -1) {
+		hash_index++;
+
+		hash_index %= QUO_KEY_COUNT;
+	}
+
+	table->hash_array[hash_index] = item;
+}
 
 /* Win32 event callback */
 #if defined(QUO_PLATFORM_WINDOWS)
@@ -487,7 +707,9 @@ static void quo_init_window_windows(quo_Window* window, int w, int h, bool resiz
 
 static void quo_update_window_windows(quo_Window* window) {
 	SwapBuffers(window->device_context);
+}
 
+static void quo_update_window_events_windows(quo_Window* window) {
 	/* Poll for events, handled in quo_win32_event_callback */
 	MSG msg;
 	while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) > 0) {
@@ -548,12 +770,118 @@ static void quo_init_window_x11(quo_Window* window, int w, int h, bool resizable
 	glViewport(0, 0, gwa.width, gwa.height);
 	window->width = gwa.width;
 	window->height = gwa.height;
+
+	quo_init_input_table(&window->key_map);
+
+	/* Key mapping */
+	quo_insert_input_table(&window->key_map, 0x00, QUO_KEY_UNKNOWN);
+	quo_insert_input_table(&window->key_map, 0x61, QUO_KEY_A);
+	quo_insert_input_table(&window->key_map, 0x62, QUO_KEY_B);
+	quo_insert_input_table(&window->key_map, 0x63, QUO_KEY_C);
+	quo_insert_input_table(&window->key_map, 0x64, QUO_KEY_D);
+	quo_insert_input_table(&window->key_map, 0x65, QUO_KEY_E);
+	quo_insert_input_table(&window->key_map, 0x66, QUO_KEY_F);
+	quo_insert_input_table(&window->key_map, 0x67, QUO_KEY_G);
+	quo_insert_input_table(&window->key_map, 0x68, QUO_KEY_H);
+	quo_insert_input_table(&window->key_map, 0x69, QUO_KEY_I);
+	quo_insert_input_table(&window->key_map, 0x6A, QUO_KEY_J);
+	quo_insert_input_table(&window->key_map, 0x6B, QUO_KEY_K);
+	quo_insert_input_table(&window->key_map, 0x6C, QUO_KEY_L);
+	quo_insert_input_table(&window->key_map, 0x6D, QUO_KEY_M);
+	quo_insert_input_table(&window->key_map, 0x6E, QUO_KEY_N);
+	quo_insert_input_table(&window->key_map, 0x6F, QUO_KEY_O);
+	quo_insert_input_table(&window->key_map, 0x70, QUO_KEY_P);
+	quo_insert_input_table(&window->key_map, 0x71, QUO_KEY_Q);
+	quo_insert_input_table(&window->key_map, 0x72, QUO_KEY_R);
+	quo_insert_input_table(&window->key_map, 0x73, QUO_KEY_S);
+	quo_insert_input_table(&window->key_map, 0x74, QUO_KEY_T);
+	quo_insert_input_table(&window->key_map, 0x75, QUO_KEY_U);
+	quo_insert_input_table(&window->key_map, 0x76, QUO_KEY_V);
+	quo_insert_input_table(&window->key_map, 0x77, QUO_KEY_W);
+	quo_insert_input_table(&window->key_map, 0x78, QUO_KEY_X);
+	quo_insert_input_table(&window->key_map, 0x79, QUO_KEY_Y);
+	quo_insert_input_table(&window->key_map, 0x7A, QUO_KEY_Z);
+
+	/* Function keys */
+	quo_insert_input_table(&window->key_map, XK_F1, QUO_KEY_F1);
+	quo_insert_input_table(&window->key_map, XK_F2, QUO_KEY_F2);
+	quo_insert_input_table(&window->key_map, XK_F3, QUO_KEY_F3);
+	quo_insert_input_table(&window->key_map, XK_F4, QUO_KEY_F4);
+	quo_insert_input_table(&window->key_map, XK_F5, QUO_KEY_F5);
+	quo_insert_input_table(&window->key_map, XK_F6, QUO_KEY_F6);
+	quo_insert_input_table(&window->key_map, XK_F7, QUO_KEY_F7);
+	quo_insert_input_table(&window->key_map, XK_F8, QUO_KEY_F8);
+	quo_insert_input_table(&window->key_map, XK_F9, QUO_KEY_F9);
+	quo_insert_input_table(&window->key_map, XK_F10, QUO_KEY_F10);
+	quo_insert_input_table(&window->key_map, XK_F11, QUO_KEY_F11);
+	quo_insert_input_table(&window->key_map, XK_F12, QUO_KEY_F12);
+
+	/* Navigation */
+	quo_insert_input_table(&window->key_map, XK_Down, QUO_KEY_DOWN);
+	quo_insert_input_table(&window->key_map, XK_Left, QUO_KEY_LEFT);
+	quo_insert_input_table(&window->key_map, XK_Right, QUO_KEY_RIGHT);
+	quo_insert_input_table(&window->key_map, XK_Up, QUO_KEY_UP);
+	quo_insert_input_table(&window->key_map, XK_Escape, QUO_KEY_ESCAPE);
+
+	/* General navigation & editing */
+	quo_insert_input_table(&window->key_map, XK_Escape, QUO_KEY_ESCAPE);
+	quo_insert_input_table(&window->key_map, XK_Return, QUO_KEY_ENTER);
+	quo_insert_input_table(&window->key_map, XK_BackSpace, QUO_KEY_BACKSPACE);
+	quo_insert_input_table(&window->key_map, XK_Linefeed, QUO_KEY_ENTER);
+	quo_insert_input_table(&window->key_map, XK_Pause, QUO_KEY_PAUSE);
+	quo_insert_input_table(&window->key_map, XK_Scroll_Lock, QUO_KEY_SCROLL_LOCK);
+	quo_insert_input_table(&window->key_map, XK_Tab, QUO_KEY_TAB);
+	quo_insert_input_table(&window->key_map, XK_Delete, QUO_KEY_DELETE);
+	quo_insert_input_table(&window->key_map, XK_Home, QUO_KEY_HOME);
+	quo_insert_input_table(&window->key_map, XK_End, QUO_KEY_END);
+	quo_insert_input_table(&window->key_map, XK_Page_Up, QUO_KEY_PAGE_UP);
+	quo_insert_input_table(&window->key_map, XK_Page_Down, QUO_KEY_PAGE_DOWN);
+	quo_insert_input_table(&window->key_map, XK_Insert, QUO_KEY_INSERT);
+	quo_insert_input_table(&window->key_map, XK_Shift_L, QUO_KEY_LEFT_SHIFT);
+	quo_insert_input_table(&window->key_map, XK_Shift_R, QUO_KEY_RIGHT_SHIFT);
+	quo_insert_input_table(&window->key_map, XK_Control_L, QUO_KEY_LEFT_CONTROL);
+	quo_insert_input_table(&window->key_map, XK_Control_R, QUO_KEY_RIGHT_CONTROL);
+	quo_insert_input_table(&window->key_map, XK_space, QUO_KEY_SPACE);
+	quo_insert_input_table(&window->key_map, XK_period, QUO_KEY_PERIOD);
+
+	/* Number keys */
+	quo_insert_input_table(&window->key_map, XK_0, QUO_KEY_0);
+	quo_insert_input_table(&window->key_map, XK_1, QUO_KEY_1);
+	quo_insert_input_table(&window->key_map, XK_2, QUO_KEY_2);
+	quo_insert_input_table(&window->key_map, XK_3, QUO_KEY_3);
+	quo_insert_input_table(&window->key_map, XK_4, QUO_KEY_4);
+	quo_insert_input_table(&window->key_map, XK_5, QUO_KEY_5);
+	quo_insert_input_table(&window->key_map, XK_6, QUO_KEY_6);
+	quo_insert_input_table(&window->key_map, XK_7, QUO_KEY_7);
+	quo_insert_input_table(&window->key_map, XK_8, QUO_KEY_8);
+	quo_insert_input_table(&window->key_map, XK_9, QUO_KEY_9);
+
+	/* Numpad keys */
+	quo_insert_input_table(&window->key_map, XK_KP_0, QUO_KEY_NP_0);
+	quo_insert_input_table(&window->key_map, XK_KP_1, QUO_KEY_NP_1);
+	quo_insert_input_table(&window->key_map, XK_KP_2, QUO_KEY_NP_2);
+	quo_insert_input_table(&window->key_map, XK_KP_3, QUO_KEY_NP_3);
+	quo_insert_input_table(&window->key_map, XK_KP_4, QUO_KEY_NP_4);
+	quo_insert_input_table(&window->key_map, XK_KP_5, QUO_KEY_NP_5);
+	quo_insert_input_table(&window->key_map, XK_KP_6, QUO_KEY_NP_6);
+	quo_insert_input_table(&window->key_map, XK_KP_7, QUO_KEY_NP_7);
+	quo_insert_input_table(&window->key_map, XK_KP_8, QUO_KEY_NP_8);
+	quo_insert_input_table(&window->key_map, XK_KP_9, QUO_KEY_NP_9);
+	quo_insert_input_table(&window->key_map, XK_KP_Multiply, QUO_KEY_NP_MULTIPLY);
+	quo_insert_input_table(&window->key_map, XK_KP_Add, QUO_KEY_NP_ADD);
+	quo_insert_input_table(&window->key_map, XK_KP_Divide, QUO_KEY_NP_DIVIDE);
+	quo_insert_input_table(&window->key_map, XK_KP_Subtract, QUO_KEY_NP_SUBTRACT);
+	quo_insert_input_table(&window->key_map, XK_KP_Decimal, QUO_KEY_NP_DECIMAL);
+
+	quo_insert_input_table(&window->key_map, XK_Caps_Lock, QUO_KEY_CAPS_LOCK);
 }
 
 static void quo_update_window_x11(quo_Window* window) {
 	/* Swap window */
 	glXSwapBuffers(window->display, window->window);
+}
 
+static void quo_update_window_events_x11(quo_Window* window) {
 	/* Handle events */
 	XEvent e;
 	while (XPending(window->display)) {
@@ -567,6 +895,18 @@ static void quo_update_window_x11(quo_Window* window) {
 
 			window->width = gwa.width;
 			window->height = gwa.height;
+		} else if (e.type == KeyPress) {
+			KeySym sym = XLookupKeysym(&e.xkey, 0);
+
+			int key = quo_search_input_table(&window->key_map, sym);
+			i_quo_set_key_held_state(key, true);
+			i_quo_set_key_down_state(key, true);
+		} else if (e.type == KeyRelease) {
+			KeySym sym = XLookupKeysym(&e.xkey, 0);
+
+			int key = quo_search_input_table(&window->key_map, sym);
+			i_quo_set_key_held_state(key, false);
+			i_quo_set_key_up_state(key, true);
 		}
 	}
 }
@@ -590,6 +930,8 @@ void quo_init_window(quo_Window* window, int w, int h, bool resizable) {
 #endif
 
 	quo_load_gl();
+
+	quo_init_input_system();
 }
 
 void quo_set_window_title(quo_Window* window, const char* title) {
@@ -623,6 +965,20 @@ void quo_update_window(quo_Window* window) {
 	window->old_time = window->now_time;
 
 	window->fps = 1.0f / window->frame_time;
+
+	quo_update_input_system();
+}
+
+void quo_update_window_events(quo_Window* window) {
+	assert(window != NULL);
+
+#if defined(QUO_PLATFORM_X11)
+	quo_update_window_events_x11(window);
+#endif
+
+#if defined(QUO_PLATFORM_WINDOWS)
+	quo_update_window_events_windows(window);
+#endif
 }
 
 void quo_free_window(quo_Window* window) {
@@ -1243,6 +1599,50 @@ void quo_shader_set_vec4(quo_Renderer* renderer, quo_ShaderHandle shader, const 
 
 /* -----------------------
  * END RENDERER
+ * -----------------------*/
+
+/* -----------------------
+ * START INPUT
+ * -----------------------*/
+
+/* Static quo_InputSystem */
+static quo_InputSystem input_system;
+
+void quo_init_input_system() {
+	memset(input_system.held_keys, 0, QUO_KEY_COUNT * sizeof(bool));
+}
+
+void quo_update_input_system() {
+	memset(input_system.down_keys, 0, QUO_KEY_COUNT * sizeof(bool));
+	memset(input_system.up_keys, 0, QUO_KEY_COUNT * sizeof(bool));
+}
+
+bool quo_key_pressed(int key) {
+	return input_system.held_keys[key];
+}
+
+bool quo_key_just_pressed(int key) {
+	return input_system.down_keys[key];
+}
+
+bool quo_key_just_released(int key) {
+	return input_system.up_keys[key];
+}
+
+void i_quo_set_key_held_state(int key, bool status) {
+	input_system.held_keys[key] = status;
+}
+
+void i_quo_set_key_down_state(int key, bool status) {
+	input_system.down_keys[key] = status;
+}
+
+void i_quo_set_key_up_state(int key, bool status) {
+	input_system.up_keys[key] = status;
+}
+
+/* -----------------------
+ * END INPUT
  * -----------------------*/
 
 #endif
