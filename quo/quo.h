@@ -635,8 +635,6 @@ static LRESULT CALLBACK quo_win32_event_callback(HWND hwnd, UINT msg, WPARAM wpa
 
 	switch (msg) {
 		case WM_DESTROY:
-			PostQuitMessage(0);
-			DestroyWindow(hwnd);
 			q_window->is_open = false;
 			return 0;
 		case WM_SIZE:
@@ -645,6 +643,22 @@ static LRESULT CALLBACK quo_win32_event_callback(HWND hwnd, UINT msg, WPARAM wpa
 				q_window->height = (lparam >> 16) & 0xFFFF;
 				return 0;
 			}
+		case WM_KEYDOWN: {
+			if (q_window) {
+				int key = quo_search_input_table(&q_window->key_map, wparam);
+				i_quo_set_key_held_state(key, true);
+				i_quo_set_key_down_state(key, true);
+			}
+			return 0;
+		}
+		case WM_KEYUP: {
+			if (q_window) {
+				int key = quo_search_input_table(&q_window->key_map, wparam);
+				i_quo_set_key_held_state(key, false);
+				i_quo_set_key_up_state(key, true);
+			}
+			return 0;
+		}
 		default:
 			break;
 	}
@@ -703,6 +717,107 @@ static void quo_init_window_windows(quo_Window* window, int w, int h, bool resiz
 
 	if (!(window->render_context = wglCreateContext(window->device_context))) { return; }
 	wglMakeCurrent(window->device_context, window->render_context);
+
+	quo_init_input_table(&window->key_map);
+	quo_insert_input_table(&window->key_map, 0x00, QUO_KEY_UNKNOWN);
+	quo_insert_input_table(&window->key_map, 0x41, QUO_KEY_A);
+	quo_insert_input_table(&window->key_map, 0x42, QUO_KEY_B);
+	quo_insert_input_table(&window->key_map, 0x43, QUO_KEY_C);
+	quo_insert_input_table(&window->key_map, 0x44, QUO_KEY_D);
+	quo_insert_input_table(&window->key_map, 0x45, QUO_KEY_E);
+	quo_insert_input_table(&window->key_map, 0x46, QUO_KEY_F);
+	quo_insert_input_table(&window->key_map, 0x47, QUO_KEY_G);
+	quo_insert_input_table(&window->key_map, 0x48, QUO_KEY_H);
+	quo_insert_input_table(&window->key_map, 0x49, QUO_KEY_I);
+	quo_insert_input_table(&window->key_map, 0x4A, QUO_KEY_J);
+	quo_insert_input_table(&window->key_map, 0x4B, QUO_KEY_K);
+	quo_insert_input_table(&window->key_map, 0x4C, QUO_KEY_L);
+	quo_insert_input_table(&window->key_map, 0x4D, QUO_KEY_M);
+	quo_insert_input_table(&window->key_map, 0x4E, QUO_KEY_N);
+	quo_insert_input_table(&window->key_map, 0x4F, QUO_KEY_O);
+	quo_insert_input_table(&window->key_map, 0x50, QUO_KEY_P);
+	quo_insert_input_table(&window->key_map, 0x51, QUO_KEY_Q);
+	quo_insert_input_table(&window->key_map, 0x52, QUO_KEY_R);
+	quo_insert_input_table(&window->key_map, 0x53, QUO_KEY_S);
+	quo_insert_input_table(&window->key_map, 0x54, QUO_KEY_T);
+	quo_insert_input_table(&window->key_map, 0x55, QUO_KEY_U);
+	quo_insert_input_table(&window->key_map, 0x56, QUO_KEY_V);
+	quo_insert_input_table(&window->key_map, 0x57, QUO_KEY_W);
+	quo_insert_input_table(&window->key_map, 0x58, QUO_KEY_X);
+	quo_insert_input_table(&window->key_map, 0x59, QUO_KEY_Y);
+	quo_insert_input_table(&window->key_map, 0x5A, QUO_KEY_Z);
+
+	/* Function keys */
+	quo_insert_input_table(&window->key_map, VK_F1, QUO_KEY_F1);
+	quo_insert_input_table(&window->key_map, VK_F2, QUO_KEY_F2);
+	quo_insert_input_table(&window->key_map, VK_F3, QUO_KEY_F3);
+	quo_insert_input_table(&window->key_map, VK_F4, QUO_KEY_F4);
+	quo_insert_input_table(&window->key_map, VK_F5, QUO_KEY_F5);
+	quo_insert_input_table(&window->key_map, VK_F6, QUO_KEY_F6);
+	quo_insert_input_table(&window->key_map, VK_F7, QUO_KEY_F7);
+	quo_insert_input_table(&window->key_map, VK_F8, QUO_KEY_F8);
+	quo_insert_input_table(&window->key_map, VK_F9, QUO_KEY_F9);
+	quo_insert_input_table(&window->key_map, VK_F10, QUO_KEY_F10);
+	quo_insert_input_table(&window->key_map, VK_F11, QUO_KEY_F11);
+	quo_insert_input_table(&window->key_map, VK_F12, QUO_KEY_F12);
+
+	/* Navigation */
+	quo_insert_input_table(&window->key_map, VK_DOWN, QUO_KEY_DOWN);
+	quo_insert_input_table(&window->key_map, VK_LEFT, QUO_KEY_LEFT);
+	quo_insert_input_table(&window->key_map, VK_RIGHT, QUO_KEY_RIGHT);
+	quo_insert_input_table(&window->key_map, VK_UP, QUO_KEY_UP);
+	quo_insert_input_table(&window->key_map, VK_ESCAPE, QUO_KEY_ESCAPE);
+
+	/* General navigation & editing */
+	quo_insert_input_table(&window->key_map, VK_ESCAPE, QUO_KEY_ESCAPE);
+	quo_insert_input_table(&window->key_map, VK_RETURN, QUO_KEY_ENTER);
+	quo_insert_input_table(&window->key_map, VK_BACK, QUO_KEY_BACKSPACE);
+	quo_insert_input_table(&window->key_map, VK_PAUSE, QUO_KEY_PAUSE);
+	quo_insert_input_table(&window->key_map, VK_SCROLL, QUO_KEY_SCROLL_LOCK);
+	quo_insert_input_table(&window->key_map, VK_TAB, QUO_KEY_TAB);
+	quo_insert_input_table(&window->key_map, VK_DELETE, QUO_KEY_DELETE);
+	quo_insert_input_table(&window->key_map, VK_HOME, QUO_KEY_HOME);
+	quo_insert_input_table(&window->key_map, VK_END, QUO_KEY_END);
+	quo_insert_input_table(&window->key_map, VK_PRIOR, QUO_KEY_PAGE_UP);
+	quo_insert_input_table(&window->key_map, VK_NEXT, QUO_KEY_PAGE_DOWN);
+	quo_insert_input_table(&window->key_map, VK_INSERT, QUO_KEY_INSERT);
+	quo_insert_input_table(&window->key_map, VK_SHIFT, QUO_KEY_LEFT_SHIFT);
+	quo_insert_input_table(&window->key_map, VK_CONTROL, QUO_KEY_LEFT_CONTROL);
+	quo_insert_input_table(&window->key_map, VK_SPACE, QUO_KEY_SPACE);
+	quo_insert_input_table(&window->key_map, VK_OEM_PERIOD, QUO_KEY_PERIOD);
+	quo_insert_input_table(&window->key_map, VK_OEM_COMMA, QUO_KEY_COMMA);
+	quo_insert_input_table(&window->key_map, VK_OEM_3, QUO_KEY_GRAVE_ACCENT);
+
+	/* Number keys */
+	quo_insert_input_table(&window->key_map, 0x30, QUO_KEY_0);
+	quo_insert_input_table(&window->key_map, 0x31, QUO_KEY_1);
+	quo_insert_input_table(&window->key_map, 0x32, QUO_KEY_2);
+	quo_insert_input_table(&window->key_map, 0x33, QUO_KEY_3);
+	quo_insert_input_table(&window->key_map, 0x34, QUO_KEY_4);
+	quo_insert_input_table(&window->key_map, 0x35, QUO_KEY_5);
+	quo_insert_input_table(&window->key_map, 0x36, QUO_KEY_6);
+	quo_insert_input_table(&window->key_map, 0x37, QUO_KEY_7);
+	quo_insert_input_table(&window->key_map, 0x38, QUO_KEY_8);
+	quo_insert_input_table(&window->key_map, 0x39, QUO_KEY_9);
+
+	/* Numpad keys */
+	quo_insert_input_table(&window->key_map, VK_NUMPAD0, QUO_KEY_NP_0);
+	quo_insert_input_table(&window->key_map, VK_NUMPAD1, QUO_KEY_NP_1);
+	quo_insert_input_table(&window->key_map, VK_NUMPAD2, QUO_KEY_NP_2);
+	quo_insert_input_table(&window->key_map, VK_NUMPAD3, QUO_KEY_NP_3);
+	quo_insert_input_table(&window->key_map, VK_NUMPAD4, QUO_KEY_NP_4);
+	quo_insert_input_table(&window->key_map, VK_NUMPAD5, QUO_KEY_NP_5);
+	quo_insert_input_table(&window->key_map, VK_NUMPAD6, QUO_KEY_NP_6);
+	quo_insert_input_table(&window->key_map, VK_NUMPAD7, QUO_KEY_NP_7);
+	quo_insert_input_table(&window->key_map, VK_NUMPAD8, QUO_KEY_NP_8);
+	quo_insert_input_table(&window->key_map, VK_NUMPAD9, QUO_KEY_NP_9);
+	quo_insert_input_table(&window->key_map, VK_MULTIPLY, QUO_KEY_NP_MULTIPLY);
+	quo_insert_input_table(&window->key_map, VK_ADD, QUO_KEY_NP_ADD);
+	quo_insert_input_table(&window->key_map, VK_DIVIDE, QUO_KEY_NP_DIVIDE);
+	quo_insert_input_table(&window->key_map, VK_SUBTRACT, QUO_KEY_NP_SUBTRACT);
+	quo_insert_input_table(&window->key_map, VK_DECIMAL, QUO_KEY_NP_DECIMAL);
+
+	quo_insert_input_table(&window->key_map, VK_CAPITAL, QUO_KEY_CAPS_LOCK);
 }
 
 static void quo_update_window_windows(quo_Window* window) {
@@ -994,6 +1109,8 @@ void quo_free_window(quo_Window* window) {
 #endif
 
 #if defined(QUO_PLATFORM_WINDOWS)
+	PostQuitMessage(0);
+	DestroyWindow(window->hwnd);
 	wglDeleteContext(window->render_context);
 #endif
 }

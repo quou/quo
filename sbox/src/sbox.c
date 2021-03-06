@@ -25,7 +25,7 @@ int main() {
 
 		quo_draw_texture(&renderer, &texture, (quo_Rect){0, 0, 16, 16}, (quo_Rect){100, 100, 50, 50}, 0xeb4034);
 
-		if (quo_key_pressed(QUO_KEY_SPACE)) {
+		if (quo_key_just_released(QUO_KEY_SPACE)) {
 			printf("hi\n");
 		}
 
