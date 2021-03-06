@@ -1,11 +1,12 @@
 #pragma once
 
+/* Make sure it works with C++, too */
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Standard includes */
 #include <stdbool.h>
-
-/* We can't know for sure how many keys the platform offers,
- * 2048 should be enough... Better than a heap allocation */
-#define QUO_MAX_KEY_COUNT 2048
 
 /* Keys */
 #define QUO_KEY_UNKNOWN            -1
@@ -1763,3 +1764,8 @@ void i_quo_set_key_up_state(int key, bool status) {
  * -----------------------*/
 
 #endif
+
+#ifdef __cplusplus
+}
+#endif
+
