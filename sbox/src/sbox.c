@@ -10,6 +10,8 @@ int main() {
 	quo_BitmapImage image;
 	quo_load_bitmap_from_file("res/smiley.bmp", &image, 3);
 
+	printf("%d, %d\n", image.width, image.height);
+
 	quo_Texture texture;
 	quo_init_texture_from_bmp(&image, &texture);
 
@@ -23,7 +25,7 @@ int main() {
 
 		quo_clear_renderer(0x000000);
 
-		quo_draw_texture(&renderer, &texture, (quo_Rect){0, 0, 16, 16}, (quo_Rect){100, 100, 50, 50}, 0xeb4034);
+		quo_draw_texture(&renderer, &texture, (quo_Rect){0, 0, texture.width, texture.height}, (quo_Rect){100, 100, 50, 50}, 0xffffff);
 
 		if (quo_key_just_released(QUO_KEY_SPACE)) {
 			printf("hi\n");
