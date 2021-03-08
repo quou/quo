@@ -10,10 +10,8 @@ int main() {
 	quo_BitmapImage image;
 	quo_load_bitmap_from_file("res/smiley.bmp", &image, 3);
 
-	printf("%d, %d\n", image.width, image.height);
-
 	quo_Texture texture;
-	quo_init_texture_from_bmp(&image, &texture);
+	quo_init_texture_from_bmp(&texture, &image);
 
 	quo_free_bitmap(&image);
 

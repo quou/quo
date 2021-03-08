@@ -7,6 +7,8 @@ project "sbox"
 	kind "ConsoleApp"
 	language "C"
 
+	targetdir "bin"
+
 	includedirs {
 		"../quo/"
 	}

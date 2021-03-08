@@ -280,42 +280,6 @@ typedef void CALLSTYLE quo_gl_delete_buffers(unsigned int, unsigned int*);
 typedef void CALLSTYLE quo_gl_active_texture(unsigned int);
 #endif
 
-/* OpenGL functions */
-quo_gl_attach_shader* glAttachShader = NULL;
-quo_gl_bind_buffer* glBindBuffer = NULL;
-quo_gl_bind_vertex_array* glBindVertexArray = NULL;
-quo_gl_buffer_data* glBufferData = NULL;
-quo_gl_compile_shader* glCompileShader = NULL;
-quo_gl_create_program* glCreateProgram = NULL;
-quo_gl_create_shader* glCreateShader = NULL;
-quo_gl_delete_program* glDeleteProgram = NULL;
-quo_gl_delete_shader* glDeleteShader = NULL;
-quo_gl_enable_vertex_attrib_array* glEnableVertexAttribArray = NULL;
-quo_gl_gen_buffers* glGenBuffers = NULL;
-quo_gl_gen_vertex_arrays* glGenVertexArrays = NULL;
-quo_gl_get_program_info_log* glGetProgramInfoLog = NULL;
-quo_gl_get_program_iv* glGetProgramiv = NULL;
-quo_gl_get_shader_info_log* glGetShaderInfoLog = NULL;
-quo_gl_get_shader_iv* glGetShaderiv = NULL;
-quo_gl_get_uniform_location* glGetUniformLocation = NULL;
-quo_gl_link_program* glLinkProgram = NULL;
-quo_gl_shader_source* glShaderSource = NULL;
-quo_gl_uniform_1_f* glUniform1f = NULL;
-quo_gl_uniform_1_i* glUniform1i = NULL;
-quo_gl_uniform_2_f* glUniform2f = NULL;
-quo_gl_uniform_3_f* glUniform3f = NULL;
-quo_gl_uniform_4_f* glUniform4f = NULL;
-quo_gl_uniform_matrix_4_f_v* glUniformMatrix4fv = NULL;
-quo_gl_use_program* glUseProgram = NULL;
-quo_gl_vertex_attrib_pointer* glVertexAttribPointer = NULL;
-quo_gl_delete_buffers* glDeleteBuffers = NULL;
-quo_gl_delete_vertex_arrays* glDeleteVertexArrays = NULL;
-
-#ifdef QUO_PLATFORM_WINDOWS
-/* X11 already defines this, on Windows it has to be done manually */
-quo_gl_active_texture* glActiveTexture = NULL;
-#endif
-
 /* Load all OpenGL functions */
 void quo_load_gl();
 
@@ -462,7 +426,7 @@ typedef struct quo_Texture {
 	unsigned int id;
 } quo_Texture;
 
-void quo_init_texture_from_bmp(quo_BitmapImage* bitmap, quo_Texture* texture);
+void quo_init_texture_from_bmp(quo_Texture* texture, quo_BitmapImage* bitmap);
 void quo_free_texture(quo_Texture* texture);
 void quo_bind_texture(quo_Texture* texture, unsigned int unit);
 void quo_unbind_texture();
@@ -558,6 +522,42 @@ void i_quo_set_key_up_state(int key, bool status);
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
+/* OpenGL functions */
+quo_gl_attach_shader* glAttachShader = NULL;
+quo_gl_bind_buffer* glBindBuffer = NULL;
+quo_gl_bind_vertex_array* glBindVertexArray = NULL;
+quo_gl_buffer_data* glBufferData = NULL;
+quo_gl_compile_shader* glCompileShader = NULL;
+quo_gl_create_program* glCreateProgram = NULL;
+quo_gl_create_shader* glCreateShader = NULL;
+quo_gl_delete_program* glDeleteProgram = NULL;
+quo_gl_delete_shader* glDeleteShader = NULL;
+quo_gl_enable_vertex_attrib_array* glEnableVertexAttribArray = NULL;
+quo_gl_gen_buffers* glGenBuffers = NULL;
+quo_gl_gen_vertex_arrays* glGenVertexArrays = NULL;
+quo_gl_get_program_info_log* glGetProgramInfoLog = NULL;
+quo_gl_get_program_iv* glGetProgramiv = NULL;
+quo_gl_get_shader_info_log* glGetShaderInfoLog = NULL;
+quo_gl_get_shader_iv* glGetShaderiv = NULL;
+quo_gl_get_uniform_location* glGetUniformLocation = NULL;
+quo_gl_link_program* glLinkProgram = NULL;
+quo_gl_shader_source* glShaderSource = NULL;
+quo_gl_uniform_1_f* glUniform1f = NULL;
+quo_gl_uniform_1_i* glUniform1i = NULL;
+quo_gl_uniform_2_f* glUniform2f = NULL;
+quo_gl_uniform_3_f* glUniform3f = NULL;
+quo_gl_uniform_4_f* glUniform4f = NULL;
+quo_gl_uniform_matrix_4_f_v* glUniformMatrix4fv = NULL;
+quo_gl_use_program* glUseProgram = NULL;
+quo_gl_vertex_attrib_pointer* glVertexAttribPointer = NULL;
+quo_gl_delete_buffers* glDeleteBuffers = NULL;
+quo_gl_delete_vertex_arrays* glDeleteVertexArrays = NULL;
+
+#ifdef QUO_PLATFORM_WINDOWS
+/* X11 already defines this, on Windows it has to be done manually */
+quo_gl_active_texture* glActiveTexture = NULL;
+#endif
 
 void quo_load_gl() {
 	glAttachShader = QUO_LOAD_GL_FUNC(quo_gl_attach_shader, "glAttachShader");
@@ -1414,7 +1414,7 @@ void quo_free_bitmap(quo_BitmapImage* image) {
 }
 
 
-void quo_init_texture_from_bmp(quo_BitmapImage* bitmap, quo_Texture* texture) {
+void quo_init_texture_from_bmp(quo_Texture* texture, quo_BitmapImage* bitmap) {
 	assert(texture != NULL);
 	assert(bitmap != NULL);
 
@@ -1475,8 +1475,11 @@ static const char* g_quad_shader_vertex = "#version 330 core\n"
 "vec2 texPos = vertex.zw;\n"
 	"float widthPixel = 1.0f / image_size.x;\n"
 	"float heightPixel = 1.0f / image_size.y;\n"
+
 	"float startX = source_rect.x, startY = source_rect.y, width = source_rect.z, height = source_rect.w;\n"
+
 	"uv = vec2(widthPixel * startX + width * widthPixel * texPos.x, heightPixel * startY + height * heightPixel * texPos.y);\n"
+
 	"gl_Position = projection * view * model * vec4(vertex.xy, 0.0, 1.0);\n"
 "}\n";
 
@@ -1548,6 +1551,8 @@ void quo_init_renderer(quo_Renderer* renderer, quo_Window* window) {
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), NULL);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+
+	quo_bind_shader(renderer, renderer->sprite_shader);
 }
 
 void quo_update_renderer(quo_Renderer* renderer) {
@@ -1563,8 +1568,6 @@ void quo_draw_rect(quo_Renderer* renderer, quo_Rect rect, unsigned long color) {
 	quo_Matrix model = quo_identity();
 	model = quo_translate(model, (quo_vec3){rect.x, rect.y, 0});
 	model = quo_scale(model, (quo_vec3){rect.w, rect.h, 1});
-
-	quo_bind_shader(renderer, renderer->sprite_shader);
 
 	quo_shader_set_matrix(renderer, renderer->sprite_shader, "model", model);
 	quo_shader_set_matrix(renderer, renderer->sprite_shader, "projection", renderer->projection);
@@ -1583,8 +1586,6 @@ void quo_draw_texture(quo_Renderer* renderer, quo_Texture* texture, quo_Rect src
 	quo_Matrix model = quo_identity();
 	model = quo_translate(model, (quo_vec3){dest.x, dest.y, 0});
 	model = quo_scale(model, (quo_vec3){dest.w, dest.h, 1});
-
-	quo_bind_shader(renderer, renderer->sprite_shader);
 
 	quo_shader_set_matrix(renderer, renderer->sprite_shader, "model", model);
 	quo_shader_set_matrix(renderer, renderer->sprite_shader, "projection", renderer->projection);
