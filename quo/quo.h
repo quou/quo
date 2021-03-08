@@ -310,6 +310,7 @@ typedef struct quo_Window {
 	quo_GLRenderContext render_context;
 
 	bool is_open;
+	bool is_focused;
 	int width, height;
 
 	double frame_time;
@@ -667,7 +668,7 @@ static LRESULT CALLBACK quo_win32_event_callback(HWND hwnd, UINT msg, WPARAM wpa
 				return 0;
 			}
 		case WM_KEYDOWN: {
-			if (q_window) {
+			if (q_window && q_window->is_focused) {
 				int key = quo_search_input_table(&q_window->key_map, wparam);
 				i_quo_set_key_held_state(key, true);
 				i_quo_set_key_down_state(key, true);
@@ -675,13 +676,23 @@ static LRESULT CALLBACK quo_win32_event_callback(HWND hwnd, UINT msg, WPARAM wpa
 			return 0;
 		}
 		case WM_KEYUP: {
-			if (q_window) {
+			if (q_window && q_window->is_focused) {
 				int key = quo_search_input_table(&q_window->key_map, wparam);
 				i_quo_set_key_held_state(key, false);
 				i_quo_set_key_up_state(key, true);
 			}
 			return 0;
 		}
+		case WM_SETFOCUS:
+			if (q_window) {
+				q_window->is_focused = true;
+			}
+			return 0;
+		case WM_KILLFOCUS:
+			if (q_window) {
+				q_window->is_focused = false;
+			}
+			return 0;
 		default:
 			break;
 	}
@@ -860,6 +871,8 @@ static void quo_update_window_events_windows(quo_Window* window) {
 
 #ifdef QUO_PLATFORM_X11
 static void quo_init_window_x11(quo_Window* window, int w, int h, bool resizable) {
+	window->is_focused = true;
+
 	window->display = XOpenDisplay(NULL);
 	window->window_root = DefaultRootWindow(window->display);
 
@@ -1034,17 +1047,25 @@ static void quo_update_window_events_x11(quo_Window* window) {
 			window->width = gwa.width;
 			window->height = gwa.height;
 		} else if (e.type == KeyPress) {
-			KeySym sym = XLookupKeysym(&e.xkey, 0);
+			if (window->is_focused) {
+				KeySym sym = XLookupKeysym(&e.xkey, 0);
 
-			int key = quo_search_input_table(&window->key_map, sym);
-			i_quo_set_key_held_state(key, true);
-			i_quo_set_key_down_state(key, true);
+				int key = quo_search_input_table(&window->key_map, sym);
+				i_quo_set_key_held_state(key, true);
+				i_quo_set_key_down_state(key, true);
+			}
 		} else if (e.type == KeyRelease) {
-			KeySym sym = XLookupKeysym(&e.xkey, 0);
+			if (window->is_focused) {
+				KeySym sym = XLookupKeysym(&e.xkey, 0);
 
-			int key = quo_search_input_table(&window->key_map, sym);
-			i_quo_set_key_held_state(key, false);
-			i_quo_set_key_up_state(key, true);
+				int key = quo_search_input_table(&window->key_map, sym);
+				i_quo_set_key_held_state(key, false);
+				i_quo_set_key_up_state(key, true);
+			}
+		} else if (e.type == FocusIn) {
+			window->is_focused = true;
+		} else if (e.type == FocusOut) {
+			window->is_focused = false;
 		}
 	}
 }
