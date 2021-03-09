@@ -20,7 +20,8 @@ project "sbox"
 	links {
  		"GL",
  		"X11",
-		"m"
+ 		"m",
+ 		"asound"
 	}
 
 	filter "configurations:debug"
