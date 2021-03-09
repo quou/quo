@@ -25,6 +25,10 @@ int main() {
 
 		quo_draw_texture(&renderer, &texture, (quo_Rect){0, 0, 13, 13}, (quo_Rect){100, 100, 50, 50}, 0xffffff);
 
+		if (quo_mouse_button_just_pressed(QUO_MOUSE_BUTTON_LEFT)) {
+			printf("%d, %d\n", quo_get_mouse_x(), quo_get_mouse_y());
+		}
+
 		quo_update_renderer(&renderer);
 		quo_update_window(&window);
 	}

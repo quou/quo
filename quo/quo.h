@@ -682,18 +682,17 @@ static LRESULT CALLBACK quo_win32_event_callback(HWND hwnd, UINT msg, WPARAM wpa
 	LONG_PTR lpUserData = GetWindowLongPtr(hwnd, GWLP_USERDATA);
 	quo_Window* q_window = (quo_Window*)lpUserData;
 
-	switch (msg) {
+	if (q_window) {
+		switch (msg) {
 		case WM_DESTROY:
 			q_window->is_open = false;
 			return 0;
 		case WM_SIZE:
-			if (q_window) {
 				q_window->width = lparam & 0xFFFF;
 				q_window->height = (lparam >> 16) & 0xFFFF;
 				return 0;
-			}
 		case WM_KEYDOWN: {
-			if (q_window && q_window->is_focused) {
+			if (q_window->is_focused) {
 				int key = quo_search_input_table(&q_window->key_map, wparam);
 				i_quo_set_key_held_state(key, true);
 				i_quo_set_key_down_state(key, true);
@@ -701,7 +700,7 @@ static LRESULT CALLBACK quo_win32_event_callback(HWND hwnd, UINT msg, WPARAM wpa
 			return 0;
 		}
 		case WM_KEYUP: {
-			if (q_window && q_window->is_focused) {
+			if (q_window->is_focused) {
 				int key = quo_search_input_table(&q_window->key_map, wparam);
 				i_quo_set_key_held_state(key, false);
 				i_quo_set_key_up_state(key, true);
@@ -709,17 +708,56 @@ static LRESULT CALLBACK quo_win32_event_callback(HWND hwnd, UINT msg, WPARAM wpa
 			return 0;
 		}
 		case WM_SETFOCUS:
-			if (q_window) {
-				q_window->is_focused = true;
-			}
+			q_window->is_focused = true;
 			return 0;
 		case WM_KILLFOCUS:
-			if (q_window) {
-				q_window->is_focused = false;
+			q_window->is_focused = false;
+			return 0;
+		case WM_LBUTTONDOWN: 
+			if (q_window->is_focused) {
+				i_quo_set_mouse_button_held_state(QUO_MOUSE_BUTTON_1, true);
+				i_quo_set_mouse_button_down_state(QUO_MOUSE_BUTTON_1, true);
+			}
+			return 0;
+		case WM_MBUTTONDOWN:
+			if (q_window->is_focused) {
+				i_quo_set_mouse_button_held_state(QUO_MOUSE_BUTTON_2, true);
+				i_quo_set_mouse_button_down_state(QUO_MOUSE_BUTTON_2, true);
+			}
+			return 0;
+		case WM_RBUTTONDOWN:
+			if (q_window->is_focused) {
+				i_quo_set_mouse_button_held_state(QUO_MOUSE_BUTTON_3, true);
+				i_quo_set_mouse_button_down_state(QUO_MOUSE_BUTTON_3, true);
+			}
+			return 0;
+		case WM_LBUTTONUP:
+			if (q_window->is_focused) {
+				i_quo_set_mouse_button_held_state(QUO_MOUSE_BUTTON_1, false);
+				i_quo_set_mouse_button_up_state(QUO_MOUSE_BUTTON_1, true);
+			}
+			return 0;
+		case WM_MBUTTONUP:
+			if (q_window->is_focused) {
+				i_quo_set_mouse_button_held_state(QUO_MOUSE_BUTTON_2, false);
+				i_quo_set_mouse_button_up_state(QUO_MOUSE_BUTTON_2, true);
+			}
+			return 0;
+		case WM_RBUTTONUP:
+			if (q_window->is_focused) {
+				i_quo_set_mouse_button_held_state(QUO_MOUSE_BUTTON_3, false);
+				i_quo_set_mouse_button_up_state(QUO_MOUSE_BUTTON_3, true);
+			}
+			return 0;
+		case WM_MOUSEMOVE:
+			if (q_window->is_focused) {
+				unsigned int x = lparam & 0xFFFF; unsigned int y = (lparam >> 16) & 0xFFFF;
+				i_quo_update_mouse_pos(x, y);
 			}
 			return 0;
 		default:
 			break;
+		}
 	}
 
 	return DefWindowProc(hwnd, msg, wparam, lparam);
