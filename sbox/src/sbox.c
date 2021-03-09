@@ -25,10 +25,6 @@ int main() {
 
 		quo_draw_texture(&renderer, &texture, (quo_Rect){0, 0, 13, 13}, (quo_Rect){100, 100, 50, 50}, 0xffffff);
 
-		if (quo_key_just_released(QUO_KEY_SPACE)) {
-			printf("hi\n");
-		}
-
 		quo_update_renderer(&renderer);
 		quo_update_window(&window);
 	}

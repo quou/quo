@@ -155,6 +155,19 @@ extern "C" {
 #define QUO_KEY_MENU               348
 #define QUO_KEY_COUNT              QUO_KEY_MENU
 
+#define QUO_MOUSE_BUTTON_1          0
+#define QUO_MOUSE_BUTTON_3          2
+#define QUO_MOUSE_BUTTON_2          1
+#define QUO_MOUSE_BUTTON_4          3
+#define QUO_MOUSE_BUTTON_5          4
+#define QUO_MOUSE_BUTTON_6          5
+#define QUO_MOUSE_BUTTON_7          6
+#define QUO_MOUSE_BUTTON_8          7
+#define QUO_MOUSE_BUTTON_COUNT      QUO_MOUSE_BUTTON_8
+#define QUO_MOUSE_BUTTON_LEFT       QUO_MOUSE_BUTTON_1
+#define QUO_MOUSE_BUTTON_RIGHT      QUO_MOUSE_BUTTON_2
+#define QUO_MOUSE_BUTTON_MIDDLE     QUO_MOUSE_BUTTON_3
+
 /* Windows */
 #if defined(_WIN32)
 #define QUO_PLATFORM_WINDOWS
@@ -167,10 +180,10 @@ extern "C" {
 
 /* Platform-specific includes */
 #if defined(QUO_PLATFORM_X11)
+/* Graphics */
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <GL/glx.h>
-#include <GL/gl.h>
 #endif
 
 #if defined(QUO_PLATFORM_WINDOWS)
@@ -200,8 +213,9 @@ typedef HGLRC quo_GLRenderContext;
 
 #define CALLSTYLE __stdcall
 #define QUO_LOAD_GL_FUNC(t, n) (t*)wglGetProcAddress(n)
+#endif
 
-/* X11 already defines these, we have to do it manually on Windows */
+/* OpenGL defines */
 #define GL_VERTEX_SHADER 0x8B31
 #define GL_COMPILE_STATUS 0x8B81
 #define GL_LINK_STATUS 0x8B82
@@ -242,7 +256,6 @@ typedef HGLRC quo_GLRenderContext;
 #define GL_TEXTURE29 0x84DD
 #define GL_TEXTURE30 0x84DE
 #define GL_TEXTURE31 0x84DF
-#endif
 
 /* GL load types */
 typedef int CALLSTYLE quo_gl_get_uniform_location(unsigned int, const char*);
@@ -274,11 +287,7 @@ typedef void CALLSTYLE quo_gl_use_program(unsigned int);
 typedef void CALLSTYLE quo_gl_vertex_attrib_pointer(unsigned int, int, unsigned int, bool, int, const void*);
 typedef void CALLSTYLE quo_gl_delete_vertex_arrays(unsigned int, unsigned int*);
 typedef void CALLSTYLE quo_gl_delete_buffers(unsigned int, unsigned int*);
-
-#ifdef QUO_PLATFORM_WINDOWS
-/* X11 already defines this, on Windows it has to be done manually */
 typedef void CALLSTYLE quo_gl_active_texture(unsigned int);
-#endif
 
 /* Load all OpenGL functions */
 void quo_load_gl();
@@ -486,6 +495,12 @@ typedef struct quo_InputSystem {
 	bool held_keys[QUO_KEY_COUNT];
 	bool down_keys[QUO_KEY_COUNT];
 	bool up_keys[QUO_KEY_COUNT];
+
+	bool held_mouse_buttons[QUO_MOUSE_BUTTON_COUNT];
+	bool down_mouse_buttons[QUO_MOUSE_BUTTON_COUNT];
+	bool up_mouse_buttons[QUO_MOUSE_BUTTON_COUNT];
+
+	int mouse_x, mouse_y;
 } quo_InputSystem;
 
 void quo_init_input_system();
@@ -495,15 +510,25 @@ bool quo_key_pressed(int key);
 bool quo_key_just_pressed(int key);
 bool quo_key_just_released(int key);
 
+bool quo_mouse_button_pressed(int button);
+bool quo_mouse_button_just_pressed(int button);
+bool quo_mouse_button_just_released(int button);
+
+int quo_get_mouse_x();
+int quo_get_mouse_y();
+
 /* For internal use only */
 void i_quo_set_key_held_state(int key, bool status);
 void i_quo_set_key_down_state(int key, bool status);
 void i_quo_set_key_up_state(int key, bool status);
+void i_quo_set_mouse_button_held_state(int button, bool status);
+void i_quo_set_mouse_button_down_state(int button, bool status);
+void i_quo_set_mouse_button_up_state(int button, bool status);
+void i_quo_update_mouse_pos(int x, int y);
 
 /* -----------------------
  * END INPUT
  * -----------------------*/
-
 
 /*  _____                 _                           _        _   _
  * |_   _|               | |                         | |      | | (_)
@@ -1066,6 +1091,42 @@ static void quo_update_window_events_x11(quo_Window* window) {
 			window->is_focused = true;
 		} else if (e.type == FocusOut) {
 			window->is_focused = false;
+		} else if (e.type == ButtonPress) {
+			switch (e.xbutton.button) {
+				case 1:
+					i_quo_set_mouse_button_held_state(QUO_MOUSE_BUTTON_1, true);
+					i_quo_set_mouse_button_down_state(QUO_MOUSE_BUTTON_1, true);
+					break;
+				case 2:
+					i_quo_set_mouse_button_held_state(QUO_MOUSE_BUTTON_2, true);
+					i_quo_set_mouse_button_down_state(QUO_MOUSE_BUTTON_2, true);
+					break;
+				case 3:
+					i_quo_set_mouse_button_held_state(QUO_MOUSE_BUTTON_3, true);
+					i_quo_set_mouse_button_down_state(QUO_MOUSE_BUTTON_3, true);
+					break;
+				default:
+					break;
+			}
+		} else if (e.type == ButtonRelease) {
+			switch (e.xbutton.button) {
+				case 1:
+					i_quo_set_mouse_button_held_state(QUO_MOUSE_BUTTON_1, false);
+					i_quo_set_mouse_button_up_state(QUO_MOUSE_BUTTON_1, true);
+					break;
+				case 2:
+					i_quo_set_mouse_button_held_state(QUO_MOUSE_BUTTON_2, false);
+					i_quo_set_mouse_button_up_state(QUO_MOUSE_BUTTON_2, true);
+					break;
+				case 3:
+					i_quo_set_mouse_button_held_state(QUO_MOUSE_BUTTON_3, false);
+					i_quo_set_mouse_button_up_state(QUO_MOUSE_BUTTON_3, true);
+					break;
+				default:
+					break;
+			}
+		} else if (e.type == MotionNotify) {
+			i_quo_update_mouse_pos(e.xmotion.x, e.xmotion.y);
 		}
 	}
 }
@@ -1151,6 +1212,7 @@ void quo_free_window(quo_Window* window) {
 	XDestroyWindow(window->display, window->window);
 	XCloseDisplay(window->display);
 #endif
+
 
 #if defined(QUO_PLATFORM_WINDOWS)
 	PostQuitMessage(0);
@@ -1772,11 +1834,14 @@ static quo_InputSystem input_system;
 
 void quo_init_input_system() {
 	memset(input_system.held_keys, 0, QUO_KEY_COUNT * sizeof(bool));
+	memset(input_system.held_mouse_buttons, 0, QUO_MOUSE_BUTTON_COUNT * sizeof(bool));
 }
 
 void quo_update_input_system() {
 	memset(input_system.down_keys, 0, QUO_KEY_COUNT * sizeof(bool));
 	memset(input_system.up_keys, 0, QUO_KEY_COUNT * sizeof(bool));
+	memset(input_system.down_mouse_buttons, 0, QUO_MOUSE_BUTTON_COUNT * sizeof(bool));
+	memset(input_system.up_mouse_buttons, 0, QUO_MOUSE_BUTTON_COUNT * sizeof(bool));
 }
 
 bool quo_key_pressed(int key) {
@@ -1791,6 +1856,18 @@ bool quo_key_just_released(int key) {
 	return input_system.up_keys[key];
 }
 
+bool quo_mouse_button_pressed(int button) {
+	return input_system.held_mouse_buttons[button];
+}
+
+bool quo_mouse_button_just_pressed(int button) {
+	return input_system.down_mouse_buttons[button];
+}
+
+bool quo_mouse_button_just_released(int button) {
+	return input_system.up_mouse_buttons[button];
+}
+
 void i_quo_set_key_held_state(int key, bool status) {
 	input_system.held_keys[key] = status;
 }
@@ -1802,6 +1879,26 @@ void i_quo_set_key_down_state(int key, bool status) {
 void i_quo_set_key_up_state(int key, bool status) {
 	input_system.up_keys[key] = status;
 }
+
+void i_quo_set_mouse_button_held_state(int button, bool status) {
+	input_system.held_mouse_buttons[button] = status;
+}
+
+void i_quo_set_mouse_button_down_state(int button, bool status) {
+	input_system.down_mouse_buttons[button] = status;
+}
+
+void i_quo_set_mouse_button_up_state(int button, bool status) {
+	input_system.up_mouse_buttons[button] = status;
+}
+
+void i_quo_update_mouse_pos(int x, int y) {
+	input_system.mouse_x = x;
+	input_system.mouse_y = y;
+}
+
+int quo_get_mouse_x() { return input_system.mouse_x; }
+int quo_get_mouse_y() { return input_system.mouse_y; }
 
 /* -----------------------
  * END INPUT
