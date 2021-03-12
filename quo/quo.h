@@ -25,7 +25,8 @@
  * 	QUO_IMPL
  * in *one* c/cpp file, to provide an implementation.*/
 
-/* COMPLETE EXAMPLE to render a red rectangle on the screen */
+/* COMPLETE EXAMPLE to render a red rectangle on the screen, seen in the
+ * below preprocessor #if */
 #if 0
 #define QUO_IMPL
 #include <quo.h>
@@ -72,8 +73,10 @@ int main() {
 extern "C" {
 #endif
 
-/* Standard includes */
-#include <stdbool.h>
+/* Boolean type */
+typedef char quo_bool;
+#define true 1
+#define false 0
 
 /* Keys */
 #define QUO_KEY_UNKNOWN            -1
@@ -328,9 +331,9 @@ typedef void CALLSTYLE quo_gl_uniform_1_i(int, int);
 typedef void CALLSTYLE quo_gl_uniform_2_f(int, float, float);
 typedef void CALLSTYLE quo_gl_uniform_3_f(int, float, float, float);
 typedef void CALLSTYLE quo_gl_uniform_4_f(int, float, float, float, float);
-typedef void CALLSTYLE quo_gl_uniform_matrix_4_f_v(int, int, bool, float*);
+typedef void CALLSTYLE quo_gl_uniform_matrix_4_f_v(int, int, quo_bool, float*);
 typedef void CALLSTYLE quo_gl_use_program(unsigned int);
-typedef void CALLSTYLE quo_gl_vertex_attrib_pointer(unsigned int, int, unsigned int, bool, int, const void*);
+typedef void CALLSTYLE quo_gl_vertex_attrib_pointer(unsigned int, int, unsigned int, quo_bool, int, const void*);
 typedef void CALLSTYLE quo_gl_delete_vertex_arrays(unsigned int, unsigned int*);
 typedef void CALLSTYLE quo_gl_delete_buffers(unsigned int, unsigned int*);
 typedef void CALLSTYLE quo_gl_active_texture(unsigned int);
@@ -359,13 +362,16 @@ void quo_init_input_table(quo_InputHashTable* table);
 int quo_search_input_table(quo_InputHashTable* table, int key);
 void quo_insert_input_table(quo_InputHashTable* table, int key, int value);
 
+/* Must be called before performing a search on the table */
+void quo_prepare_input_table(quo_InputHashTable* table);
+
 /* Window struct */
 typedef struct quo_Window {
 	quo_GLDeviceContext device_context;
 	quo_GLRenderContext render_context;
 
-	bool is_open;
-	bool is_focused;
+	quo_bool is_open;
+	quo_bool is_focused;
 	int width, height;
 
 	double frame_time;
@@ -391,14 +397,14 @@ typedef struct quo_Window {
 } quo_Window;
 
 /* Window management */
-void quo_init_window(quo_Window* window, int w, int h, bool resizable);
+void quo_init_window(quo_Window* window, int w, int h, quo_bool resizable);
 void quo_set_window_title(quo_Window* window, const char* title);
 void quo_update_window(quo_Window* window);
 void quo_update_window_events(quo_Window* window);
 void quo_free_window(quo_Window* window);
 
 /* -----------------------
- * END MATHS
+ * END WINDOW
  * -----------------------*/
 
 /* -----------------------
@@ -473,7 +479,7 @@ typedef struct quo_BitmapImage {
 
 /* Load a bitmap from a file. Returnes true on success.
  * The file must not have a colour space written to it's header. */
-bool quo_load_bitmap_from_file(const char* filename, quo_BitmapImage* image, unsigned int components);
+quo_bool quo_load_bitmap_from_file(const char* filename, quo_BitmapImage* image, unsigned int components);
 void quo_free_bitmap(quo_BitmapImage* image);
 
 /* A GPU texture */
@@ -499,6 +505,9 @@ typedef struct quo_Renderer {
 
 	unsigned int quad_va;
 	unsigned int quad_vb;
+
+	unsigned int line_va;
+	unsigned int line_vb;
 
 	unsigned int shaders[QUO_MAX_SHADERS];
 	unsigned int shader_count;
@@ -538,13 +547,13 @@ void quo_shader_set_vec4(quo_Renderer* renderer, quo_ShaderHandle shader, const 
  * -----------------------*/
 
 typedef struct quo_InputSystem {
-	bool held_keys[QUO_KEY_COUNT];
-	bool down_keys[QUO_KEY_COUNT];
-	bool up_keys[QUO_KEY_COUNT];
+	quo_bool held_keys[QUO_KEY_COUNT];
+	quo_bool down_keys[QUO_KEY_COUNT];
+	quo_bool up_keys[QUO_KEY_COUNT];
 
-	bool held_mouse_buttons[QUO_MOUSE_BUTTON_COUNT];
-	bool down_mouse_buttons[QUO_MOUSE_BUTTON_COUNT];
-	bool up_mouse_buttons[QUO_MOUSE_BUTTON_COUNT];
+	quo_bool held_mouse_buttons[QUO_MOUSE_BUTTON_COUNT];
+	quo_bool down_mouse_buttons[QUO_MOUSE_BUTTON_COUNT];
+	quo_bool up_mouse_buttons[QUO_MOUSE_BUTTON_COUNT];
 
 	int mouse_x, mouse_y;
 } quo_InputSystem;
@@ -552,24 +561,24 @@ typedef struct quo_InputSystem {
 void quo_init_input_system();
 void quo_update_input_system();
 
-bool quo_key_pressed(int key);
-bool quo_key_just_pressed(int key);
-bool quo_key_just_released(int key);
+quo_bool quo_key_pressed(int key);
+quo_bool quo_key_just_pressed(int key);
+quo_bool quo_key_just_released(int key);
 
-bool quo_mouse_button_pressed(int button);
-bool quo_mouse_button_just_pressed(int button);
-bool quo_mouse_button_just_released(int button);
+quo_bool quo_mouse_button_pressed(int button);
+quo_bool quo_mouse_button_just_pressed(int button);
+quo_bool quo_mouse_button_just_released(int button);
 
 int quo_get_mouse_x();
 int quo_get_mouse_y();
 
 /* For internal use only */
-void i_quo_set_key_held_state(int key, bool status);
-void i_quo_set_key_down_state(int key, bool status);
-void i_quo_set_key_up_state(int key, bool status);
-void i_quo_set_mouse_button_held_state(int button, bool status);
-void i_quo_set_mouse_button_down_state(int button, bool status);
-void i_quo_set_mouse_button_up_state(int button, bool status);
+void i_quo_set_key_held_state(int key, quo_bool status);
+void i_quo_set_key_down_state(int key, quo_bool status);
+void i_quo_set_key_up_state(int key, quo_bool status);
+void i_quo_set_mouse_button_held_state(int button, quo_bool status);
+void i_quo_set_mouse_button_down_state(int button, quo_bool status);
+void i_quo_set_mouse_button_up_state(int button, quo_bool status);
 void i_quo_update_mouse_pos(int x, int y);
 
 /* -----------------------
@@ -680,6 +689,11 @@ static int quo_input_hash_code(int key) {
 	return key % QUO_KEY_COUNT;
 }
 
+static int quo_input_table_compare_func(const void* a, const void* b) {
+	return (((quo_InputHashTableItem*)a)->key - ((quo_InputHashTableItem*)b)->key);
+}
+
+
 void quo_init_input_table(quo_InputHashTable* table) {
 	assert(table != NULL);
 
@@ -688,22 +702,37 @@ void quo_init_input_table(quo_InputHashTable* table) {
 	}
 }
 
+void quo_prepare_input_table(quo_InputHashTable* table) {
+	assert(table != NULL);
+
+	qsort(table->hash_array, QUO_KEY_COUNT, sizeof(quo_InputHashTableItem), quo_input_table_compare_func);
+}
+
+
+static int quo_binary_search_input_table(quo_InputHashTable* table, int l, int r, int key) {
+	if (r >= l) {
+		int mid = l + (r - l) / 2;
+
+		if (table->hash_array[mid].key == key) {
+			return mid;
+		}
+
+		if (table->hash_array[mid].key > key) {
+			return quo_binary_search_input_table(table, l, mid - 1, key);
+		}
+
+		return quo_binary_search_input_table(table, mid + 1, r, key);
+	}
+
+	return 0;
+}
+
 int quo_search_input_table(quo_InputHashTable* table, int key) {
 	assert(table != NULL);
 
 	int hash_index = quo_input_hash_code(key);
 
-	while (table->hash_array[hash_index].key != -1) {
-		if (table->hash_array[hash_index].key == key) {
-			return table->hash_array[hash_index].value;
-		}
-
-		hash_index++;
-
-		hash_index %= QUO_KEY_COUNT;
-	}
-
-	return 0;
+	return table->hash_array[quo_binary_search_input_table(table, 0, QUO_KEY_COUNT, key)].value;
 }
 
 void quo_insert_input_table(quo_InputHashTable* table, int key, int value) {
@@ -811,7 +840,7 @@ static LRESULT CALLBACK quo_win32_event_callback(HWND hwnd, UINT msg, WPARAM wpa
 #endif
 
 #ifdef QUO_PLATFORM_WINDOWS
-static void quo_init_window_windows(quo_Window* window, int w, int h, bool resizable) {
+static void quo_init_window_windows(quo_Window* window, int w, int h, quo_bool resizable) {
 	WNDCLASS wc;
 	wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
@@ -979,7 +1008,7 @@ static void quo_update_window_events_windows(quo_Window* window) {
 #endif /* QUO_PLATFORM_WINDOWS */
 
 #ifdef QUO_PLATFORM_X11
-static void quo_init_window_x11(quo_Window* window, int w, int h, bool resizable) {
+static void quo_init_window_x11(quo_Window* window, int w, int h, quo_bool resizable) {
 	window->is_focused = true;
 
 	window->display = XOpenDisplay(NULL);
@@ -1217,7 +1246,7 @@ static void quo_update_window_events_x11(quo_Window* window) {
 
 #endif /* QUO_PLATFORM_X11 */
 
-void quo_init_window(quo_Window* window, int w, int h, bool resizable) {
+void quo_init_window(quo_Window* window, int w, int h, quo_bool resizable) {
 	assert(window != NULL);
 
 	window->is_open = true;
@@ -1232,6 +1261,8 @@ void quo_init_window(quo_Window* window, int w, int h, bool resizable) {
 #if defined(QUO_PLATFORM_WINDOWS)
 	quo_init_window_windows(window, w, h, resizable);
 #endif
+
+	quo_prepare_input_table(&window->key_map);
 
 	quo_load_gl();
 
@@ -1472,7 +1503,7 @@ quo_Matrix quo_perspective(float fov, float aspect, float near_plane, float far_
 #define LOADBMP_RGB  3
 #define LOADBMP_RGBA 4
 
-bool quo_load_bitmap_from_file(const char* filename, quo_BitmapImage* image, unsigned int components) {
+quo_bool quo_load_bitmap_from_file(const char* filename, quo_BitmapImage* image, unsigned int components) {
 	assert(image != NULL);
 
 	FILE *f = fopen(filename, "rb");
@@ -1917,62 +1948,62 @@ void quo_shader_set_vec4(quo_Renderer* renderer, quo_ShaderHandle shader, const 
 static quo_InputSystem input_system;
 
 void quo_init_input_system() {
-	memset(input_system.held_keys, 0, QUO_KEY_COUNT * sizeof(bool));
-	memset(input_system.held_mouse_buttons, 0, QUO_MOUSE_BUTTON_COUNT * sizeof(bool));
+	memset(input_system.held_keys, 0, QUO_KEY_COUNT * sizeof(quo_bool));
+	memset(input_system.held_mouse_buttons, 0, QUO_MOUSE_BUTTON_COUNT * sizeof(quo_bool));
 }
 
 void quo_update_input_system() {
-	memset(input_system.down_keys, 0, QUO_KEY_COUNT * sizeof(bool));
-	memset(input_system.up_keys, 0, QUO_KEY_COUNT * sizeof(bool));
-	memset(input_system.down_mouse_buttons, 0, QUO_MOUSE_BUTTON_COUNT * sizeof(bool));
-	memset(input_system.up_mouse_buttons, 0, QUO_MOUSE_BUTTON_COUNT * sizeof(bool));
+	memset(input_system.down_keys, 0, QUO_KEY_COUNT * sizeof(quo_bool));
+	memset(input_system.up_keys, 0, QUO_KEY_COUNT * sizeof(quo_bool));
+	memset(input_system.down_mouse_buttons, 0, QUO_MOUSE_BUTTON_COUNT * sizeof(quo_bool));
+	memset(input_system.up_mouse_buttons, 0, QUO_MOUSE_BUTTON_COUNT * sizeof(quo_bool));
 }
 
-bool quo_key_pressed(int key) {
+quo_bool quo_key_pressed(int key) {
 	return input_system.held_keys[key];
 }
 
-bool quo_key_just_pressed(int key) {
+quo_bool quo_key_just_pressed(int key) {
 	return input_system.down_keys[key];
 }
 
-bool quo_key_just_released(int key) {
+quo_bool quo_key_just_released(int key) {
 	return input_system.up_keys[key];
 }
 
-bool quo_mouse_button_pressed(int button) {
+quo_bool quo_mouse_button_pressed(int button) {
 	return input_system.held_mouse_buttons[button];
 }
 
-bool quo_mouse_button_just_pressed(int button) {
+quo_bool quo_mouse_button_just_pressed(int button) {
 	return input_system.down_mouse_buttons[button];
 }
 
-bool quo_mouse_button_just_released(int button) {
+quo_bool quo_mouse_button_just_released(int button) {
 	return input_system.up_mouse_buttons[button];
 }
 
-void i_quo_set_key_held_state(int key, bool status) {
+void i_quo_set_key_held_state(int key, quo_bool status) {
 	input_system.held_keys[key] = status;
 }
 
-void i_quo_set_key_down_state(int key, bool status) {
+void i_quo_set_key_down_state(int key, quo_bool status) {
 	input_system.down_keys[key] = status;
 }
 
-void i_quo_set_key_up_state(int key, bool status) {
+void i_quo_set_key_up_state(int key, quo_bool status) {
 	input_system.up_keys[key] = status;
 }
 
-void i_quo_set_mouse_button_held_state(int button, bool status) {
+void i_quo_set_mouse_button_held_state(int button, quo_bool status) {
 	input_system.held_mouse_buttons[button] = status;
 }
 
-void i_quo_set_mouse_button_down_state(int button, bool status) {
+void i_quo_set_mouse_button_down_state(int button, quo_bool status) {
 	input_system.down_mouse_buttons[button] = status;
 }
 
-void i_quo_set_mouse_button_up_state(int button, bool status) {
+void i_quo_set_mouse_button_up_state(int button, quo_bool status) {
 	input_system.up_mouse_buttons[button] = status;
 }
 
@@ -1993,4 +2024,3 @@ int quo_get_mouse_y() { return input_system.mouse_y; }
 #ifdef __cplusplus
 }
 #endif
-
