@@ -9,6 +9,7 @@ This library is standalone, meaning it doesn't depend on anything that doesn't c
  - 2D rendering
  - Basic maths
  - Input
+ - Bare-bones IMGUI
 
 ## Planned Features
  - 3D rendering pipeline
