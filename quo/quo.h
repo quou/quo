@@ -597,7 +597,8 @@ void i_quo_update_mouse_pos(int x, int y);
 #define QUO_IMGUI_ATTRIB_CHARACTER_SIZE 5
 #define QUO_IMGUI_ATTRIB_PADDING 7
 #define QUO_IMGUI_ATTRIB_COL_SIZE 8
-#define QUO_IMGUI_ATTRIB_COUNT 9
+#define QUO_IMGUI_ATTRIB_SCALE 9
+#define QUO_IMGUI_ATTRIB_COUNT 10
 
 typedef struct quo_IMGUIState {
 	int attribs[QUO_IMGUI_ATTRIB_COUNT];
@@ -2077,6 +2078,7 @@ int quo_get_mouse_y() { return input_system.mouse_y; }
 static quo_IMGUIState imgui_state;
 
 static int quo_imgui_draw_text(int x, int y, const char* text) {
+	int scale = imgui_state.attribs[QUO_IMGUI_ATTRIB_SCALE];
 	int char_size = imgui_state.attribs[QUO_IMGUI_ATTRIB_CHARACTER_SIZE];
 	int padding = imgui_state.attribs[QUO_IMGUI_ATTRIB_PADDING];
 
@@ -2086,18 +2088,18 @@ static int quo_imgui_draw_text(int x, int y, const char* text) {
 	int current_y = y;
 	for (unsigned int i = 0; i < strlen(text); i++) {
 		if (text[i] == '\n') {
-			current_y += (char_size) + padding;
-			element_height += (char_size) + padding;
+			current_y += (char_size + padding) * scale;
+			element_height += (char_size + padding) * scale;
 			current_x = x;
 
 			continue;
 		}
 
 		quo_Rect src = imgui_state.font_characters[text[i]];
-		quo_Rect dest = (quo_Rect){current_x, current_y, char_size, char_size};
+		quo_Rect dest = (quo_Rect){current_x, current_y, char_size * scale, char_size * scale};
 		quo_draw_texture(imgui_state.renderer, imgui_state.font_texture, src, dest, imgui_state.attribs[QUO_IMGUI_ATTRIB_TEXT_COLOR]);
 
-		current_x += char_size;
+		current_x += char_size * scale;
 	}
 
 	return element_height;
@@ -2118,6 +2120,7 @@ void quo_imgui_use_default_settings() {
 	imgui_state.attribs[QUO_IMGUI_ATTRIB_TEXT_COLOR] = 0xffffff;
 	imgui_state.attribs[QUO_IMGUI_ATTRIB_PADDING] = 5;
 	imgui_state.attribs[QUO_IMGUI_ATTRIB_COL_SIZE] = 400;
+	imgui_state.attribs[QUO_IMGUI_ATTRIB_SCALE] = 1;
 
 	imgui_state.current_x = imgui_state.attribs[QUO_IMGUI_ATTRIB_PADDING];
 	imgui_state.current_y = imgui_state.attribs[QUO_IMGUI_ATTRIB_PADDING];
@@ -2182,10 +2185,12 @@ void quo_free_imgui() {
 }
 
 static void quo_imgui_update_coords(int element_height, int padding) {
+	int scale = imgui_state.attribs[QUO_IMGUI_ATTRIB_SCALE];
+
 	imgui_state.current_y += element_height + padding;
 	if (imgui_state.current_y >= imgui_state.renderer->window->height + (padding * 2)) {
-		imgui_state.current_x += imgui_state.attribs[QUO_IMGUI_ATTRIB_COL_SIZE];
-		imgui_state.current_y = padding;
+		imgui_state.current_x += imgui_state.attribs[QUO_IMGUI_ATTRIB_COL_SIZE] * scale;
+		imgui_state.current_y = padding * scale;
 	}
 }
 
@@ -2194,9 +2199,10 @@ quo_bool quo_imgui_button(const char* label) {
 	int padding = imgui_state.attribs[QUO_IMGUI_ATTRIB_PADDING];
 	unsigned long background_color = imgui_state.attribs[QUO_IMGUI_ATTRIB_BACKGROUND_COLOR];
 	unsigned long text_color = imgui_state.attribs[QUO_IMGUI_ATTRIB_TEXT_COLOR];
+	int scale = imgui_state.attribs[QUO_IMGUI_ATTRIB_SCALE];
 
-	int element_width = (strlen(label) * char_size) + (padding * 2);
-	int element_height = char_size + (padding * 2);
+	int element_width = ((strlen(label) * char_size) + (padding * 2)) * scale;
+	int element_height = (char_size + (padding * 2)) * scale;
 
 	quo_Rect rect = {imgui_state.current_x, imgui_state.current_y, element_width, element_height};
 
@@ -2209,7 +2215,7 @@ quo_bool quo_imgui_button(const char* label) {
 
 	quo_draw_rect(imgui_state.renderer, rect, background_color);
 
-	quo_imgui_draw_text(imgui_state.current_x + padding, imgui_state.current_y + padding, label);
+	quo_imgui_draw_text(imgui_state.current_x + (padding * scale), imgui_state.current_y + (padding * scale), label);
 
 	quo_imgui_update_coords(element_height, padding);
 
@@ -2224,15 +2230,16 @@ quo_bool quo_imgui_text(const char* text) {
 	int char_size = imgui_state.attribs[QUO_IMGUI_ATTRIB_CHARACTER_SIZE];
 	int padding = imgui_state.attribs[QUO_IMGUI_ATTRIB_PADDING];
 	unsigned long text_color = imgui_state.attribs[QUO_IMGUI_ATTRIB_TEXT_COLOR];
+	int scale = imgui_state.attribs[QUO_IMGUI_ATTRIB_SCALE];
 
 	int element_width = (strlen(text) * char_size) + (padding * 2);
 	int element_height = char_size + (padding * 2);
 
 	quo_Rect rect = {imgui_state.current_x, imgui_state.current_y, element_width, element_height};
 
-	element_height = quo_imgui_draw_text(imgui_state.current_x + padding, imgui_state.current_y + padding, text);
+	element_height = quo_imgui_draw_text(imgui_state.current_x + (padding * scale), imgui_state.current_y + (padding * scale), text);
 
-	quo_imgui_update_coords(element_height, padding);
+	quo_imgui_update_coords(element_height, padding * scale);
 
 	if (mouse_over_rect(rect) && quo_mouse_button_just_released(QUO_MOUSE_BUTTON_LEFT)) {
 		return true;

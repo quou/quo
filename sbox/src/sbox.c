@@ -30,16 +30,15 @@ int main() {
 		quo_draw_texture(&renderer, &texture, (quo_Rect){0, 0, 13, 13}, (quo_Rect){400, 250, 50, 50}, 0xffffff);
 
 		if (quo_imgui_button("Print FPS")) {
-			sprintf(fps_string, "%g\n", window.fps);
+			sprintf(fps_string, "FPS: %g\n", window.fps);
 		}
 
 		quo_imgui_text(fps_string);
 		quo_imgui_text("Hey there. Welcome to Quo, a single-header,\nzero dependency game library written in C.\nThis library is standalone, meaning it doesn't\ndepend on anything that doesn't come with\nthe operating system.");
 
 		if (quo_imgui_button("I'm a button!")) {
-			sprintf(fps_string, "%g\n", window.fps);
+			sprintf(fps_string, "FPS: %g\n", window.fps);
 		}
-
 
 		quo_imgui_end_frame();
 
