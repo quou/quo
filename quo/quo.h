@@ -511,6 +511,8 @@ typedef struct quo_Renderer {
 
 	unsigned int shaders[QUO_MAX_SHADERS];
 	unsigned int shader_count;
+
+	unsigned long background_color;
 } quo_Renderer;
 
 /* Rendering utility */
@@ -708,7 +710,7 @@ void quo_prepare_input_table(quo_InputHashTable* table) {
 	qsort(table->hash_array, QUO_KEY_COUNT, sizeof(quo_InputHashTableItem), quo_input_table_compare_func);
 }
 
-
+/* Recursive binary search */
 static int quo_binary_search_input_table(quo_InputHashTable* table, int l, int r, int key) {
 	if (r >= l) {
 		int mid = l + (r - l) / 2;
@@ -1687,8 +1689,9 @@ static const char* g_quad_shader_fragment = "#version 330 core\n"
 "in vec2 uv;\n"
 
 "uniform vec3 color = vec3(1.0);\n"
+"uniform vec3 background_color = vec3(1.0, 0.0, 1.0);\n"
 "uniform sampler2D tex;\n"
-"uniform bool use_tex = false;"
+"uniform bool use_tex = false;\n"
 
 "void main() {\n"
 	"vec4 tex_color = vec4(1.0f);"
@@ -1696,7 +1699,12 @@ static const char* g_quad_shader_fragment = "#version 330 core\n"
 		"tex_color = texture(tex, uv);\n"
 	"}\n"
 
-	"out_color = tex_color * vec4(color, 1.0);\n"
+	"vec4 final_color = tex_color * vec4(color, 1.0);\n"
+	"if (final_color.xyz == background_color){ \n"
+		"discard;\n"
+	"}\n"
+
+	"out_color = final_color;\n"
 "}\n";
 
 static void check_shader_errors(unsigned int shader) {
@@ -1719,6 +1727,7 @@ void quo_init_renderer(quo_Renderer* renderer, quo_Window* window) {
 
 	renderer->shader_count = 0;
 	renderer->window = window;
+	renderer->background_color = 0xff00ff;
 
 	for (unsigned int i = 0; i < QUO_MAX_SHADERS; i++) {
 		renderer->shaders[i] = 0;
@@ -1788,6 +1797,7 @@ void quo_draw_texture(quo_Renderer* renderer, quo_Texture* texture, quo_Rect src
 	quo_shader_set_matrix(renderer, renderer->sprite_shader, "model", model);
 	quo_shader_set_matrix(renderer, renderer->sprite_shader, "projection", renderer->projection);
 	quo_shader_set_color(renderer, renderer->sprite_shader, "color", color);
+	quo_shader_set_color(renderer, renderer->sprite_shader, "background_color", renderer->background_color);
 	quo_shader_set_int(renderer, renderer->sprite_shader, "use_tex", 1);
 	quo_shader_set_vec2(renderer, renderer->sprite_shader, "image_size", texture->width, texture->height);
 	quo_shader_set_vec4(renderer, renderer->sprite_shader, "source_rect", src.x, src.y, src.w, src.h);

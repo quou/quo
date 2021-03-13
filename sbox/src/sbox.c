@@ -26,7 +26,7 @@ int main() {
 		quo_draw_texture(&renderer, &texture, (quo_Rect){0, 0, 13, 13}, (quo_Rect){100, 100, 50, 50}, 0xffffff);
 
 		if (quo_key_just_pressed(QUO_KEY_SPACE)) {
-			printf("%d, %d\n", quo_get_mouse_x(), quo_get_mouse_y());
+			printf("%g\n", window.fps);
 		}
 
 		quo_update_renderer(&renderer);
