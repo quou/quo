@@ -16,6 +16,13 @@ This library is standalone, meaning it doesn't depend on anything that doesn't c
  - Audio
  - MacOS support (This is going to take a while, as it will mean adding support for Metal as well as OpenGL, since MacOS's OpenGL support is pretty shaky).
 
+## Compiling
+You must `#define QUO_IMPL` in **one** c/cpp file before including the header, to provide an implementation.
+
+On Linux you must link with `libX11`, `libGL`, and `libm` to avoid linking errors.
+
+On Windows with MSVC, linking is done automatically via `#pragma comment`s. On none-MSVC Windows compilers, you must link with `user32.lib`, `gdi32.lib` and `opengl32.lib`.
+
 ## Example Usage
 See a more complete example in the `sbox` folder.
 

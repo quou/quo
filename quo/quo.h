@@ -506,9 +506,6 @@ typedef struct quo_Renderer {
 	unsigned int quad_va;
 	unsigned int quad_vb;
 
-	unsigned int line_va;
-	unsigned int line_vb;
-
 	unsigned int shaders[QUO_MAX_SHADERS];
 	unsigned int shader_count;
 
