@@ -24,6 +24,9 @@ On Linux you must link with `libX11`, `libGL`, and `libm` to avoid linking error
 
 On Windows with MSVC, linking is done automatically via `#pragma comment`s. On none-MSVC Windows compilers, you must link with `user32.lib`, `gdi32.lib` and `opengl32.lib`.
 
+## Legacy mode
+For older computers, you can enable the use of GLSL version 1.3, by `#defining QUO_LEGACY` before including the library.
+
 ## Example Usage
 See a more complete example in the `sbox` folder.
 
