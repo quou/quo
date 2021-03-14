@@ -1703,6 +1703,53 @@ void quo_unbind_texture() {
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
+#ifdef QUO_LEGACY
+static const char* g_quad_shader_vertex = "#version 130\n"
+"attribute vec4 vertex;\n"
+
+"uniform mat4 projection = mat4(1.0);\n"
+"uniform mat4 model = mat4(1.0);\n"
+"uniform mat4 view = mat4(1.0);\n"
+"out vec2 uv;\n"
+
+"uniform vec2 image_size;\n"
+"uniform vec4 source_rect;\n"
+
+"void main() {\n"
+"vec2 texPos = vertex.zw;\n"
+    "float widthPixel = 1.0f / image_size.x;\n"
+    "float heightPixel = 1.0f / image_size.y;\n"
+
+    "float startX = source_rect.x, startY = source_rect.y, width = source_rect.z, height = source_rect.w;\n"
+
+    "uv = vec2(widthPixel * startX + width * widthPixel * texPos.x, heightPixel * startY + height * heightPixel * texPos.y);\n"
+
+    "gl_Position = projection * view * model * vec4(vertex.xy, 0.0, 1.0);\n"
+"}\n";
+
+static const char* g_quad_shader_fragment = "#version 130\n"
+"out vec4 out_color;\n"
+
+"in vec2 uv;\n"
+
+"uniform vec3 color = vec3(1.0);\n"
+"uniform vec3 background_color = vec3(1.0, 0.0, 1.0);\n"
+"uniform sampler2D tex;\n"
+"uniform bool use_tex = false;\n"
+
+"void main() {\n"
+    "vec4 tex_color = vec4(1.0f);"
+    "if (use_tex) {\n"
+        "tex_color = texture(tex, uv);\n"
+    "}\n"
+
+    "if (tex_color.xyz == background_color){\n"
+        "discard;\n"
+    "}\n"
+
+    "out_color = tex_color * vec4(color, 1.0);\n"
+"}\n";
+#else
 static const char* g_quad_shader_vertex = "#version 330 core\n"
 "layout (location = 0) in vec4 vertex;\n"
 
@@ -1748,6 +1795,7 @@ static const char* g_quad_shader_fragment = "#version 330 core\n"
 
 	"out_color = tex_color * vec4(color, 1.0);\n"
 "}\n";
+#endif
 
 static void check_shader_errors(unsigned int shader) {
 	int r;

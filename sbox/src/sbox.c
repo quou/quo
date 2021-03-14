@@ -40,6 +40,10 @@ int main() {
 			sprintf(fps_string, "FPS: %g\n", window.fps);
 		}
 
+		if (quo_key_just_pressed(QUO_KEY_SPACE)) {
+			printf("%g\n", window.fps);
+		}
+
 		quo_imgui_end_frame();
 
 		quo_update_renderer(&renderer);
