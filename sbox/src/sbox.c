@@ -27,7 +27,7 @@ int main() {
 
 		quo_clear_renderer(0x000000);
 
-		quo_draw_texture(&renderer, &texture, (quo_Rect){0, 0, 13, 13}, (quo_Rect){400, 250, 50, 50}, 0xffffff);
+		quo_draw_texture(&renderer, &texture, (quo_Rect){0, 0, 13, 13}, (quo_Rect){100, 100, 50, 50}, 0xffffff);
 
 		if (quo_imgui_button("Print FPS")) {
 			sprintf(fps_string, "FPS: %g\n", window.fps);
@@ -38,10 +38,6 @@ int main() {
 
 		if (quo_imgui_button("I'm a button!")) {
 			sprintf(fps_string, "FPS: %g\n", window.fps);
-		}
-
-		if (quo_key_just_pressed(QUO_KEY_SPACE)) {
-			printf("%g\n", window.fps);
 		}
 
 		quo_imgui_end_frame();

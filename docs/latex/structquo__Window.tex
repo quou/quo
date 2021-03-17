@@ -1,0 +1,107 @@
+\hypertarget{structquo__Window}{}\doxysection{quo\+\_\+\+Window Struct Reference}
+\label{structquo__Window}\index{quo\_Window@{quo\_Window}}
+
+
+Platform window structure. Responsible for storing data about a window\textquotesingle{}s state and it\textquotesingle{}s Open\+GL context.  
+
+
+
+
+{\ttfamily \#include $<$quo.\+h$>$}
+
+
+
+Collaboration diagram for quo\+\_\+\+Window\+:
+% FIG 0
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+quo\+\_\+\+GLDevice\+Context \mbox{\hyperlink{structquo__Window_a2df436e1d1b78d55639470631478cc75}{device\+\_\+context}}
+\item 
+quo\+\_\+\+GLRender\+Context \mbox{\hyperlink{structquo__Window_a456f607e75c5126b4c85468da289e523}{render\+\_\+context}}
+\item 
+quo\+\_\+bool \mbox{\hyperlink{structquo__Window_a2570b1a2b6be07d1644bc1a48fd99480}{is\+\_\+open}}
+\item 
+quo\+\_\+bool \mbox{\hyperlink{structquo__Window_a907673a8c7699116d0d082be260a70e1}{is\+\_\+focused}}
+\item 
+int \mbox{\hyperlink{structquo__Window_a014d023cfc1300cab75f06e504cee746}{width}}
+\item 
+int \mbox{\hyperlink{structquo__Window_a3b712050c6d7a664f7ff0616b495657f}{height}}
+\item 
+double \mbox{\hyperlink{structquo__Window_a3aa42884458f310ef340e83882496af8}{frame\+\_\+time}}
+\item 
+\mbox{\Hypertarget{structquo__Window_a1c8800d6297b914b6be416b729fd6752}\label{structquo__Window_a1c8800d6297b914b6be416b729fd6752}} 
+double {\bfseries now\+\_\+time}
+\item 
+\mbox{\Hypertarget{structquo__Window_abe02c0429e3f38dfcea4f51369aac259}\label{structquo__Window_abe02c0429e3f38dfcea4f51369aac259}} 
+double {\bfseries old\+\_\+time}
+\item 
+double \mbox{\hyperlink{structquo__Window_a4abcd5615302a19215da1bf3c022c686}{fps}}
+\item 
+\mbox{\hyperlink{structquo__InputHashTable}{quo\+\_\+\+Input\+Hash\+Table}} \mbox{\hyperlink{structquo__Window_ad5cbc39decef67e1e92c5044472ca45c}{key\+\_\+map}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Platform window structure. Responsible for storing data about a window\textquotesingle{}s state and it\textquotesingle{}s Open\+GL context. 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{structquo__Window_a2df436e1d1b78d55639470631478cc75}\label{structquo__Window_a2df436e1d1b78d55639470631478cc75}} 
+\index{quo\_Window@{quo\_Window}!device\_context@{device\_context}}
+\index{device\_context@{device\_context}!quo\_Window@{quo\_Window}}
+\doxysubsubsection{\texorpdfstring{device\_context}{device\_context}}
+{\footnotesize\ttfamily quo\+\_\+\+GLDevice\+Context quo\+\_\+\+Window\+::device\+\_\+context}
+
+Platform Open\+GL device context \mbox{\Hypertarget{structquo__Window_a4abcd5615302a19215da1bf3c022c686}\label{structquo__Window_a4abcd5615302a19215da1bf3c022c686}} 
+\index{quo\_Window@{quo\_Window}!fps@{fps}}
+\index{fps@{fps}!quo\_Window@{quo\_Window}}
+\doxysubsubsection{\texorpdfstring{fps}{fps}}
+{\footnotesize\ttfamily double quo\+\_\+\+Window\+::fps}
+
+Stores the FPS of the window \mbox{\Hypertarget{structquo__Window_a3aa42884458f310ef340e83882496af8}\label{structquo__Window_a3aa42884458f310ef340e83882496af8}} 
+\index{quo\_Window@{quo\_Window}!frame\_time@{frame\_time}}
+\index{frame\_time@{frame\_time}!quo\_Window@{quo\_Window}}
+\doxysubsubsection{\texorpdfstring{frame\_time}{frame\_time}}
+{\footnotesize\ttfamily double quo\+\_\+\+Window\+::frame\+\_\+time}
+
+Stores the time since the last frame. \mbox{\Hypertarget{structquo__Window_a3b712050c6d7a664f7ff0616b495657f}\label{structquo__Window_a3b712050c6d7a664f7ff0616b495657f}} 
+\index{quo\_Window@{quo\_Window}!height@{height}}
+\index{height@{height}!quo\_Window@{quo\_Window}}
+\doxysubsubsection{\texorpdfstring{height}{height}}
+{\footnotesize\ttfamily int quo\+\_\+\+Window\+::height}
+
+Stores the height of the window. If the window is resizable, then this will be updated on a window resize. \mbox{\Hypertarget{structquo__Window_a907673a8c7699116d0d082be260a70e1}\label{structquo__Window_a907673a8c7699116d0d082be260a70e1}} 
+\index{quo\_Window@{quo\_Window}!is\_focused@{is\_focused}}
+\index{is\_focused@{is\_focused}!quo\_Window@{quo\_Window}}
+\doxysubsubsection{\texorpdfstring{is\_focused}{is\_focused}}
+{\footnotesize\ttfamily quo\+\_\+bool quo\+\_\+\+Window\+::is\+\_\+focused}
+
+Stores whether or not the window is capturing keyboard and mouse input \mbox{\Hypertarget{structquo__Window_a2570b1a2b6be07d1644bc1a48fd99480}\label{structquo__Window_a2570b1a2b6be07d1644bc1a48fd99480}} 
+\index{quo\_Window@{quo\_Window}!is\_open@{is\_open}}
+\index{is\_open@{is\_open}!quo\_Window@{quo\_Window}}
+\doxysubsubsection{\texorpdfstring{is\_open}{is\_open}}
+{\footnotesize\ttfamily quo\+\_\+bool quo\+\_\+\+Window\+::is\+\_\+open}
+
+Initially set to true, when the window is closed, set to false \mbox{\Hypertarget{structquo__Window_ad5cbc39decef67e1e92c5044472ca45c}\label{structquo__Window_ad5cbc39decef67e1e92c5044472ca45c}} 
+\index{quo\_Window@{quo\_Window}!key\_map@{key\_map}}
+\index{key\_map@{key\_map}!quo\_Window@{quo\_Window}}
+\doxysubsubsection{\texorpdfstring{key\_map}{key\_map}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structquo__InputHashTable}{quo\+\_\+\+Input\+Hash\+Table}} quo\+\_\+\+Window\+::key\+\_\+map}
+
+Hash table for mapping platform keys to generic quo keymaps. \mbox{\Hypertarget{structquo__Window_a456f607e75c5126b4c85468da289e523}\label{structquo__Window_a456f607e75c5126b4c85468da289e523}} 
+\index{quo\_Window@{quo\_Window}!render\_context@{render\_context}}
+\index{render\_context@{render\_context}!quo\_Window@{quo\_Window}}
+\doxysubsubsection{\texorpdfstring{render\_context}{render\_context}}
+{\footnotesize\ttfamily quo\+\_\+\+GLRender\+Context quo\+\_\+\+Window\+::render\+\_\+context}
+
+Platform Open\+GL render context \mbox{\Hypertarget{structquo__Window_a014d023cfc1300cab75f06e504cee746}\label{structquo__Window_a014d023cfc1300cab75f06e504cee746}} 
+\index{quo\_Window@{quo\_Window}!width@{width}}
+\index{width@{width}!quo\_Window@{quo\_Window}}
+\doxysubsubsection{\texorpdfstring{width}{width}}
+{\footnotesize\ttfamily int quo\+\_\+\+Window\+::width}
+
+Stores the width of the window. If the window is resizable, then this will be updated on a window resize. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+quo/\mbox{\hyperlink{quo_8h}{quo.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,93 @@
+\hypertarget{structquo__Renderer}{}\doxysection{quo\+\_\+\+Renderer Struct Reference}
+\label{structquo__Renderer}\index{quo\_Renderer@{quo\_Renderer}}
+
+
+Responsible for drawing things to the screen.  
+
+
+
+
+{\ttfamily \#include $<$quo.\+h$>$}
+
+
+
+Collaboration diagram for quo\+\_\+\+Renderer\+:
+% FIG 0
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structquo__Window}{quo\+\_\+\+Window}} $\ast$ \mbox{\hyperlink{structquo__Renderer_a0841daed01a0e3a9af688300ff1ec797}{window}}
+\item 
+\mbox{\hyperlink{structquo__Matrix}{quo\+\_\+\+Matrix}} \mbox{\hyperlink{structquo__Renderer_a5a162bf803fd17b53713d985e3fea0b0}{projection}}
+\item 
+\mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}} \mbox{\hyperlink{structquo__Renderer_a576867c738754cab772e42bdec2f2738}{sprite\+\_\+shader}}
+\item 
+unsigned int \mbox{\hyperlink{structquo__Renderer_a64aa5120630afec63fd598d2e61a2ee9}{quad\+\_\+va}}
+\item 
+unsigned int \mbox{\hyperlink{structquo__Renderer_a52fa39e50ad9131a92d7c6609c1addd0}{quad\+\_\+vb}}
+\item 
+unsigned int \mbox{\hyperlink{structquo__Renderer_a2bbfdd9460f7d595c0be8e7098eafe84}{shaders}} \mbox{[}\mbox{\hyperlink{quo_8h_ac8e3a16bb26617693d2754747854e1a2}{QUO\+\_\+\+MAX\+\_\+\+SHADERS}}\mbox{]}
+\item 
+unsigned int \mbox{\hyperlink{structquo__Renderer_a15ef30176ad5a112b703128e13b26351}{shader\+\_\+count}}
+\item 
+unsigned long \mbox{\hyperlink{structquo__Renderer_a18de1cc37f55ef0d89ba062db5f19c5d}{background\+\_\+color}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Responsible for drawing things to the screen. 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{structquo__Renderer_a18de1cc37f55ef0d89ba062db5f19c5d}\label{structquo__Renderer_a18de1cc37f55ef0d89ba062db5f19c5d}} 
+\index{quo\_Renderer@{quo\_Renderer}!background\_color@{background\_color}}
+\index{background\_color@{background\_color}!quo\_Renderer@{quo\_Renderer}}
+\doxysubsubsection{\texorpdfstring{background\_color}{background\_color}}
+{\footnotesize\ttfamily unsigned long quo\+\_\+\+Renderer\+::background\+\_\+color}
+
+Colour that will be discarded in the fragment shader. Set this to whatever you want to be the \char`\"{}transparent\char`\"{} colour. Can be updated per-\/frame \mbox{\Hypertarget{structquo__Renderer_a5a162bf803fd17b53713d985e3fea0b0}\label{structquo__Renderer_a5a162bf803fd17b53713d985e3fea0b0}} 
+\index{quo\_Renderer@{quo\_Renderer}!projection@{projection}}
+\index{projection@{projection}!quo\_Renderer@{quo\_Renderer}}
+\doxysubsubsection{\texorpdfstring{projection}{projection}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structquo__Matrix}{quo\+\_\+\+Matrix}} quo\+\_\+\+Renderer\+::projection}
+
+Projection matrix used to render sprites \mbox{\Hypertarget{structquo__Renderer_a64aa5120630afec63fd598d2e61a2ee9}\label{structquo__Renderer_a64aa5120630afec63fd598d2e61a2ee9}} 
+\index{quo\_Renderer@{quo\_Renderer}!quad\_va@{quad\_va}}
+\index{quad\_va@{quad\_va}!quo\_Renderer@{quo\_Renderer}}
+\doxysubsubsection{\texorpdfstring{quad\_va}{quad\_va}}
+{\footnotesize\ttfamily unsigned int quo\+\_\+\+Renderer\+::quad\+\_\+va}
+
+Default sprite vertex array \mbox{\Hypertarget{structquo__Renderer_a52fa39e50ad9131a92d7c6609c1addd0}\label{structquo__Renderer_a52fa39e50ad9131a92d7c6609c1addd0}} 
+\index{quo\_Renderer@{quo\_Renderer}!quad\_vb@{quad\_vb}}
+\index{quad\_vb@{quad\_vb}!quo\_Renderer@{quo\_Renderer}}
+\doxysubsubsection{\texorpdfstring{quad\_vb}{quad\_vb}}
+{\footnotesize\ttfamily unsigned int quo\+\_\+\+Renderer\+::quad\+\_\+vb}
+
+Default sprite vertex buffer \mbox{\Hypertarget{structquo__Renderer_a15ef30176ad5a112b703128e13b26351}\label{structquo__Renderer_a15ef30176ad5a112b703128e13b26351}} 
+\index{quo\_Renderer@{quo\_Renderer}!shader\_count@{shader\_count}}
+\index{shader\_count@{shader\_count}!quo\_Renderer@{quo\_Renderer}}
+\doxysubsubsection{\texorpdfstring{shader\_count}{shader\_count}}
+{\footnotesize\ttfamily unsigned int quo\+\_\+\+Renderer\+::shader\+\_\+count}
+
+Stores the current number of shaders \mbox{\Hypertarget{structquo__Renderer_a2bbfdd9460f7d595c0be8e7098eafe84}\label{structquo__Renderer_a2bbfdd9460f7d595c0be8e7098eafe84}} 
+\index{quo\_Renderer@{quo\_Renderer}!shaders@{shaders}}
+\index{shaders@{shaders}!quo\_Renderer@{quo\_Renderer}}
+\doxysubsubsection{\texorpdfstring{shaders}{shaders}}
+{\footnotesize\ttfamily unsigned int quo\+\_\+\+Renderer\+::shaders\mbox{[}\mbox{\hyperlink{quo_8h_ac8e3a16bb26617693d2754747854e1a2}{QUO\+\_\+\+MAX\+\_\+\+SHADERS}}\mbox{]}}
+
+Shader array \mbox{\Hypertarget{structquo__Renderer_a576867c738754cab772e42bdec2f2738}\label{structquo__Renderer_a576867c738754cab772e42bdec2f2738}} 
+\index{quo\_Renderer@{quo\_Renderer}!sprite\_shader@{sprite\_shader}}
+\index{sprite\_shader@{sprite\_shader}!quo\_Renderer@{quo\_Renderer}}
+\doxysubsubsection{\texorpdfstring{sprite\_shader}{sprite\_shader}}
+{\footnotesize\ttfamily \mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}} quo\+\_\+\+Renderer\+::sprite\+\_\+shader}
+
+Default sprite shader \mbox{\Hypertarget{structquo__Renderer_a0841daed01a0e3a9af688300ff1ec797}\label{structquo__Renderer_a0841daed01a0e3a9af688300ff1ec797}} 
+\index{quo\_Renderer@{quo\_Renderer}!window@{window}}
+\index{window@{window}!quo\_Renderer@{quo\_Renderer}}
+\doxysubsubsection{\texorpdfstring{window}{window}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structquo__Window}{quo\+\_\+\+Window}}$\ast$ quo\+\_\+\+Renderer\+::window}
+
+Pointer to window on which this renderer should operate 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+quo/\mbox{\hyperlink{quo_8h}{quo.\+h}}\end{DoxyCompactItemize}
