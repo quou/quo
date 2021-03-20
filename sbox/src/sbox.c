@@ -1,6 +1,9 @@
 #define QUO_IMPL
 #include <quo.h>
 
+
+#include <stdio.h>
+
 int main() {
 	quo_Window window;
 

@@ -1,0 +1,1984 @@
+\hypertarget{quo_8h}{}\doxysection{quo/quo.h File Reference}
+\label{quo_8h}\index{quo/quo.h@{quo/quo.h}}
+
+
+Quo is a single-\/header game library written in C.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+Include dependency graph for quo.\+h\+:
+% FIG 0
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structquo__InputHashTableItem}{quo\+\_\+\+Input\+Hash\+Table\+Item}}
+\begin{DoxyCompactList}\small\item\em \mbox{[}internal use only\mbox{]} Key value pair, for storing system input map items \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structquo__InputHashTable}{quo\+\_\+\+Input\+Hash\+Table}}
+\begin{DoxyCompactList}\small\item\em \mbox{[}internal use only\mbox{]} Hash table for storing keymaps \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structquo__Window}{quo\+\_\+\+Window}}
+\begin{DoxyCompactList}\small\item\em Platform window structure. Responsible for storing data about a window\textquotesingle{}s state and it\textquotesingle{}s Open\+GL context. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}}
+\begin{DoxyCompactList}\small\item\em Generic 2 dimensional vector class. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}}
+\begin{DoxyCompactList}\small\item\em Generic 3 dimensional vector class. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structquo__Matrix}{quo\+\_\+\+Matrix}}
+\begin{DoxyCompactList}\small\item\em Represents a 4x4 float matrix. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structquo__Rect}{quo\+\_\+\+Rect}}
+\begin{DoxyCompactList}\small\item\em Generic rectangle struct. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structquo__BitmapImage}{quo\+\_\+\+Bitmap\+Image}}
+\begin{DoxyCompactList}\small\item\em Represents a bitmap image, containing it\textquotesingle{}s raw pixel data, it\textquotesingle{}s width and height and it\textquotesingle{}s component count. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structquo__Texture}{quo\+\_\+\+Texture}}
+\begin{DoxyCompactList}\small\item\em A texture that lives on the GPU. Should be created from a bitmap image. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}}
+\begin{DoxyCompactList}\small\item\em Responsible for drawing things to the screen. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structquo__InputSystem}{quo\+\_\+\+Input\+System}}
+\begin{DoxyCompactList}\small\item\em Handles keyboard and mouse input. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structquo__IMGUIState}{quo\+\_\+\+IMGUIState}}
+\begin{DoxyCompactList}\small\item\em State for the immediate mode GUI. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}}
+\begin{DoxyCompactList}\small\item\em A buffer for holding generic data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{quo_8h_a41f9c5fb8b08eb5dc3edce4dcb37fee7}\label{quo_8h_a41f9c5fb8b08eb5dc3edce4dcb37fee7}} 
+\#define {\bfseries true}~1
+\item 
+\mbox{\Hypertarget{quo_8h_a65e9886d74aaee76545e83dd09011727}\label{quo_8h_a65e9886d74aaee76545e83dd09011727}} 
+\#define {\bfseries false}~0
+\item 
+\mbox{\Hypertarget{quo_8h_ac97e3f0423a50209055c85c8f9e1380f}\label{quo_8h_ac97e3f0423a50209055c85c8f9e1380f}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+UNKNOWN}~-\/1
+\item 
+\mbox{\Hypertarget{quo_8h_a1963c1d9b924c94fc4f79c69eb52949e}\label{quo_8h_a1963c1d9b924c94fc4f79c69eb52949e}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+SPACE}~32
+\item 
+\mbox{\Hypertarget{quo_8h_a0156b5a17bd6fd2bb16112549a289f34}\label{quo_8h_a0156b5a17bd6fd2bb16112549a289f34}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+APOSTROPHE}~39  /$\ast$ \textquotesingle{} $\ast$/
+\item 
+\mbox{\Hypertarget{quo_8h_a301d0ad17c05be97f08be765e7c50b5e}\label{quo_8h_a301d0ad17c05be97f08be765e7c50b5e}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+COMMA}~44  /$\ast$ , $\ast$/
+\item 
+\mbox{\Hypertarget{quo_8h_aae8e60d24ad5bac01bc00fbb148d9eb5}\label{quo_8h_aae8e60d24ad5bac01bc00fbb148d9eb5}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+MINUS}~45  /$\ast$ -\/ $\ast$/
+\item 
+\mbox{\Hypertarget{quo_8h_a4e0b47c6492395af85df8e04c9b4ea59}\label{quo_8h_a4e0b47c6492395af85df8e04c9b4ea59}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+PERIOD}~46  /$\ast$ . $\ast$/
+\item 
+\mbox{\Hypertarget{quo_8h_a4c92c579ab824d296963f5c723b270f4}\label{quo_8h_a4c92c579ab824d296963f5c723b270f4}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+SLASH}~47  /$\ast$ / $\ast$/
+\item 
+\mbox{\Hypertarget{quo_8h_a045d6ca375715945e28bc97ec52d03b5}\label{quo_8h_a045d6ca375715945e28bc97ec52d03b5}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+0}~48
+\item 
+\mbox{\Hypertarget{quo_8h_a1070516255ea847711903b62f493838c}\label{quo_8h_a1070516255ea847711903b62f493838c}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+1}~49
+\item 
+\mbox{\Hypertarget{quo_8h_a0cb7c895d1c52872c16d32f9d061346e}\label{quo_8h_a0cb7c895d1c52872c16d32f9d061346e}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+2}~50
+\item 
+\mbox{\Hypertarget{quo_8h_a4d0bc2bb709016a505f535856bc1f482}\label{quo_8h_a4d0bc2bb709016a505f535856bc1f482}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+3}~51
+\item 
+\mbox{\Hypertarget{quo_8h_adc0be13de7d4b6f5027023db2258fb92}\label{quo_8h_adc0be13de7d4b6f5027023db2258fb92}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+4}~52
+\item 
+\mbox{\Hypertarget{quo_8h_a66eb5c6c5de2bfb2281ca70be6fbff1e}\label{quo_8h_a66eb5c6c5de2bfb2281ca70be6fbff1e}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+5}~53
+\item 
+\mbox{\Hypertarget{quo_8h_a7a65534d30aa4dfef0e63cc7d442c2a7}\label{quo_8h_a7a65534d30aa4dfef0e63cc7d442c2a7}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+6}~54
+\item 
+\mbox{\Hypertarget{quo_8h_a33efb76c49286035ffe1a097f5a56193}\label{quo_8h_a33efb76c49286035ffe1a097f5a56193}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+7}~55
+\item 
+\mbox{\Hypertarget{quo_8h_a9b1cd8a981418bac6a740dd95ed8a7e2}\label{quo_8h_a9b1cd8a981418bac6a740dd95ed8a7e2}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+8}~56
+\item 
+\mbox{\Hypertarget{quo_8h_a47ddae9799cf735fce511a56ad957689}\label{quo_8h_a47ddae9799cf735fce511a56ad957689}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+9}~57
+\item 
+\mbox{\Hypertarget{quo_8h_a969759e394b4c96a6b8b233ac35c7888}\label{quo_8h_a969759e394b4c96a6b8b233ac35c7888}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+SEMICOLON}~59  /$\ast$ ; $\ast$/
+\item 
+\mbox{\Hypertarget{quo_8h_a18940791dac489f1b0554fcb24332ef9}\label{quo_8h_a18940791dac489f1b0554fcb24332ef9}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+EQUAL}~61  /$\ast$ = $\ast$/
+\item 
+\mbox{\Hypertarget{quo_8h_addc8ed4e942f5f7a487d89e258bf3ff7}\label{quo_8h_addc8ed4e942f5f7a487d89e258bf3ff7}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+A}~65
+\item 
+\mbox{\Hypertarget{quo_8h_a1f0c026eec708df74d0e1661b190c224}\label{quo_8h_a1f0c026eec708df74d0e1661b190c224}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+B}~66
+\item 
+\mbox{\Hypertarget{quo_8h_adfad133616378b321815ebb4b1b1ebb1}\label{quo_8h_adfad133616378b321815ebb4b1b1ebb1}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+C}~67
+\item 
+\mbox{\Hypertarget{quo_8h_a3c7a09afbf8d293566924b06d0c6ac63}\label{quo_8h_a3c7a09afbf8d293566924b06d0c6ac63}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+D}~68
+\item 
+\mbox{\Hypertarget{quo_8h_aef0b5d698ebe341f180addb6d2992785}\label{quo_8h_aef0b5d698ebe341f180addb6d2992785}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+E}~69
+\item 
+\mbox{\Hypertarget{quo_8h_a4dafd72fdfa2d4a401cc0568bc09ce74}\label{quo_8h_a4dafd72fdfa2d4a401cc0568bc09ce74}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+F}~70
+\item 
+\mbox{\Hypertarget{quo_8h_aab14568a4aa063944966f47deeee982e}\label{quo_8h_aab14568a4aa063944966f47deeee982e}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+G}~71
+\item 
+\mbox{\Hypertarget{quo_8h_a87f0b0e9bfd06ac36206d0b9e0c5e565}\label{quo_8h_a87f0b0e9bfd06ac36206d0b9e0c5e565}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+H}~72
+\item 
+\mbox{\Hypertarget{quo_8h_a93afd74fff69a68e7d45bafe1ae35818}\label{quo_8h_a93afd74fff69a68e7d45bafe1ae35818}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+I}~73
+\item 
+\mbox{\Hypertarget{quo_8h_a25352c66591d6577b88619d5ca88d8c9}\label{quo_8h_a25352c66591d6577b88619d5ca88d8c9}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+J}~74
+\item 
+\mbox{\Hypertarget{quo_8h_a311643428c666da7c34b521e599b1621}\label{quo_8h_a311643428c666da7c34b521e599b1621}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+K}~75
+\item 
+\mbox{\Hypertarget{quo_8h_a39e34d8c30c02a79ae7d38c981f62a72}\label{quo_8h_a39e34d8c30c02a79ae7d38c981f62a72}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+L}~76
+\item 
+\mbox{\Hypertarget{quo_8h_a1a4f137667e77e2762094d368b5b5c8b}\label{quo_8h_a1a4f137667e77e2762094d368b5b5c8b}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+M}~77
+\item 
+\mbox{\Hypertarget{quo_8h_a1af43a70afd8e7ed7df326ee9e936838}\label{quo_8h_a1af43a70afd8e7ed7df326ee9e936838}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+N}~78
+\item 
+\mbox{\Hypertarget{quo_8h_af1c0be68db07e32c498a99e95948b401}\label{quo_8h_af1c0be68db07e32c498a99e95948b401}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+O}~79
+\item 
+\mbox{\Hypertarget{quo_8h_a45584d0155f4d61783b1b1d7e405c861}\label{quo_8h_a45584d0155f4d61783b1b1d7e405c861}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+P}~80
+\item 
+\mbox{\Hypertarget{quo_8h_ac60fc04fad0ac913d86b81336cd735af}\label{quo_8h_ac60fc04fad0ac913d86b81336cd735af}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+Q}~81
+\item 
+\mbox{\Hypertarget{quo_8h_a748dbbd3685db4a3c2c124f8e9718688}\label{quo_8h_a748dbbd3685db4a3c2c124f8e9718688}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+R}~82
+\item 
+\mbox{\Hypertarget{quo_8h_af6ed57b74bc7a540256d3b9ccbd7eb27}\label{quo_8h_af6ed57b74bc7a540256d3b9ccbd7eb27}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+S}~83
+\item 
+\mbox{\Hypertarget{quo_8h_abd9d15338fd5dd36d6efc6551057a662}\label{quo_8h_abd9d15338fd5dd36d6efc6551057a662}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+T}~84
+\item 
+\mbox{\Hypertarget{quo_8h_a302a7c77fa306ce8166b5300bdb27aae}\label{quo_8h_a302a7c77fa306ce8166b5300bdb27aae}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+U}~85
+\item 
+\mbox{\Hypertarget{quo_8h_ac319a0717e3e149fc91ac1d6a7e6a894}\label{quo_8h_ac319a0717e3e149fc91ac1d6a7e6a894}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+V}~86
+\item 
+\mbox{\Hypertarget{quo_8h_a4d568dd5cbeddb89fc8f5cdbca82da1a}\label{quo_8h_a4d568dd5cbeddb89fc8f5cdbca82da1a}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+W}~87
+\item 
+\mbox{\Hypertarget{quo_8h_aea9343dd40fab14b31f3d0879937d7e2}\label{quo_8h_aea9343dd40fab14b31f3d0879937d7e2}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+X}~88
+\item 
+\mbox{\Hypertarget{quo_8h_a5bf0aedebe92b6463606f9222a457603}\label{quo_8h_a5bf0aedebe92b6463606f9222a457603}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+Y}~89
+\item 
+\mbox{\Hypertarget{quo_8h_acfbdf7ce7a69f7e15bfa8e5e1553d335}\label{quo_8h_acfbdf7ce7a69f7e15bfa8e5e1553d335}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+Z}~90
+\item 
+\mbox{\Hypertarget{quo_8h_ae5fb8388ee8c137f6bba41ffa3b5abae}\label{quo_8h_ae5fb8388ee8c137f6bba41ffa3b5abae}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+LEFT\+\_\+\+BRACKET}~91  /$\ast$ \mbox{[} $\ast$/
+\item 
+\mbox{\Hypertarget{quo_8h_a4898e9607de643da43f783fda5b267c9}\label{quo_8h_a4898e9607de643da43f783fda5b267c9}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+BACKSLASH}~92  /$\ast$ \textbackslash{} $\ast$/
+\item 
+\mbox{\Hypertarget{quo_8h_ac45f061dba85d0db362a8e74beff77e5}\label{quo_8h_ac45f061dba85d0db362a8e74beff77e5}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+RIGHT\+\_\+\+BRACKET}~93  /$\ast$ \mbox{]} $\ast$/
+\item 
+\mbox{\Hypertarget{quo_8h_ab435abdc4f5ce9aa3e814f8f7ab5ecb1}\label{quo_8h_ab435abdc4f5ce9aa3e814f8f7ab5ecb1}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+GRAVE\+\_\+\+ACCENT}~96  /$\ast$ \`{} $\ast$/
+\item 
+\mbox{\Hypertarget{quo_8h_a5bcb0a20881187ef260e1324cec6b89d}\label{quo_8h_a5bcb0a20881187ef260e1324cec6b89d}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+WORLD\+\_\+1}~161 /$\ast$ non-\/US \#1 $\ast$/
+\item 
+\mbox{\Hypertarget{quo_8h_a1d4f14bef778a22173324f4bc4d79900}\label{quo_8h_a1d4f14bef778a22173324f4bc4d79900}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+WORLD\+\_\+2}~162 /$\ast$ non-\/US \#2 $\ast$/
+\item 
+\mbox{\Hypertarget{quo_8h_a515fa558c7303238f25f2485dba36d0d}\label{quo_8h_a515fa558c7303238f25f2485dba36d0d}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+ESCAPE}~256
+\item 
+\mbox{\Hypertarget{quo_8h_a5b0ccf23830bcb90547f57594d62ac40}\label{quo_8h_a5b0ccf23830bcb90547f57594d62ac40}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+ENTER}~257
+\item 
+\mbox{\Hypertarget{quo_8h_a203d333e7d74af0036e4e02f7b931fc2}\label{quo_8h_a203d333e7d74af0036e4e02f7b931fc2}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+TAB}~258
+\item 
+\mbox{\Hypertarget{quo_8h_a99614af9065ea306be459738327b2021}\label{quo_8h_a99614af9065ea306be459738327b2021}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+BACKSPACE}~259
+\item 
+\mbox{\Hypertarget{quo_8h_af3c78fa8f2dbd8d241789f230332dda7}\label{quo_8h_af3c78fa8f2dbd8d241789f230332dda7}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+INSERT}~260
+\item 
+\mbox{\Hypertarget{quo_8h_ab2093a5bc93bf6d54015d91f489493b2}\label{quo_8h_ab2093a5bc93bf6d54015d91f489493b2}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+DELETE}~261
+\item 
+\mbox{\Hypertarget{quo_8h_acd0fd835d7c5c32ceeeedb79220d259c}\label{quo_8h_acd0fd835d7c5c32ceeeedb79220d259c}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+RIGHT}~262
+\item 
+\mbox{\Hypertarget{quo_8h_aaad3210b953751b49a0d6b70cc4c4b04}\label{quo_8h_aaad3210b953751b49a0d6b70cc4c4b04}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+LEFT}~263
+\item 
+\mbox{\Hypertarget{quo_8h_a3cf2154f1847654be6b2d903ab056c6e}\label{quo_8h_a3cf2154f1847654be6b2d903ab056c6e}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+DOWN}~264
+\item 
+\mbox{\Hypertarget{quo_8h_a7c5f5c51d82f6c94e15ce4a2c2091c87}\label{quo_8h_a7c5f5c51d82f6c94e15ce4a2c2091c87}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+UP}~265
+\item 
+\mbox{\Hypertarget{quo_8h_a31655e819aba21c487d8637e7af35dcb}\label{quo_8h_a31655e819aba21c487d8637e7af35dcb}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+PAGE\+\_\+\+UP}~266
+\item 
+\mbox{\Hypertarget{quo_8h_ad9da0d43bb02f44a3fa04b59d910ee6e}\label{quo_8h_ad9da0d43bb02f44a3fa04b59d910ee6e}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+PAGE\+\_\+\+DOWN}~267
+\item 
+\mbox{\Hypertarget{quo_8h_ae5a1c673bc2cba8e261a31231d533363}\label{quo_8h_ae5a1c673bc2cba8e261a31231d533363}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+HOME}~268
+\item 
+\mbox{\Hypertarget{quo_8h_a9cb25563d1817e658696977ddae9c758}\label{quo_8h_a9cb25563d1817e658696977ddae9c758}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+END}~269
+\item 
+\mbox{\Hypertarget{quo_8h_a29cc3a854b14608211468cdeaffc15f5}\label{quo_8h_a29cc3a854b14608211468cdeaffc15f5}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+CAPS\+\_\+\+LOCK}~280
+\item 
+\mbox{\Hypertarget{quo_8h_a31a47f3bfb7755dfae7482f40b62dbb7}\label{quo_8h_a31a47f3bfb7755dfae7482f40b62dbb7}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+SCROLL\+\_\+\+LOCK}~281
+\item 
+\mbox{\Hypertarget{quo_8h_a3f25af6dd718c24406782b5c2f095c21}\label{quo_8h_a3f25af6dd718c24406782b5c2f095c21}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NUM\+\_\+\+LOCK}~282
+\item 
+\mbox{\Hypertarget{quo_8h_aea74b84cc0f7c3b409fadfc00216c01f}\label{quo_8h_aea74b84cc0f7c3b409fadfc00216c01f}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+PRINT\+\_\+\+SCREEN}~283
+\item 
+\mbox{\Hypertarget{quo_8h_a1b286072f21fcacdc9daae4f8c82ba31}\label{quo_8h_a1b286072f21fcacdc9daae4f8c82ba31}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+PAUSE}~284
+\item 
+\mbox{\Hypertarget{quo_8h_adab224ba949041c4b1967cf92db2ac08}\label{quo_8h_adab224ba949041c4b1967cf92db2ac08}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F1}~290
+\item 
+\mbox{\Hypertarget{quo_8h_a832cf114fa932d117d589e5a106547f9}\label{quo_8h_a832cf114fa932d117d589e5a106547f9}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F2}~291
+\item 
+\mbox{\Hypertarget{quo_8h_a4fb748af7fbcbf5c25179089e57096ae}\label{quo_8h_a4fb748af7fbcbf5c25179089e57096ae}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F3}~292
+\item 
+\mbox{\Hypertarget{quo_8h_a63096d6a010c2b33f8690f36dbe64621}\label{quo_8h_a63096d6a010c2b33f8690f36dbe64621}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F4}~293
+\item 
+\mbox{\Hypertarget{quo_8h_aea7adf213d1fe3f5799e7b9c31bbe0a4}\label{quo_8h_aea7adf213d1fe3f5799e7b9c31bbe0a4}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F5}~294
+\item 
+\mbox{\Hypertarget{quo_8h_aa9384498cb86cb47838b3d9d1e22c368}\label{quo_8h_aa9384498cb86cb47838b3d9d1e22c368}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F6}~295
+\item 
+\mbox{\Hypertarget{quo_8h_a1566630a1772e865899a0a39f35640db}\label{quo_8h_a1566630a1772e865899a0a39f35640db}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F7}~296
+\item 
+\mbox{\Hypertarget{quo_8h_aa7d2d8973c6d3730ffce951fe28638c4}\label{quo_8h_aa7d2d8973c6d3730ffce951fe28638c4}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F8}~297
+\item 
+\mbox{\Hypertarget{quo_8h_a7e56608ff0257fd9c9a07869c842d440}\label{quo_8h_a7e56608ff0257fd9c9a07869c842d440}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F9}~298
+\item 
+\mbox{\Hypertarget{quo_8h_a8942276341959e9f750f9e92185b76e1}\label{quo_8h_a8942276341959e9f750f9e92185b76e1}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F10}~299
+\item 
+\mbox{\Hypertarget{quo_8h_addedb0c9102c98f992c77c7bb8347ff0}\label{quo_8h_addedb0c9102c98f992c77c7bb8347ff0}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F11}~300
+\item 
+\mbox{\Hypertarget{quo_8h_af25cbb37cd96d60475e64a69b593a98c}\label{quo_8h_af25cbb37cd96d60475e64a69b593a98c}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F12}~301
+\item 
+\mbox{\Hypertarget{quo_8h_ac54bbaf4ced04a3ec0b3cc10b4ff8e02}\label{quo_8h_ac54bbaf4ced04a3ec0b3cc10b4ff8e02}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F13}~302
+\item 
+\mbox{\Hypertarget{quo_8h_acebf214e8d462cba0f4a05469d6113b6}\label{quo_8h_acebf214e8d462cba0f4a05469d6113b6}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F14}~303
+\item 
+\mbox{\Hypertarget{quo_8h_a58eb3787ce6ca240549e171605295f10}\label{quo_8h_a58eb3787ce6ca240549e171605295f10}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F15}~304
+\item 
+\mbox{\Hypertarget{quo_8h_afca8f219d9f1a7358272901e413bcdd5}\label{quo_8h_afca8f219d9f1a7358272901e413bcdd5}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F16}~305
+\item 
+\mbox{\Hypertarget{quo_8h_ad6d6d354c31f9b1b2849f3de58dc244e}\label{quo_8h_ad6d6d354c31f9b1b2849f3de58dc244e}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F17}~306
+\item 
+\mbox{\Hypertarget{quo_8h_a4710bd9f790f28c2f553f7ce07782c42}\label{quo_8h_a4710bd9f790f28c2f553f7ce07782c42}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F18}~307
+\item 
+\mbox{\Hypertarget{quo_8h_a14c842993a861bc6c5b217258a174d23}\label{quo_8h_a14c842993a861bc6c5b217258a174d23}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F19}~308
+\item 
+\mbox{\Hypertarget{quo_8h_a4a08f71ea211480e3e37722edddadc28}\label{quo_8h_a4a08f71ea211480e3e37722edddadc28}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F20}~309
+\item 
+\mbox{\Hypertarget{quo_8h_a0a885a449d57e789c398cafd2f5fabbb}\label{quo_8h_a0a885a449d57e789c398cafd2f5fabbb}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F21}~310
+\item 
+\mbox{\Hypertarget{quo_8h_a7a7e5652daedc607665edcbd353869ef}\label{quo_8h_a7a7e5652daedc607665edcbd353869ef}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F22}~311
+\item 
+\mbox{\Hypertarget{quo_8h_aafe3ebb0df4d7e5b6d6f41f956fd9d81}\label{quo_8h_aafe3ebb0df4d7e5b6d6f41f956fd9d81}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F23}~312
+\item 
+\mbox{\Hypertarget{quo_8h_a76f25a6cf8b299ab648bb539065f9eb9}\label{quo_8h_a76f25a6cf8b299ab648bb539065f9eb9}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F24}~313
+\item 
+\mbox{\Hypertarget{quo_8h_adb3988c041c278b577c0ac56cb6ab071}\label{quo_8h_adb3988c041c278b577c0ac56cb6ab071}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F25}~314
+\item 
+\mbox{\Hypertarget{quo_8h_a88e343d2611f7998b85559fb79cb7410}\label{quo_8h_a88e343d2611f7998b85559fb79cb7410}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+0}~320
+\item 
+\mbox{\Hypertarget{quo_8h_a38174a76ddc3a0f2d5ce4b5c9af4a3de}\label{quo_8h_a38174a76ddc3a0f2d5ce4b5c9af4a3de}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+1}~321
+\item 
+\mbox{\Hypertarget{quo_8h_aaa0db6e2c349fde6af5b2fbc9f022200}\label{quo_8h_aaa0db6e2c349fde6af5b2fbc9f022200}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+2}~322
+\item 
+\mbox{\Hypertarget{quo_8h_aeb9ea6524c7123a2fedcc21419b67676}\label{quo_8h_aeb9ea6524c7123a2fedcc21419b67676}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+3}~323
+\item 
+\mbox{\Hypertarget{quo_8h_a974d30c72f6570633cfc6fd7e89a0ff2}\label{quo_8h_a974d30c72f6570633cfc6fd7e89a0ff2}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+4}~324
+\item 
+\mbox{\Hypertarget{quo_8h_a08a4dc5edbe497757d63ca158ca97031}\label{quo_8h_a08a4dc5edbe497757d63ca158ca97031}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+5}~325
+\item 
+\mbox{\Hypertarget{quo_8h_a54a1c84f6c1a5dfe99752e5b82d8c3ef}\label{quo_8h_a54a1c84f6c1a5dfe99752e5b82d8c3ef}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+6}~326
+\item 
+\mbox{\Hypertarget{quo_8h_a686887f834a1dfd6fe752ccf563b6b86}\label{quo_8h_a686887f834a1dfd6fe752ccf563b6b86}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+7}~327
+\item 
+\mbox{\Hypertarget{quo_8h_a467694dfe668b66e990a86e836a8c5d1}\label{quo_8h_a467694dfe668b66e990a86e836a8c5d1}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+8}~328
+\item 
+\mbox{\Hypertarget{quo_8h_a45d8b39a5ff4885a98aa4f47694ffe33}\label{quo_8h_a45d8b39a5ff4885a98aa4f47694ffe33}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+9}~329
+\item 
+\mbox{\Hypertarget{quo_8h_af1bb54f3e74fec62fd8f3f3ed29de556}\label{quo_8h_af1bb54f3e74fec62fd8f3f3ed29de556}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+\+DECIMAL}~330
+\item 
+\mbox{\Hypertarget{quo_8h_a40a0246c5edee70ae9cbda105e8b3970}\label{quo_8h_a40a0246c5edee70ae9cbda105e8b3970}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+\+DIVIDE}~331
+\item 
+\mbox{\Hypertarget{quo_8h_a60f7678575e347106622fe82aa7d2e47}\label{quo_8h_a60f7678575e347106622fe82aa7d2e47}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+\+MULTIPLY}~332
+\item 
+\mbox{\Hypertarget{quo_8h_a5d7194397bef533cb9e1a3501407b6b9}\label{quo_8h_a5d7194397bef533cb9e1a3501407b6b9}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+\+SUBTRACT}~333
+\item 
+\mbox{\Hypertarget{quo_8h_a4bdb3220cae5d710f96affeceb9d6740}\label{quo_8h_a4bdb3220cae5d710f96affeceb9d6740}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+\+ADD}~334
+\item 
+\mbox{\Hypertarget{quo_8h_a1ded84480563d0b4d5331818805880b8}\label{quo_8h_a1ded84480563d0b4d5331818805880b8}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+\+ENTER}~335
+\item 
+\mbox{\Hypertarget{quo_8h_a39b654ee36b466cc6633f3e8d6abda4a}\label{quo_8h_a39b654ee36b466cc6633f3e8d6abda4a}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+\+EQUAL}~336
+\item 
+\mbox{\Hypertarget{quo_8h_aa0a65fe37f98da859eb9eee6069c9d1c}\label{quo_8h_aa0a65fe37f98da859eb9eee6069c9d1c}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+LEFT\+\_\+\+SHIFT}~340
+\item 
+\mbox{\Hypertarget{quo_8h_a0c73f6eaea94d0650696839125891b29}\label{quo_8h_a0c73f6eaea94d0650696839125891b29}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+LEFT\+\_\+\+CONTROL}~341
+\item 
+\mbox{\Hypertarget{quo_8h_a594b938a86651d09eba40df3ec9da64b}\label{quo_8h_a594b938a86651d09eba40df3ec9da64b}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+LEFT\+\_\+\+ALT}~342
+\item 
+\mbox{\Hypertarget{quo_8h_a127c9ad1fb54655687c224d21a1b4dc3}\label{quo_8h_a127c9ad1fb54655687c224d21a1b4dc3}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+LEFT\+\_\+\+SUPER}~343
+\item 
+\mbox{\Hypertarget{quo_8h_abb1e9f4797674bf072bfbcf11fd77c43}\label{quo_8h_abb1e9f4797674bf072bfbcf11fd77c43}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+RIGHT\+\_\+\+SHIFT}~344
+\item 
+\mbox{\Hypertarget{quo_8h_aaac32b5eff3b65e72b17aadf5c3dab96}\label{quo_8h_aaac32b5eff3b65e72b17aadf5c3dab96}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+RIGHT\+\_\+\+CONTROL}~345
+\item 
+\mbox{\Hypertarget{quo_8h_ac1018ee661b863e4ced001590641856f}\label{quo_8h_ac1018ee661b863e4ced001590641856f}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+RIGHT\+\_\+\+ALT}~346
+\item 
+\mbox{\Hypertarget{quo_8h_a03bed45e047843cd069571340867ab95}\label{quo_8h_a03bed45e047843cd069571340867ab95}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+RIGHT\+\_\+\+SUPER}~347
+\item 
+\mbox{\Hypertarget{quo_8h_a88c0fcfe42794dc06eb7ada24f0848da}\label{quo_8h_a88c0fcfe42794dc06eb7ada24f0848da}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+MENU}~348
+\item 
+\mbox{\Hypertarget{quo_8h_ab738cb4e68db1500da575d251e987864}\label{quo_8h_ab738cb4e68db1500da575d251e987864}} 
+\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+COUNT}~QUO\+\_\+\+KEY\+\_\+\+MENU
+\item 
+\mbox{\Hypertarget{quo_8h_a3dad6ec4d18585af4f9f04e6e55e9111}\label{quo_8h_a3dad6ec4d18585af4f9f04e6e55e9111}} 
+\#define {\bfseries QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+1}~0
+\item 
+\mbox{\Hypertarget{quo_8h_a5938b74e7a257625723cf50b8c553c66}\label{quo_8h_a5938b74e7a257625723cf50b8c553c66}} 
+\#define {\bfseries QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+3}~2
+\item 
+\mbox{\Hypertarget{quo_8h_ae1dcd79c162b3a41009b9da66d128cb9}\label{quo_8h_ae1dcd79c162b3a41009b9da66d128cb9}} 
+\#define {\bfseries QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+2}~1
+\item 
+\mbox{\Hypertarget{quo_8h_a4021c2d0a90d0ca2f5f4755549e4d653}\label{quo_8h_a4021c2d0a90d0ca2f5f4755549e4d653}} 
+\#define {\bfseries QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+4}~3
+\item 
+\mbox{\Hypertarget{quo_8h_a041e0b9550e7c9cc4f532b0c2329b9af}\label{quo_8h_a041e0b9550e7c9cc4f532b0c2329b9af}} 
+\#define {\bfseries QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+5}~4
+\item 
+\mbox{\Hypertarget{quo_8h_adf28229a41d0e13c41ee75d456381ddc}\label{quo_8h_adf28229a41d0e13c41ee75d456381ddc}} 
+\#define {\bfseries QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+6}~5
+\item 
+\mbox{\Hypertarget{quo_8h_ab34a62b14a39654d25be82e23ceeea66}\label{quo_8h_ab34a62b14a39654d25be82e23ceeea66}} 
+\#define {\bfseries QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+7}~6
+\item 
+\mbox{\Hypertarget{quo_8h_aebfb878a0796735ce20f96bfff67b7c4}\label{quo_8h_aebfb878a0796735ce20f96bfff67b7c4}} 
+\#define {\bfseries QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+8}~7
+\item 
+\mbox{\Hypertarget{quo_8h_a7fd768aa89037ff552d057fc5da88d21}\label{quo_8h_a7fd768aa89037ff552d057fc5da88d21}} 
+\#define {\bfseries QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+\+COUNT}~QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+8
+\item 
+\mbox{\Hypertarget{quo_8h_ad8f3b3c5e6e3f88c4ebed5057027981e}\label{quo_8h_ad8f3b3c5e6e3f88c4ebed5057027981e}} 
+\#define {\bfseries QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+\+LEFT}~QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+1
+\item 
+\mbox{\Hypertarget{quo_8h_a7d0e187de260509be1d319cd261d3e01}\label{quo_8h_a7d0e187de260509be1d319cd261d3e01}} 
+\#define {\bfseries QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+\+RIGHT}~QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+2
+\item 
+\mbox{\Hypertarget{quo_8h_ad4af67fb0e90bd3d7b0266dde3b0df34}\label{quo_8h_ad4af67fb0e90bd3d7b0266dde3b0df34}} 
+\#define {\bfseries QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+\+MIDDLE}~QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+3
+\item 
+\mbox{\Hypertarget{quo_8h_a3784ca58f718010d950dd30ca63a4439}\label{quo_8h_a3784ca58f718010d950dd30ca63a4439}} 
+\#define {\bfseries QUO\+\_\+\+PI}~3.\+14159265358f
+\item 
+\mbox{\Hypertarget{quo_8h_ac8e3a16bb26617693d2754747854e1a2}\label{quo_8h_ac8e3a16bb26617693d2754747854e1a2}} 
+\#define \mbox{\hyperlink{quo_8h_ac8e3a16bb26617693d2754747854e1a2}{QUO\+\_\+\+MAX\+\_\+\+SHADERS}}~10
+\begin{DoxyCompactList}\small\item\em Maximum amount of shaders that can be created. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a5801c838c9c102e88038726a1c1cb968}\label{quo_8h_a5801c838c9c102e88038726a1c1cb968}} 
+\#define {\bfseries QUO\+\_\+\+IMGUI\+\_\+\+ATTRIB\+\_\+\+BACKGROUND\+\_\+\+COLOR}~0
+\item 
+\mbox{\Hypertarget{quo_8h_a4942409f23ea4998965f62bfc28723a4}\label{quo_8h_a4942409f23ea4998965f62bfc28723a4}} 
+\#define {\bfseries QUO\+\_\+\+IMGUI\+\_\+\+ATTRIB\+\_\+\+FRAME\+\_\+\+COLOR}~1
+\item 
+\mbox{\Hypertarget{quo_8h_af2db456198f07b71cf8631f512712627}\label{quo_8h_af2db456198f07b71cf8631f512712627}} 
+\#define {\bfseries QUO\+\_\+\+IMGUI\+\_\+\+ATTRIB\+\_\+\+HOVER\+\_\+\+COLOR}~2
+\item 
+\mbox{\Hypertarget{quo_8h_a5982508e9849b8686ad81f13ede63d27}\label{quo_8h_a5982508e9849b8686ad81f13ede63d27}} 
+\#define {\bfseries QUO\+\_\+\+IMGUI\+\_\+\+ATTRIB\+\_\+\+ACTIVE\+\_\+\+COLOR}~3
+\item 
+\mbox{\Hypertarget{quo_8h_ad282c227c459bd4d1d88d318d0ac8cc8}\label{quo_8h_ad282c227c459bd4d1d88d318d0ac8cc8}} 
+\#define {\bfseries QUO\+\_\+\+IMGUI\+\_\+\+ATTRIB\+\_\+\+TEXT\+\_\+\+COLOR}~4
+\item 
+\mbox{\Hypertarget{quo_8h_a7bb30a1c33ad3ee33fe098f33c664425}\label{quo_8h_a7bb30a1c33ad3ee33fe098f33c664425}} 
+\#define {\bfseries QUO\+\_\+\+IMGUI\+\_\+\+ATTRIB\+\_\+\+CHARACTER\+\_\+\+SIZE}~5
+\item 
+\mbox{\Hypertarget{quo_8h_a27590c79d1fca3a117f33e120c786cdc}\label{quo_8h_a27590c79d1fca3a117f33e120c786cdc}} 
+\#define {\bfseries QUO\+\_\+\+IMGUI\+\_\+\+ATTRIB\+\_\+\+PADDING}~7
+\item 
+\mbox{\Hypertarget{quo_8h_acc5ab38badc7f6eae3da6f329e90c456}\label{quo_8h_acc5ab38badc7f6eae3da6f329e90c456}} 
+\#define {\bfseries QUO\+\_\+\+IMGUI\+\_\+\+ATTRIB\+\_\+\+COL\+\_\+\+SIZE}~8
+\item 
+\mbox{\Hypertarget{quo_8h_af05e0f8e264dc46fe23f3711b43a715c}\label{quo_8h_af05e0f8e264dc46fe23f3711b43a715c}} 
+\#define {\bfseries QUO\+\_\+\+IMGUI\+\_\+\+ATTRIB\+\_\+\+SCALE}~9
+\item 
+\mbox{\Hypertarget{quo_8h_a3e190188962f75ff0feba9b2fa868941}\label{quo_8h_a3e190188962f75ff0feba9b2fa868941}} 
+\#define {\bfseries QUO\+\_\+\+IMGUI\+\_\+\+ATTRIB\+\_\+\+COUNT}~10
+\item 
+\mbox{\Hypertarget{quo_8h_a5bb3c825ce47a067bc49b899447d41fe}\label{quo_8h_a5bb3c825ce47a067bc49b899447d41fe}} 
+\#define \mbox{\hyperlink{quo_8h_a5bb3c825ce47a067bc49b899447d41fe}{QUO\+\_\+\+BYTE\+\_\+\+BUFFER\+\_\+\+DEFAULT\+\_\+\+CAPACITY}}~1024
+\begin{DoxyCompactList}\small\item\em The default size of a byte buffer. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{quo_8h_a99ac6db25386417803a7b1d3e07f1846}{quo\+\_\+byte\+\_\+buffer\+\_\+write}}(\+\_\+buffer,  \+\_\+type,  \+\_\+val)
+\begin{DoxyCompactList}\small\item\em Write some data to a byte buffer at the current position. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{quo_8h_aa48ebf5b1b755751cfceac53ee4b2ba3}{quo\+\_\+byte\+\_\+buffer\+\_\+read}}(\+\_\+buffer,  \+\_\+type,  \+\_\+val\+\_\+p)
+\begin{DoxyCompactList}\small\item\em Read some data from a byte buffer at the current position. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{quo_8h_a43942b0a74b23c60c923b7695c9c4a41}\label{quo_8h_a43942b0a74b23c60c923b7695c9c4a41}} 
+typedef char {\bfseries quo\+\_\+bool}
+\item 
+\mbox{\Hypertarget{quo_8h_a475b29eaec18155bec99a72a70ba1b61}\label{quo_8h_a475b29eaec18155bec99a72a70ba1b61}} 
+typedef struct \mbox{\hyperlink{structquo__InputHashTableItem}{quo\+\_\+\+Input\+Hash\+Table\+Item}} \mbox{\hyperlink{quo_8h_a475b29eaec18155bec99a72a70ba1b61}{quo\+\_\+\+Input\+Hash\+Table\+Item}}
+\begin{DoxyCompactList}\small\item\em \mbox{[}internal use only\mbox{]} Key value pair, for storing system input map items \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_abf49734ac81b832ceecebd12b2323765}\label{quo_8h_abf49734ac81b832ceecebd12b2323765}} 
+typedef struct \mbox{\hyperlink{structquo__InputHashTable}{quo\+\_\+\+Input\+Hash\+Table}} \mbox{\hyperlink{quo_8h_abf49734ac81b832ceecebd12b2323765}{quo\+\_\+\+Input\+Hash\+Table}}
+\begin{DoxyCompactList}\small\item\em \mbox{[}internal use only\mbox{]} Hash table for storing keymaps \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a56f75d5bdfd9d37b9ea9366501f712a2}\label{quo_8h_a56f75d5bdfd9d37b9ea9366501f712a2}} 
+typedef struct \mbox{\hyperlink{structquo__Window}{quo\+\_\+\+Window}} \mbox{\hyperlink{quo_8h_a56f75d5bdfd9d37b9ea9366501f712a2}{quo\+\_\+\+Window}}
+\begin{DoxyCompactList}\small\item\em Platform window structure. Responsible for storing data about a window\textquotesingle{}s state and it\textquotesingle{}s Open\+GL context. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a5b09e8f40de41634b240da792a1c3018}\label{quo_8h_a5b09e8f40de41634b240da792a1c3018}} 
+typedef struct \mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} \mbox{\hyperlink{quo_8h_a5b09e8f40de41634b240da792a1c3018}{quo\+\_\+vec2}}
+\begin{DoxyCompactList}\small\item\em Generic 2 dimensional vector class. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_ab14fe915b7f6cde0d4c065da07ac26f7}\label{quo_8h_ab14fe915b7f6cde0d4c065da07ac26f7}} 
+typedef struct \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} \mbox{\hyperlink{quo_8h_ab14fe915b7f6cde0d4c065da07ac26f7}{quo\+\_\+vec3}}
+\begin{DoxyCompactList}\small\item\em Generic 3 dimensional vector class. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a0050f4ef5fd3f252b7acc983364ed97a}\label{quo_8h_a0050f4ef5fd3f252b7acc983364ed97a}} 
+typedef struct \mbox{\hyperlink{structquo__Matrix}{quo\+\_\+\+Matrix}} \mbox{\hyperlink{quo_8h_a0050f4ef5fd3f252b7acc983364ed97a}{quo\+\_\+\+Matrix}}
+\begin{DoxyCompactList}\small\item\em Represents a 4x4 float matrix. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a4e41869738494ef31967522aaa73c435}\label{quo_8h_a4e41869738494ef31967522aaa73c435}} 
+typedef struct \mbox{\hyperlink{structquo__Rect}{quo\+\_\+\+Rect}} \mbox{\hyperlink{quo_8h_a4e41869738494ef31967522aaa73c435}{quo\+\_\+\+Rect}}
+\begin{DoxyCompactList}\small\item\em Generic rectangle struct. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a77df5dd130070cb18573dca6570e0f30}\label{quo_8h_a77df5dd130070cb18573dca6570e0f30}} 
+typedef struct \mbox{\hyperlink{structquo__BitmapImage}{quo\+\_\+\+Bitmap\+Image}} \mbox{\hyperlink{quo_8h_a77df5dd130070cb18573dca6570e0f30}{quo\+\_\+\+Bitmap\+Image}}
+\begin{DoxyCompactList}\small\item\em Represents a bitmap image, containing it\textquotesingle{}s raw pixel data, it\textquotesingle{}s width and height and it\textquotesingle{}s component count. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a5c00cb5f1d8811e5f7f4a14b3b46aad7}\label{quo_8h_a5c00cb5f1d8811e5f7f4a14b3b46aad7}} 
+typedef struct \mbox{\hyperlink{structquo__Texture}{quo\+\_\+\+Texture}} \mbox{\hyperlink{quo_8h_a5c00cb5f1d8811e5f7f4a14b3b46aad7}{quo\+\_\+\+Texture}}
+\begin{DoxyCompactList}\small\item\em A texture that lives on the GPU. Should be created from a bitmap image. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a6c48124a8ce2225be23f46043eccd910}\label{quo_8h_a6c48124a8ce2225be23f46043eccd910}} 
+typedef unsigned int \mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}}
+\begin{DoxyCompactList}\small\item\em To be used as an index into the renderer\textquotesingle{}s shader array. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a370e7745513bf46694319ab62c3cd560}\label{quo_8h_a370e7745513bf46694319ab62c3cd560}} 
+typedef struct \mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} \mbox{\hyperlink{quo_8h_a370e7745513bf46694319ab62c3cd560}{quo\+\_\+\+Renderer}}
+\begin{DoxyCompactList}\small\item\em Responsible for drawing things to the screen. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a82c579ebb79a06c26ed86cb420545ba4}\label{quo_8h_a82c579ebb79a06c26ed86cb420545ba4}} 
+typedef struct \mbox{\hyperlink{structquo__InputSystem}{quo\+\_\+\+Input\+System}} \mbox{\hyperlink{quo_8h_a82c579ebb79a06c26ed86cb420545ba4}{quo\+\_\+\+Input\+System}}
+\begin{DoxyCompactList}\small\item\em Handles keyboard and mouse input. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a3019bec11d87ccb19ea25672ca0b676c}\label{quo_8h_a3019bec11d87ccb19ea25672ca0b676c}} 
+typedef struct \mbox{\hyperlink{structquo__IMGUIState}{quo\+\_\+\+IMGUIState}} \mbox{\hyperlink{quo_8h_a3019bec11d87ccb19ea25672ca0b676c}{quo\+\_\+\+IMGUIState}}
+\begin{DoxyCompactList}\small\item\em State for the immediate mode GUI. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a6f905e5ef753c5909a30475bfd5c337f}\label{quo_8h_a6f905e5ef753c5909a30475bfd5c337f}} 
+typedef struct \mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} \mbox{\hyperlink{quo_8h_a6f905e5ef753c5909a30475bfd5c337f}{quo\+\_\+\+Byte\+Buffer}}
+\begin{DoxyCompactList}\small\item\em A buffer for holding generic data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{quo_8h_aa4f5fb19a9537ed1700201fc53ad1b7b}\label{quo_8h_aa4f5fb19a9537ed1700201fc53ad1b7b}} 
+double \mbox{\hyperlink{quo_8h_aa4f5fb19a9537ed1700201fc53ad1b7b}{quo\+\_\+get\+\_\+elapsed\+\_\+time}} ()
+\begin{DoxyCompactList}\small\item\em Get the time since the program began, in milliseconds. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a98453cf69cfa20e8909591c3336dea77}\label{quo_8h_a98453cf69cfa20e8909591c3336dea77}} 
+void \mbox{\hyperlink{quo_8h_a98453cf69cfa20e8909591c3336dea77}{quo\+\_\+init\+\_\+input\+\_\+table}} (\mbox{\hyperlink{structquo__InputHashTable}{quo\+\_\+\+Input\+Hash\+Table}} $\ast$table)
+\begin{DoxyCompactList}\small\item\em \mbox{[}internal use only\mbox{]} Initialise a new input hash table \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_ab4e228c9d2f17cbdc206bbc2a2f3aa2e}\label{quo_8h_ab4e228c9d2f17cbdc206bbc2a2f3aa2e}} 
+int \mbox{\hyperlink{quo_8h_ab4e228c9d2f17cbdc206bbc2a2f3aa2e}{quo\+\_\+search\+\_\+input\+\_\+table}} (\mbox{\hyperlink{structquo__InputHashTable}{quo\+\_\+\+Input\+Hash\+Table}} $\ast$table, int key)
+\begin{DoxyCompactList}\small\item\em \mbox{[}internal use only\mbox{]} Search the input table for a key \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a06f16b54cc95714e15bd0c77f30a8f1a}\label{quo_8h_a06f16b54cc95714e15bd0c77f30a8f1a}} 
+void \mbox{\hyperlink{quo_8h_a06f16b54cc95714e15bd0c77f30a8f1a}{quo\+\_\+insert\+\_\+input\+\_\+table}} (\mbox{\hyperlink{structquo__InputHashTable}{quo\+\_\+\+Input\+Hash\+Table}} $\ast$table, int key, int value)
+\begin{DoxyCompactList}\small\item\em \mbox{[}internal use only\mbox{]} Insert a key value pair into the input table \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a2a0ed8061d1124e7ce1e1cdfa401f4d7}\label{quo_8h_a2a0ed8061d1124e7ce1e1cdfa401f4d7}} 
+void \mbox{\hyperlink{quo_8h_a2a0ed8061d1124e7ce1e1cdfa401f4d7}{quo\+\_\+prepare\+\_\+input\+\_\+table}} (\mbox{\hyperlink{structquo__InputHashTable}{quo\+\_\+\+Input\+Hash\+Table}} $\ast$table)
+\begin{DoxyCompactList}\small\item\em \mbox{[}internal use only\mbox{]} Sorts the input hash table to prepare it for binary search \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a8d75b04770914fb2700c7c8f00ace1c0}{quo\+\_\+init\+\_\+window}} (\mbox{\hyperlink{structquo__Window}{quo\+\_\+\+Window}} $\ast$window, int w, int h, quo\+\_\+bool resizable)
+\begin{DoxyCompactList}\small\item\em Open a new window. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_afaf708f70b4c0441f7c833de04acdd39}{quo\+\_\+set\+\_\+window\+\_\+title}} (\mbox{\hyperlink{structquo__Window}{quo\+\_\+\+Window}} $\ast$window, const char $\ast$title)
+\begin{DoxyCompactList}\small\item\em Set the title/caption of a window. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a200f5e3fa4c5e7dc26cc9fe3a601ee3e}{quo\+\_\+update\+\_\+window}} (\mbox{\hyperlink{structquo__Window}{quo\+\_\+\+Window}} $\ast$window)
+\begin{DoxyCompactList}\small\item\em Update a window, to be called at the end of each frame. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_ab382aab2d60d824053a5f0057b55e0bd}{quo\+\_\+update\+\_\+window\+\_\+events}} (\mbox{\hyperlink{structquo__Window}{quo\+\_\+\+Window}} $\ast$window)
+\begin{DoxyCompactList}\small\item\em Update a window\textquotesingle{}s events, to be called at the start of each frame. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_ab35da0414c26e9abe1781a01c52510d7}{quo\+\_\+free\+\_\+window}} (\mbox{\hyperlink{structquo__Window}{quo\+\_\+\+Window}} $\ast$window)
+\begin{DoxyCompactList}\small\item\em Close and destroy a window. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} \mbox{\hyperlink{quo_8h_aa385f9ba3950f3675036edea653e7552}{quo\+\_\+add\+\_\+vec2}} (\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} a, \mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} b)
+\begin{DoxyCompactList}\small\item\em Add two quo\+\_\+vec2s together. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} \mbox{\hyperlink{quo_8h_ae522c02fda64f0af8523a29d658d85a6}{quo\+\_\+subtract\+\_\+vec2}} (\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} a, \mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} b)
+\begin{DoxyCompactList}\small\item\em Subtract a \mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} from another. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} \mbox{\hyperlink{quo_8h_affec23d8d3b444e7755999c746b5bf1c}{quo\+\_\+multiply\+\_\+vec2}} (\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} a, \mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} b)
+\begin{DoxyCompactList}\small\item\em Multiply two quo\+\_\+vec2s. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} \mbox{\hyperlink{quo_8h_abbd3185b4ad67fc5d9f4d3e5a7058ce3}{quo\+\_\+divide\+\_\+vec2}} (\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} a, \mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} b)
+\begin{DoxyCompactList}\small\item\em Divide a \mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} by another. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} \mbox{\hyperlink{quo_8h_aaf87d01b7bb3df94b5e1bdd43e19978d}{quo\+\_\+normalise\+\_\+vec2}} (\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} v)
+\begin{DoxyCompactList}\small\item\em Normalise a \mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}}. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{quo_8h_a29c61a30d8c52546aa3d89ac3d9b4c7a}{quo\+\_\+vec2\+\_\+magnitude}} (\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} v)
+\begin{DoxyCompactList}\small\item\em Calculate the magnitude of a \mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}}. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{quo_8h_a84947c5542b7fab7e216ed95fbe114fb}{quo\+\_\+dot\+\_\+vec2}} (\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} a, \mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} b)
+\begin{DoxyCompactList}\small\item\em Calculate the dot product of two quo\+\_\+vec2s. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} \mbox{\hyperlink{quo_8h_aa3823c29b995c7465aa076f5e87e348a}{quo\+\_\+add\+\_\+vec3}} (\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} a, \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} b)
+\begin{DoxyCompactList}\small\item\em Add two quo\+\_\+vec3s together. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} \mbox{\hyperlink{quo_8h_ac98bb9271f3becddd67460aa369877e3}{quo\+\_\+subtract\+\_\+vec3}} (\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} a, \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} b)
+\begin{DoxyCompactList}\small\item\em Subtract a \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} from another. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} \mbox{\hyperlink{quo_8h_a03fbb85d9a0693d84c59ca0226915914}{quo\+\_\+multiply\+\_\+vec3}} (\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} a, \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} b)
+\begin{DoxyCompactList}\small\item\em Multiply two quo\+\_\+vec3s. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} \mbox{\hyperlink{quo_8h_ad765d90f1b13b645ee33a9cec274e267}{quo\+\_\+divide\+\_\+vec3}} (\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} a, \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} b)
+\begin{DoxyCompactList}\small\item\em Divide a \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} by another. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} \mbox{\hyperlink{quo_8h_ad4cd7aa02697cc0abcc98275d2761eec}{quo\+\_\+normalise\+\_\+vec3}} (\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} v)
+\begin{DoxyCompactList}\small\item\em Normalise a \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}}. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{quo_8h_a7e3a6705faa947dc4a19a8a6868019a6}{quo\+\_\+vec3\+\_\+magnitude}} (\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} v)
+\begin{DoxyCompactList}\small\item\em Calculate the magnitude of a \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} \mbox{\hyperlink{quo_8h_a484ad0b4bcdbfbda76d0cb9f94065832}{quo\+\_\+cross\+\_\+vec3}} (\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} a, \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} b)
+\begin{DoxyCompactList}\small\item\em Calculate the cross product of two a quo\+\_\+vec3s. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{quo_8h_afcb2d9cb1a5b85c54dd0d64bb164e318}{quo\+\_\+dot\+\_\+vec3}} (\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} a, \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} b)
+\begin{DoxyCompactList}\small\item\em Calculate the dot product of two quo\+\_\+vec3s. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structquo__Matrix}{quo\+\_\+\+Matrix}} \mbox{\hyperlink{quo_8h_a01362ae07ffafd0a1a10ec89dca09964}{quo\+\_\+identity}} ()
+\begin{DoxyCompactList}\small\item\em Create an identity matrix. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structquo__Matrix}{quo\+\_\+\+Matrix}} \mbox{\hyperlink{quo_8h_ae2f25c0dacdac4f2f73ba1ead7520f93}{quo\+\_\+translate}} (\mbox{\hyperlink{structquo__Matrix}{quo\+\_\+\+Matrix}} m, \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} translation)
+\begin{DoxyCompactList}\small\item\em Translate a matrix. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structquo__Matrix}{quo\+\_\+\+Matrix}} \mbox{\hyperlink{quo_8h_abf02b3f778da754072721250b5c9da53}{quo\+\_\+rotate}} (\mbox{\hyperlink{structquo__Matrix}{quo\+\_\+\+Matrix}} m, float angle, \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} axis)
+\begin{DoxyCompactList}\small\item\em Rotate a matrix. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structquo__Matrix}{quo\+\_\+\+Matrix}} \mbox{\hyperlink{quo_8h_a459944d4f9ba0d65ac39fcdaf7c7f209}{quo\+\_\+scale}} (\mbox{\hyperlink{structquo__Matrix}{quo\+\_\+\+Matrix}} m, \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} scale)
+\begin{DoxyCompactList}\small\item\em Scale a matrix. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structquo__Matrix}{quo\+\_\+\+Matrix}} \mbox{\hyperlink{quo_8h_aa044b3f89a965b92cd197519c327fc3b}{quo\+\_\+orthographic}} (float left, float right, float bottom, float top, float near\+\_\+plane, float far\+\_\+plane)
+\begin{DoxyCompactList}\small\item\em Create an orthographic projection matrix. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structquo__Matrix}{quo\+\_\+\+Matrix}} \mbox{\hyperlink{quo_8h_a407c9c82e69c60f812114b238fc0b5e1}{quo\+\_\+perspective}} (float fov, float aspect, float near\+\_\+plane, float far\+\_\+plane)
+\begin{DoxyCompactList}\small\item\em Create a perspective projection matrix. \end{DoxyCompactList}\item 
+quo\+\_\+bool \mbox{\hyperlink{quo_8h_a86e2abd9d30f10d14fa6da5193b46468}{quo\+\_\+load\+\_\+bitmap\+\_\+from\+\_\+file}} (const char $\ast$filename, \mbox{\hyperlink{structquo__BitmapImage}{quo\+\_\+\+Bitmap\+Image}} $\ast$image, unsigned int components)
+\begin{DoxyCompactList}\small\item\em Load a bitmap from a file. The file must not have a colour space written to it\textquotesingle{}s header. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_ababd61559d20e5ab1583fb4f346e3c3a}{quo\+\_\+free\+\_\+bitmap}} (\mbox{\hyperlink{structquo__BitmapImage}{quo\+\_\+\+Bitmap\+Image}} $\ast$image)
+\begin{DoxyCompactList}\small\item\em Free a bitmap\textquotesingle{}s pixel data. Should be called once converted into a texture. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a82a6c4a47e0c58996b0432bacb221b66}{quo\+\_\+init\+\_\+texture\+\_\+from\+\_\+bmp}} (\mbox{\hyperlink{structquo__Texture}{quo\+\_\+\+Texture}} $\ast$texture, \mbox{\hyperlink{structquo__BitmapImage}{quo\+\_\+\+Bitmap\+Image}} $\ast$bitmap)
+\begin{DoxyCompactList}\small\item\em Create a texture. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a296489ffd24e47fff56ad79e7bd807ad}{quo\+\_\+free\+\_\+texture}} (\mbox{\hyperlink{structquo__Texture}{quo\+\_\+\+Texture}} $\ast$texture)
+\begin{DoxyCompactList}\small\item\em Free a texture. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a325e0f0c8e4c7e1a0bc92341440d58d6}{quo\+\_\+bind\+\_\+texture}} (\mbox{\hyperlink{structquo__Texture}{quo\+\_\+\+Texture}} $\ast$texture, unsigned int unit)
+\begin{DoxyCompactList}\small\item\em Bind a texture to a texture unit. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_aebea7a9e0728a90ce740395ca6b2338b}\label{quo_8h_aebea7a9e0728a90ce740395ca6b2338b}} 
+void \mbox{\hyperlink{quo_8h_aebea7a9e0728a90ce740395ca6b2338b}{quo\+\_\+unbind\+\_\+texture}} ()
+\begin{DoxyCompactList}\small\item\em Unbind the currently bound texture. \end{DoxyCompactList}\item 
+unsigned long \mbox{\hyperlink{quo_8h_a9d8857f236d29e03fcfd3121f7c04e7e}{quo\+\_\+color\+\_\+from\+\_\+rgb}} (int r, int g, int b)
+\begin{DoxyCompactList}\small\item\em Create a hex colour from red, green and blue values. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_aa64c90c273791526b411ee4d1aea3ed1}{quo\+\_\+init\+\_\+renderer}} (\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$renderer, \mbox{\hyperlink{structquo__Window}{quo\+\_\+\+Window}} $\ast$window)
+\begin{DoxyCompactList}\small\item\em Initialise a new renderer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_af72acdde635cc9e7f5c32b320c09bbde}{quo\+\_\+free\+\_\+renderer}} (\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$renderer)
+\begin{DoxyCompactList}\small\item\em Free a renderer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a1ea781ff70f0b0d450b159e571dfcb89}{quo\+\_\+update\+\_\+renderer}} (\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$renderer)
+\begin{DoxyCompactList}\small\item\em Update a renderer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_aed627d591b0492ff570dd8146609401f}{quo\+\_\+clear\+\_\+renderer}} (unsigned long color)
+\begin{DoxyCompactList}\small\item\em Clear the screen. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a286d921d2275a411e639402df1726dd0}{quo\+\_\+draw\+\_\+rect}} (\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$renderer, \mbox{\hyperlink{structquo__Rect}{quo\+\_\+\+Rect}} rect, unsigned long color)
+\begin{DoxyCompactList}\small\item\em Draw a \mbox{\hyperlink{structquo__Rect}{quo\+\_\+\+Rect}} on the screen. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_aace430c1e0ce2381a07dda88dfa20f6b}{quo\+\_\+draw\+\_\+texture}} (\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$renderer, \mbox{\hyperlink{structquo__Texture}{quo\+\_\+\+Texture}} $\ast$texture, \mbox{\hyperlink{structquo__Rect}{quo\+\_\+\+Rect}} src, \mbox{\hyperlink{structquo__Rect}{quo\+\_\+\+Rect}} dest, unsigned long color)
+\begin{DoxyCompactList}\small\item\em Draw a \mbox{\hyperlink{structquo__Texture}{quo\+\_\+\+Texture}} on the screen. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}} \mbox{\hyperlink{quo_8h_a8c74d495f6ecdb7d5fe24b08aa965444}{quo\+\_\+create\+\_\+shader}} (\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$renderer, const char $\ast$vertex\+\_\+source, const char $\ast$fragment\+\_\+source)
+\begin{DoxyCompactList}\small\item\em Create a new shader. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a6c7a4d1722bd00087834ace2fa581a4d}{quo\+\_\+bind\+\_\+shader}} (\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$renderer, \mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}} shader)
+\begin{DoxyCompactList}\small\item\em Bind a shader. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a78f72cc1b4b9afd1d94115d5e71929e1}{quo\+\_\+shader\+\_\+set\+\_\+color}} (\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$renderer, \mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}} shader, const char $\ast$uniform\+\_\+name, unsigned long color)
+\begin{DoxyCompactList}\small\item\em Set a uniform colour. Note\+: Shader must be bound before calling this function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a107476f0c5c2f36b8582c5e3d0ce2168}{quo\+\_\+shader\+\_\+set\+\_\+float}} (\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$renderer, \mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}} shader, const char $\ast$uniform\+\_\+name, float val)
+\begin{DoxyCompactList}\small\item\em Set a uniform float. Note\+: Shader must be bound before calling this function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a12e1b06bf812c7c0ebdbc7316f5499a4}{quo\+\_\+shader\+\_\+set\+\_\+int}} (\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$renderer, \mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}} shader, const char $\ast$uniform\+\_\+name, int val)
+\begin{DoxyCompactList}\small\item\em Set a uniform integer. Note\+: Shader must be bound before calling this function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a2a6a236f8d4965059f12dbcdb68b94dc}{quo\+\_\+shader\+\_\+set\+\_\+matrix}} (\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$renderer, \mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}} shader, const char $\ast$uniform\+\_\+name, \mbox{\hyperlink{structquo__Matrix}{quo\+\_\+\+Matrix}} m)
+\begin{DoxyCompactList}\small\item\em Set a uniform matrix. Note\+: Shader must be bound before calling this function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a7a0826c80033bc1219205f65310c6475}{quo\+\_\+shader\+\_\+set\+\_\+vec2}} (\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$renderer, \mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}} shader, const char $\ast$uniform\+\_\+name, \mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} val)
+\begin{DoxyCompactList}\small\item\em Set a uniform 2D vector. Note\+: Shader must be bound before calling this function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a965f6a42b6c3d16b56f7c658304fdb60}{quo\+\_\+shader\+\_\+set\+\_\+vec3}} (\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$renderer, \mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}} shader, const char $\ast$uniform\+\_\+name, \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} val)
+\begin{DoxyCompactList}\small\item\em Set a uniform 3D vector. Note\+: Shader must be bound before calling this function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a4b35f564178f80fb821d3671b4b543cf}{quo\+\_\+shader\+\_\+set\+\_\+vec4}} (\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$renderer, \mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}} shader, const char $\ast$uniform\+\_\+name, float x, float y, float z, float w)
+\begin{DoxyCompactList}\small\item\em Set a uniform vector. Note\+: Shader must be bound before calling this function. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a914f62962ae315772b617cfec963e105}\label{quo_8h_a914f62962ae315772b617cfec963e105}} 
+void \mbox{\hyperlink{quo_8h_a914f62962ae315772b617cfec963e105}{quo\+\_\+init\+\_\+input\+\_\+system}} ()
+\begin{DoxyCompactList}\small\item\em Initialise the static input system. Called in quo\+\_\+init\+\_\+window. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a9c05cbf0e91ab669ffb040c903a00686}\label{quo_8h_a9c05cbf0e91ab669ffb040c903a00686}} 
+void \mbox{\hyperlink{quo_8h_a9c05cbf0e91ab669ffb040c903a00686}{quo\+\_\+update\+\_\+input\+\_\+system}} ()
+\begin{DoxyCompactList}\small\item\em Update the input system. Called in quo\+\_\+update. \end{DoxyCompactList}\item 
+quo\+\_\+bool \mbox{\hyperlink{quo_8h_ab98d51ab165d3885be06701cfd072a37}{quo\+\_\+key\+\_\+pressed}} (int key)
+\begin{DoxyCompactList}\small\item\em Check whether a key is currently held down. \end{DoxyCompactList}\item 
+quo\+\_\+bool \mbox{\hyperlink{quo_8h_ab289c2d010a3be7ca761e7d1250b279e}{quo\+\_\+key\+\_\+just\+\_\+pressed}} (int key)
+\begin{DoxyCompactList}\small\item\em Check whether a key has been pressed in the current frame. \end{DoxyCompactList}\item 
+quo\+\_\+bool \mbox{\hyperlink{quo_8h_a7b466f4a3733e75e995b9205377d094e}{quo\+\_\+key\+\_\+just\+\_\+released}} (int key)
+\begin{DoxyCompactList}\small\item\em Check whether a key has been released in the current frame. \end{DoxyCompactList}\item 
+quo\+\_\+bool \mbox{\hyperlink{quo_8h_a3cebdb1f32fdc64aae539f785ced682d}{quo\+\_\+mouse\+\_\+button\+\_\+pressed}} (int button)
+\begin{DoxyCompactList}\small\item\em Check whether a mouse button is currently held down. \end{DoxyCompactList}\item 
+quo\+\_\+bool \mbox{\hyperlink{quo_8h_a26c27314a148ba20cd112e13a1e8255d}{quo\+\_\+mouse\+\_\+button\+\_\+just\+\_\+pressed}} (int button)
+\begin{DoxyCompactList}\small\item\em Check whether a mouse button has been pressed in the current frame. \end{DoxyCompactList}\item 
+quo\+\_\+bool \mbox{\hyperlink{quo_8h_a36330d881cf604bd33b36cb1ce24dfd4}{quo\+\_\+mouse\+\_\+button\+\_\+just\+\_\+released}} (int button)
+\begin{DoxyCompactList}\small\item\em Check whether a mouse button has been released in the current frame. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{quo_8h_a801f674365bec64383b03891fc9d2245}{quo\+\_\+get\+\_\+mouse\+\_\+x}} ()
+\begin{DoxyCompactList}\small\item\em Get the mouse\textquotesingle{}s x coordinate relative to the window. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{quo_8h_a8d1248d8d6146136461913a71bef5e7d}{quo\+\_\+get\+\_\+mouse\+\_\+y}} ()
+\begin{DoxyCompactList}\small\item\em Get the mouse\textquotesingle{}s y coordinate relative to the window. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a76826bad982a1f189949859cd3945948}\label{quo_8h_a76826bad982a1f189949859cd3945948}} 
+void \mbox{\hyperlink{quo_8h_a76826bad982a1f189949859cd3945948}{i\+\_\+quo\+\_\+set\+\_\+key\+\_\+held\+\_\+state}} (int key, quo\+\_\+bool status)
+\begin{DoxyCompactList}\small\item\em FOR INTERNAL USE ONLY. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a436b39f8b0972d5a4df148a207c8e1ba}\label{quo_8h_a436b39f8b0972d5a4df148a207c8e1ba}} 
+void \mbox{\hyperlink{quo_8h_a436b39f8b0972d5a4df148a207c8e1ba}{i\+\_\+quo\+\_\+set\+\_\+key\+\_\+down\+\_\+state}} (int key, quo\+\_\+bool status)
+\begin{DoxyCompactList}\small\item\em FOR INTERNAL USE ONLY. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a15937d9064995e098b4ea59ec3746fa6}\label{quo_8h_a15937d9064995e098b4ea59ec3746fa6}} 
+void \mbox{\hyperlink{quo_8h_a15937d9064995e098b4ea59ec3746fa6}{i\+\_\+quo\+\_\+set\+\_\+key\+\_\+up\+\_\+state}} (int key, quo\+\_\+bool status)
+\begin{DoxyCompactList}\small\item\em FOR INTERNAL USE ONLY. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_ab64785ebc736098dedbfc8cf1be0aa0c}\label{quo_8h_ab64785ebc736098dedbfc8cf1be0aa0c}} 
+void \mbox{\hyperlink{quo_8h_ab64785ebc736098dedbfc8cf1be0aa0c}{i\+\_\+quo\+\_\+set\+\_\+mouse\+\_\+button\+\_\+held\+\_\+state}} (int button, quo\+\_\+bool status)
+\begin{DoxyCompactList}\small\item\em FOR INTERNAL USE ONLY. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a617f61f9f7a6ce64e866e445af14ad6f}\label{quo_8h_a617f61f9f7a6ce64e866e445af14ad6f}} 
+void \mbox{\hyperlink{quo_8h_a617f61f9f7a6ce64e866e445af14ad6f}{i\+\_\+quo\+\_\+set\+\_\+mouse\+\_\+button\+\_\+down\+\_\+state}} (int button, quo\+\_\+bool status)
+\begin{DoxyCompactList}\small\item\em FOR INTERNAL USE ONLY. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_ad0a6f1deb9514c9dac292e0eee151c13}\label{quo_8h_ad0a6f1deb9514c9dac292e0eee151c13}} 
+void \mbox{\hyperlink{quo_8h_ad0a6f1deb9514c9dac292e0eee151c13}{i\+\_\+quo\+\_\+set\+\_\+mouse\+\_\+button\+\_\+up\+\_\+state}} (int button, quo\+\_\+bool status)
+\begin{DoxyCompactList}\small\item\em FOR INTERNAL USE ONLY. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a805a7d0b877b9ddd9f5c16d62e295549}\label{quo_8h_a805a7d0b877b9ddd9f5c16d62e295549}} 
+void \mbox{\hyperlink{quo_8h_a805a7d0b877b9ddd9f5c16d62e295549}{i\+\_\+quo\+\_\+update\+\_\+mouse\+\_\+pos}} (int x, int y)
+\begin{DoxyCompactList}\small\item\em FOR INTERNAL USE ONLY. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a163f96bb05cf0ecf49c2a7f622ac7b71}\label{quo_8h_a163f96bb05cf0ecf49c2a7f622ac7b71}} 
+void \mbox{\hyperlink{quo_8h_a163f96bb05cf0ecf49c2a7f622ac7b71}{quo\+\_\+imgui\+\_\+use\+\_\+default\+\_\+settings}} ()
+\begin{DoxyCompactList}\small\item\em Initialise the IMGUI with default settings. To be called after quo\+\_\+init\+\_\+imgui. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_aa13aa207a8673a40934193dd5cc5e8ee}\label{quo_8h_aa13aa207a8673a40934193dd5cc5e8ee}} 
+void \mbox{\hyperlink{quo_8h_aa13aa207a8673a40934193dd5cc5e8ee}{quo\+\_\+imgui\+\_\+use\+\_\+custom\+\_\+font}} (\mbox{\hyperlink{structquo__Texture}{quo\+\_\+\+Texture}} $\ast$font\+\_\+texture, const char $\ast$char\+\_\+order, unsigned int char\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Initialise the IMGUI with custom settings. To be called after quo\+\_\+init\+\_\+imgui. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a9370d289498f254de95d8e85226575ad}{quo\+\_\+imgui\+\_\+get\+\_\+attribs}} (int $\ast$attribs)
+\begin{DoxyCompactList}\small\item\em Get the attribute array for the IMGUI. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_acc4ac5c536585d5a5c0b032a2d58d9a2}{quo\+\_\+init\+\_\+imgui}} (\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$renderer)
+\begin{DoxyCompactList}\small\item\em Initialise the IMGUI. To be called before any other IMGUI functions. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a0c8658b4dd0759380d8cd461b743c943}\label{quo_8h_a0c8658b4dd0759380d8cd461b743c943}} 
+void \mbox{\hyperlink{quo_8h_a0c8658b4dd0759380d8cd461b743c943}{quo\+\_\+imgui\+\_\+end\+\_\+frame}} ()
+\begin{DoxyCompactList}\small\item\em End the IMGUI frame. To be called at the end of each frame, before quo\+\_\+update\+\_\+window. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_aa505e020597476d2cc2355926d73b18a}\label{quo_8h_aa505e020597476d2cc2355926d73b18a}} 
+void \mbox{\hyperlink{quo_8h_aa505e020597476d2cc2355926d73b18a}{quo\+\_\+free\+\_\+imgui}} ()
+\begin{DoxyCompactList}\small\item\em Free the IMGUI. \end{DoxyCompactList}\item 
+quo\+\_\+bool \mbox{\hyperlink{quo_8h_ae483bdf7fcbe02292c1d68bb58bd4835}{quo\+\_\+imgui\+\_\+button}} (const char $\ast$label)
+\begin{DoxyCompactList}\small\item\em IMGUI button element. \end{DoxyCompactList}\item 
+quo\+\_\+bool \mbox{\hyperlink{quo_8h_aeddea9fc8555a4bfb59907bb8c912010}{quo\+\_\+imgui\+\_\+text}} (const char $\ast$text)
+\begin{DoxyCompactList}\small\item\em IMGUI text element (allows the use of \textbackslash{}n) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a6e78bb4006a62fda91dd477a2668ec0d}{quo\+\_\+byte\+\_\+buffer\+\_\+dump}} (\mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} $\ast$buffer, FILE $\ast$file)
+\begin{DoxyCompactList}\small\item\em Dump the contents of a byte buffer to a file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a56024746c8c08be18b0ec3bf7deda0ad}{quo\+\_\+byte\+\_\+buffer\+\_\+read\+\_\+file}} (\mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} $\ast$buffer, FILE $\ast$file)
+\begin{DoxyCompactList}\small\item\em Read a dumped buffer back from a file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a28ac3df224cf30209f359391ad00cd7d}{quo\+\_\+init\+\_\+byte\+\_\+buffer}} (\mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} $\ast$buffer)
+\begin{DoxyCompactList}\small\item\em Initialise a new byte buffer, with a capacity of QUO\+\_\+\+BYTE\+\_\+\+BUFFER\+\_\+\+DEFAULT\+\_\+\+CAPACITY. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a4926047538d8e6c5c191d32c3230abc6}{quo\+\_\+free\+\_\+byte\+\_\+buffer}} (\mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} $\ast$buffer)
+\begin{DoxyCompactList}\small\item\em Free a byte buffer\textquotesingle{}s memory. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_ae684eeb1e92384573855dbb668227aba}{quo\+\_\+resize\+\_\+byte\+\_\+buffer}} (\mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} $\ast$buffer, unsigned int capacity)
+\begin{DoxyCompactList}\small\item\em Resize a byte buffer to contain more elements. This happens automatically when writing. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a548d0bcb6eb7f9ebcf3d3be3ef9ef96e}\label{quo_8h_a548d0bcb6eb7f9ebcf3d3be3ef9ef96e}} 
+void \mbox{\hyperlink{quo_8h_a548d0bcb6eb7f9ebcf3d3be3ef9ef96e}{i\+\_\+quo\+\_\+byte\+\_\+buffer\+\_\+write\+\_\+impl}} (\mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} $\ast$buffer, void $\ast$data, unsigned int size)
+\begin{DoxyCompactList}\small\item\em FOR INTERNAL USE ONLY. Use the quo\+\_\+byte\+\_\+buffer\+\_\+write macro instead. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Quo is a single-\/header game library written in C. 
+
+This library is standalone, meaning it doesn\textquotesingle{}t depend on anything that doesn\textquotesingle{}t come with the operating system. 
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{quo_8h_aa48ebf5b1b755751cfceac53ee4b2ba3}\label{quo_8h_aa48ebf5b1b755751cfceac53ee4b2ba3}} 
+\index{quo.h@{quo.h}!quo\_byte\_buffer\_read@{quo\_byte\_buffer\_read}}
+\index{quo\_byte\_buffer\_read@{quo\_byte\_buffer\_read}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_byte\_buffer\_read}{quo\_byte\_buffer\_read}}
+{\footnotesize\ttfamily \#define quo\+\_\+byte\+\_\+buffer\+\_\+read(\begin{DoxyParamCaption}\item[{}]{\+\_\+buffer,  }\item[{}]{\+\_\+type,  }\item[{}]{\+\_\+val\+\_\+p }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{\(\backslash\)}
+\DoxyCodeLine{    \_type* \_v = (\_type*)(\_val\_p); \(\backslash\)}
+\DoxyCodeLine{    quo\_ByteBuffer* \_bb = (\_buffer); \(\backslash\)}
+\DoxyCodeLine{    *(\_v) = *(\_type*)(\_bb-\/>data + \_bb-\/>position); \(\backslash\)}
+\DoxyCodeLine{    \_bb-\/>position += \textcolor{keyword}{sizeof}(\_type); \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+
+
+Read some data from a byte buffer at the current position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+buffer} & Pointer to buffer to read from \\
+\hline
+{\em \+\_\+type} & Type of data to be read, eg. int, float \\
+\hline
+{\em \+\_\+val\+\_\+p} & Pointer to value to read into \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a99ac6db25386417803a7b1d3e07f1846}\label{quo_8h_a99ac6db25386417803a7b1d3e07f1846}} 
+\index{quo.h@{quo.h}!quo\_byte\_buffer\_write@{quo\_byte\_buffer\_write}}
+\index{quo\_byte\_buffer\_write@{quo\_byte\_buffer\_write}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_byte\_buffer\_write}{quo\_byte\_buffer\_write}}
+{\footnotesize\ttfamily \#define quo\+\_\+byte\+\_\+buffer\+\_\+write(\begin{DoxyParamCaption}\item[{}]{\+\_\+buffer,  }\item[{}]{\+\_\+type,  }\item[{}]{\+\_\+val }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{\(\backslash\)}
+\DoxyCodeLine{    quo\_ByteBuffer* \_bb = (\_buffer); \(\backslash\)}
+\DoxyCodeLine{    unsigned \textcolor{keywordtype}{int} \_size = \textcolor{keyword}{sizeof}(\_type); \(\backslash\)}
+\DoxyCodeLine{    \_type \_v = \_val; \(\backslash\)}
+\DoxyCodeLine{    i\_quo\_byte\_buffer\_write\_impl(\_bb, (\textcolor{keywordtype}{void}*)\&(\_v), \_size); \(\backslash\)}
+\DoxyCodeLine{\} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+
+
+Write some data to a byte buffer at the current position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+buffer} & Pointer to buffer to write to \\
+\hline
+{\em \+\_\+type} & Type of data to be written, eg. int, float \\
+\hline
+{\em \+\_\+val} & Value to write \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{quo_8h_aa385f9ba3950f3675036edea653e7552}\label{quo_8h_aa385f9ba3950f3675036edea653e7552}} 
+\index{quo.h@{quo.h}!quo\_add\_vec2@{quo\_add\_vec2}}
+\index{quo\_add\_vec2@{quo\_add\_vec2}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_add\_vec2()}{quo\_add\_vec2()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} quo\+\_\+add\+\_\+vec2 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}}}]{a,  }\item[{\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}}}]{b }\end{DoxyParamCaption})}
+
+
+
+Add two quo\+\_\+vec2s together. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & First vector to add \\
+\hline
+{\em b} & Second vector to add \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result of addition 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_aa3823c29b995c7465aa076f5e87e348a}\label{quo_8h_aa3823c29b995c7465aa076f5e87e348a}} 
+\index{quo.h@{quo.h}!quo\_add\_vec3@{quo\_add\_vec3}}
+\index{quo\_add\_vec3@{quo\_add\_vec3}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_add\_vec3()}{quo\_add\_vec3()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} quo\+\_\+add\+\_\+vec3 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}}}]{a,  }\item[{\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}}}]{b }\end{DoxyParamCaption})}
+
+
+
+Add two quo\+\_\+vec3s together. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & First vector to add \\
+\hline
+{\em b} & Second vector to add \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result of addition 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_a6c7a4d1722bd00087834ace2fa581a4d}\label{quo_8h_a6c7a4d1722bd00087834ace2fa581a4d}} 
+\index{quo.h@{quo.h}!quo\_bind\_shader@{quo\_bind\_shader}}
+\index{quo\_bind\_shader@{quo\_bind\_shader}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_bind\_shader()}{quo\_bind\_shader()}}
+{\footnotesize\ttfamily void quo\+\_\+bind\+\_\+shader (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$}]{renderer,  }\item[{\mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}}}]{shader }\end{DoxyParamCaption})}
+
+
+
+Bind a shader. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em renderer} & Pointer to renderer where the shader is stored \\
+\hline
+{\em shader} & Handle to shader to be bound \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a325e0f0c8e4c7e1a0bc92341440d58d6}\label{quo_8h_a325e0f0c8e4c7e1a0bc92341440d58d6}} 
+\index{quo.h@{quo.h}!quo\_bind\_texture@{quo\_bind\_texture}}
+\index{quo\_bind\_texture@{quo\_bind\_texture}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_bind\_texture()}{quo\_bind\_texture()}}
+{\footnotesize\ttfamily void quo\+\_\+bind\+\_\+texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Texture}{quo\+\_\+\+Texture}} $\ast$}]{texture,  }\item[{unsigned int}]{unit }\end{DoxyParamCaption})}
+
+
+
+Bind a texture to a texture unit. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em unit} & Texture unit where the texture will be bound. Should be $<$ 32 \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a6e78bb4006a62fda91dd477a2668ec0d}\label{quo_8h_a6e78bb4006a62fda91dd477a2668ec0d}} 
+\index{quo.h@{quo.h}!quo\_byte\_buffer\_dump@{quo\_byte\_buffer\_dump}}
+\index{quo\_byte\_buffer\_dump@{quo\_byte\_buffer\_dump}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_byte\_buffer\_dump()}{quo\_byte\_buffer\_dump()}}
+{\footnotesize\ttfamily void quo\+\_\+byte\+\_\+buffer\+\_\+dump (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} $\ast$}]{buffer,  }\item[{FILE $\ast$}]{file }\end{DoxyParamCaption})}
+
+
+
+Dump the contents of a byte buffer to a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & Pointer to the buffer which to dump \\
+\hline
+{\em file} & File stream to dump the buffer to \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a56024746c8c08be18b0ec3bf7deda0ad}\label{quo_8h_a56024746c8c08be18b0ec3bf7deda0ad}} 
+\index{quo.h@{quo.h}!quo\_byte\_buffer\_read\_file@{quo\_byte\_buffer\_read\_file}}
+\index{quo\_byte\_buffer\_read\_file@{quo\_byte\_buffer\_read\_file}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_byte\_buffer\_read\_file()}{quo\_byte\_buffer\_read\_file()}}
+{\footnotesize\ttfamily void quo\+\_\+byte\+\_\+buffer\+\_\+read\+\_\+file (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} $\ast$}]{buffer,  }\item[{FILE $\ast$}]{file }\end{DoxyParamCaption})}
+
+
+
+Read a dumped buffer back from a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & Pointer to the buffer to read into \\
+\hline
+{\em file} & File stream containing the raw buffer data \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_aed627d591b0492ff570dd8146609401f}\label{quo_8h_aed627d591b0492ff570dd8146609401f}} 
+\index{quo.h@{quo.h}!quo\_clear\_renderer@{quo\_clear\_renderer}}
+\index{quo\_clear\_renderer@{quo\_clear\_renderer}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_clear\_renderer()}{quo\_clear\_renderer()}}
+{\footnotesize\ttfamily void quo\+\_\+clear\+\_\+renderer (\begin{DoxyParamCaption}\item[{unsigned long}]{color }\end{DoxyParamCaption})}
+
+
+
+Clear the screen. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em color} & Hex colour that the screen will clear to \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a9d8857f236d29e03fcfd3121f7c04e7e}\label{quo_8h_a9d8857f236d29e03fcfd3121f7c04e7e}} 
+\index{quo.h@{quo.h}!quo\_color\_from\_rgb@{quo\_color\_from\_rgb}}
+\index{quo\_color\_from\_rgb@{quo\_color\_from\_rgb}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_color\_from\_rgb()}{quo\_color\_from\_rgb()}}
+{\footnotesize\ttfamily unsigned long quo\+\_\+color\+\_\+from\+\_\+rgb (\begin{DoxyParamCaption}\item[{int}]{r,  }\item[{int}]{g,  }\item[{int}]{b }\end{DoxyParamCaption})}
+
+
+
+Create a hex colour from red, green and blue values. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & Red value \\
+\hline
+{\em g} & Green value \\
+\hline
+{\em b} & Blue value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Hex colour 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_a8c74d495f6ecdb7d5fe24b08aa965444}\label{quo_8h_a8c74d495f6ecdb7d5fe24b08aa965444}} 
+\index{quo.h@{quo.h}!quo\_create\_shader@{quo\_create\_shader}}
+\index{quo\_create\_shader@{quo\_create\_shader}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_create\_shader()}{quo\_create\_shader()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}} quo\+\_\+create\+\_\+shader (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$}]{renderer,  }\item[{const char $\ast$}]{vertex\+\_\+source,  }\item[{const char $\ast$}]{fragment\+\_\+source }\end{DoxyParamCaption})}
+
+
+
+Create a new shader. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em renderer} & Pointer to renderer where to store the shader \\
+\hline
+{\em vertex\+\_\+source} & String source code for the vertex shader \\
+\hline
+{\em fragment\+\_\+source} & String source code for the fragment shader \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A handle to the new shader 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_a484ad0b4bcdbfbda76d0cb9f94065832}\label{quo_8h_a484ad0b4bcdbfbda76d0cb9f94065832}} 
+\index{quo.h@{quo.h}!quo\_cross\_vec3@{quo\_cross\_vec3}}
+\index{quo\_cross\_vec3@{quo\_cross\_vec3}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_cross\_vec3()}{quo\_cross\_vec3()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} quo\+\_\+cross\+\_\+vec3 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}}}]{a,  }\item[{\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}}}]{b }\end{DoxyParamCaption})}
+
+
+
+Calculate the cross product of two a quo\+\_\+vec3s. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & First vector involved in calculation \\
+\hline
+{\em b} & Second vector involved in calculation \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Resulting cross product 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_abbd3185b4ad67fc5d9f4d3e5a7058ce3}\label{quo_8h_abbd3185b4ad67fc5d9f4d3e5a7058ce3}} 
+\index{quo.h@{quo.h}!quo\_divide\_vec2@{quo\_divide\_vec2}}
+\index{quo\_divide\_vec2@{quo\_divide\_vec2}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_divide\_vec2()}{quo\_divide\_vec2()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} quo\+\_\+divide\+\_\+vec2 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}}}]{a,  }\item[{\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}}}]{b }\end{DoxyParamCaption})}
+
+
+
+Divide a \mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} by another. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & Vector to be divided \\
+\hline
+{\em b} & Vector to divide by \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result of division 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_ad765d90f1b13b645ee33a9cec274e267}\label{quo_8h_ad765d90f1b13b645ee33a9cec274e267}} 
+\index{quo.h@{quo.h}!quo\_divide\_vec3@{quo\_divide\_vec3}}
+\index{quo\_divide\_vec3@{quo\_divide\_vec3}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_divide\_vec3()}{quo\_divide\_vec3()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} quo\+\_\+divide\+\_\+vec3 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}}}]{a,  }\item[{\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}}}]{b }\end{DoxyParamCaption})}
+
+
+
+Divide a \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} by another. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & Vector to be divided \\
+\hline
+{\em b} & Vector to divide by \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result of division 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_a84947c5542b7fab7e216ed95fbe114fb}\label{quo_8h_a84947c5542b7fab7e216ed95fbe114fb}} 
+\index{quo.h@{quo.h}!quo\_dot\_vec2@{quo\_dot\_vec2}}
+\index{quo\_dot\_vec2@{quo\_dot\_vec2}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_dot\_vec2()}{quo\_dot\_vec2()}}
+{\footnotesize\ttfamily float quo\+\_\+dot\+\_\+vec2 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}}}]{a,  }\item[{\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}}}]{b }\end{DoxyParamCaption})}
+
+
+
+Calculate the dot product of two quo\+\_\+vec2s. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & First vector involved in the calculation \\
+\hline
+{\em a} & Second vector involved in the calculation \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The dot product of the two vectors 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_afcb2d9cb1a5b85c54dd0d64bb164e318}\label{quo_8h_afcb2d9cb1a5b85c54dd0d64bb164e318}} 
+\index{quo.h@{quo.h}!quo\_dot\_vec3@{quo\_dot\_vec3}}
+\index{quo\_dot\_vec3@{quo\_dot\_vec3}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_dot\_vec3()}{quo\_dot\_vec3()}}
+{\footnotesize\ttfamily float quo\+\_\+dot\+\_\+vec3 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}}}]{a,  }\item[{\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}}}]{b }\end{DoxyParamCaption})}
+
+
+
+Calculate the dot product of two quo\+\_\+vec3s. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & First vector involved in the calculation \\
+\hline
+{\em a} & Second vector involved in the calculation \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The dot product of the two vectors 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_a286d921d2275a411e639402df1726dd0}\label{quo_8h_a286d921d2275a411e639402df1726dd0}} 
+\index{quo.h@{quo.h}!quo\_draw\_rect@{quo\_draw\_rect}}
+\index{quo\_draw\_rect@{quo\_draw\_rect}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_draw\_rect()}{quo\_draw\_rect()}}
+{\footnotesize\ttfamily void quo\+\_\+draw\+\_\+rect (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$}]{renderer,  }\item[{\mbox{\hyperlink{structquo__Rect}{quo\+\_\+\+Rect}}}]{rect,  }\item[{unsigned long}]{color }\end{DoxyParamCaption})}
+
+
+
+Draw a \mbox{\hyperlink{structquo__Rect}{quo\+\_\+\+Rect}} on the screen. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em renderer} & Pointer to renderer to use to draw the rectangle \\
+\hline
+{\em rect} & Rectangle to be drawn \\
+\hline
+{\em color} & Hex colour that the rectangle will be drawn as \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_aace430c1e0ce2381a07dda88dfa20f6b}\label{quo_8h_aace430c1e0ce2381a07dda88dfa20f6b}} 
+\index{quo.h@{quo.h}!quo\_draw\_texture@{quo\_draw\_texture}}
+\index{quo\_draw\_texture@{quo\_draw\_texture}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_draw\_texture()}{quo\_draw\_texture()}}
+{\footnotesize\ttfamily void quo\+\_\+draw\+\_\+texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$}]{renderer,  }\item[{\mbox{\hyperlink{structquo__Texture}{quo\+\_\+\+Texture}} $\ast$}]{texture,  }\item[{\mbox{\hyperlink{structquo__Rect}{quo\+\_\+\+Rect}}}]{src,  }\item[{\mbox{\hyperlink{structquo__Rect}{quo\+\_\+\+Rect}}}]{dest,  }\item[{unsigned long}]{color }\end{DoxyParamCaption})}
+
+
+
+Draw a \mbox{\hyperlink{structquo__Texture}{quo\+\_\+\+Texture}} on the screen. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em renderer} & Pointer to renderer to use to draw the texture \\
+\hline
+{\em texture} & Texture to be drawn \\
+\hline
+{\em src} & Source rectangle. This is the rectangle of the image that will be rendered, in terms of a sprite sheet \\
+\hline
+{\em dest} & Destiniation rectangle. This is the rectangle where the texture will be rendered, in terms of the window \\
+\hline
+{\em color} & Hex colour that the texture will be drawn as. Use 0xffffff (White) to use the original image colours. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_ababd61559d20e5ab1583fb4f346e3c3a}\label{quo_8h_ababd61559d20e5ab1583fb4f346e3c3a}} 
+\index{quo.h@{quo.h}!quo\_free\_bitmap@{quo\_free\_bitmap}}
+\index{quo\_free\_bitmap@{quo\_free\_bitmap}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_free\_bitmap()}{quo\_free\_bitmap()}}
+{\footnotesize\ttfamily void quo\+\_\+free\+\_\+bitmap (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__BitmapImage}{quo\+\_\+\+Bitmap\+Image}} $\ast$}]{image }\end{DoxyParamCaption})}
+
+
+
+Free a bitmap\textquotesingle{}s pixel data. Should be called once converted into a texture. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em image} & Image to free \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a4926047538d8e6c5c191d32c3230abc6}\label{quo_8h_a4926047538d8e6c5c191d32c3230abc6}} 
+\index{quo.h@{quo.h}!quo\_free\_byte\_buffer@{quo\_free\_byte\_buffer}}
+\index{quo\_free\_byte\_buffer@{quo\_free\_byte\_buffer}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_free\_byte\_buffer()}{quo\_free\_byte\_buffer()}}
+{\footnotesize\ttfamily void quo\+\_\+free\+\_\+byte\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} $\ast$}]{buffer }\end{DoxyParamCaption})}
+
+
+
+Free a byte buffer\textquotesingle{}s memory. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & Pointer to the buffer to free \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_af72acdde635cc9e7f5c32b320c09bbde}\label{quo_8h_af72acdde635cc9e7f5c32b320c09bbde}} 
+\index{quo.h@{quo.h}!quo\_free\_renderer@{quo\_free\_renderer}}
+\index{quo\_free\_renderer@{quo\_free\_renderer}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_free\_renderer()}{quo\_free\_renderer()}}
+{\footnotesize\ttfamily void quo\+\_\+free\+\_\+renderer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$}]{renderer }\end{DoxyParamCaption})}
+
+
+
+Free a renderer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em renderer} & Pointer to renderer to be freed \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a296489ffd24e47fff56ad79e7bd807ad}\label{quo_8h_a296489ffd24e47fff56ad79e7bd807ad}} 
+\index{quo.h@{quo.h}!quo\_free\_texture@{quo\_free\_texture}}
+\index{quo\_free\_texture@{quo\_free\_texture}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_free\_texture()}{quo\_free\_texture()}}
+{\footnotesize\ttfamily void quo\+\_\+free\+\_\+texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Texture}{quo\+\_\+\+Texture}} $\ast$}]{texture }\end{DoxyParamCaption})}
+
+
+
+Free a texture. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em texture} & Texture to free \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_ab35da0414c26e9abe1781a01c52510d7}\label{quo_8h_ab35da0414c26e9abe1781a01c52510d7}} 
+\index{quo.h@{quo.h}!quo\_free\_window@{quo\_free\_window}}
+\index{quo\_free\_window@{quo\_free\_window}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_free\_window()}{quo\_free\_window()}}
+{\footnotesize\ttfamily void quo\+\_\+free\+\_\+window (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Window}{quo\+\_\+\+Window}} $\ast$}]{window }\end{DoxyParamCaption})}
+
+
+
+Close and destroy a window. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em window} & Pointer to the window to free \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a801f674365bec64383b03891fc9d2245}\label{quo_8h_a801f674365bec64383b03891fc9d2245}} 
+\index{quo.h@{quo.h}!quo\_get\_mouse\_x@{quo\_get\_mouse\_x}}
+\index{quo\_get\_mouse\_x@{quo\_get\_mouse\_x}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_get\_mouse\_x()}{quo\_get\_mouse\_x()}}
+{\footnotesize\ttfamily int quo\+\_\+get\+\_\+mouse\+\_\+x (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the mouse\textquotesingle{}s x coordinate relative to the window. 
+
+\begin{DoxyReturn}{Returns}
+The mouse\textquotesingle{}s x coordinate relative to the window 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_a8d1248d8d6146136461913a71bef5e7d}\label{quo_8h_a8d1248d8d6146136461913a71bef5e7d}} 
+\index{quo.h@{quo.h}!quo\_get\_mouse\_y@{quo\_get\_mouse\_y}}
+\index{quo\_get\_mouse\_y@{quo\_get\_mouse\_y}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_get\_mouse\_y()}{quo\_get\_mouse\_y()}}
+{\footnotesize\ttfamily int quo\+\_\+get\+\_\+mouse\+\_\+y (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the mouse\textquotesingle{}s y coordinate relative to the window. 
+
+\begin{DoxyReturn}{Returns}
+The mouse\textquotesingle{}s y coordinate relative to the window 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_a01362ae07ffafd0a1a10ec89dca09964}\label{quo_8h_a01362ae07ffafd0a1a10ec89dca09964}} 
+\index{quo.h@{quo.h}!quo\_identity@{quo\_identity}}
+\index{quo\_identity@{quo\_identity}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_identity()}{quo\_identity()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structquo__Matrix}{quo\+\_\+\+Matrix}} quo\+\_\+identity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create an identity matrix. 
+
+\begin{DoxyReturn}{Returns}
+A new identity matrix 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_ae483bdf7fcbe02292c1d68bb58bd4835}\label{quo_8h_ae483bdf7fcbe02292c1d68bb58bd4835}} 
+\index{quo.h@{quo.h}!quo\_imgui\_button@{quo\_imgui\_button}}
+\index{quo\_imgui\_button@{quo\_imgui\_button}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_imgui\_button()}{quo\_imgui\_button()}}
+{\footnotesize\ttfamily quo\+\_\+bool quo\+\_\+imgui\+\_\+button (\begin{DoxyParamCaption}\item[{const char $\ast$}]{label }\end{DoxyParamCaption})}
+
+
+
+IMGUI button element. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em label} & Text to be displayed on the button \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Whether the button has been clicked 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_a9370d289498f254de95d8e85226575ad}\label{quo_8h_a9370d289498f254de95d8e85226575ad}} 
+\index{quo.h@{quo.h}!quo\_imgui\_get\_attribs@{quo\_imgui\_get\_attribs}}
+\index{quo\_imgui\_get\_attribs@{quo\_imgui\_get\_attribs}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_imgui\_get\_attribs()}{quo\_imgui\_get\_attribs()}}
+{\footnotesize\ttfamily void quo\+\_\+imgui\+\_\+get\+\_\+attribs (\begin{DoxyParamCaption}\item[{int $\ast$}]{attribs }\end{DoxyParamCaption})}
+
+
+
+Get the attribute array for the IMGUI. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em attribs} & Array where to place the attribs \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_aeddea9fc8555a4bfb59907bb8c912010}\label{quo_8h_aeddea9fc8555a4bfb59907bb8c912010}} 
+\index{quo.h@{quo.h}!quo\_imgui\_text@{quo\_imgui\_text}}
+\index{quo\_imgui\_text@{quo\_imgui\_text}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_imgui\_text()}{quo\_imgui\_text()}}
+{\footnotesize\ttfamily quo\+\_\+bool quo\+\_\+imgui\+\_\+text (\begin{DoxyParamCaption}\item[{const char $\ast$}]{text }\end{DoxyParamCaption})}
+
+
+
+IMGUI text element (allows the use of \textbackslash{}n) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em text} & Text to be displayed \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Whether the text is hovered 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_a28ac3df224cf30209f359391ad00cd7d}\label{quo_8h_a28ac3df224cf30209f359391ad00cd7d}} 
+\index{quo.h@{quo.h}!quo\_init\_byte\_buffer@{quo\_init\_byte\_buffer}}
+\index{quo\_init\_byte\_buffer@{quo\_init\_byte\_buffer}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_init\_byte\_buffer()}{quo\_init\_byte\_buffer()}}
+{\footnotesize\ttfamily void quo\+\_\+init\+\_\+byte\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} $\ast$}]{buffer }\end{DoxyParamCaption})}
+
+
+
+Initialise a new byte buffer, with a capacity of QUO\+\_\+\+BYTE\+\_\+\+BUFFER\+\_\+\+DEFAULT\+\_\+\+CAPACITY. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & Pointer to the buffer to initialise \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_acc4ac5c536585d5a5c0b032a2d58d9a2}\label{quo_8h_acc4ac5c536585d5a5c0b032a2d58d9a2}} 
+\index{quo.h@{quo.h}!quo\_init\_imgui@{quo\_init\_imgui}}
+\index{quo\_init\_imgui@{quo\_init\_imgui}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_init\_imgui()}{quo\_init\_imgui()}}
+{\footnotesize\ttfamily void quo\+\_\+init\+\_\+imgui (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$}]{renderer }\end{DoxyParamCaption})}
+
+
+
+Initialise the IMGUI. To be called before any other IMGUI functions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em renderer} & Pointer to the renderer for the IMGUI \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_aa64c90c273791526b411ee4d1aea3ed1}\label{quo_8h_aa64c90c273791526b411ee4d1aea3ed1}} 
+\index{quo.h@{quo.h}!quo\_init\_renderer@{quo\_init\_renderer}}
+\index{quo\_init\_renderer@{quo\_init\_renderer}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_init\_renderer()}{quo\_init\_renderer()}}
+{\footnotesize\ttfamily void quo\+\_\+init\+\_\+renderer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$}]{renderer,  }\item[{\mbox{\hyperlink{structquo__Window}{quo\+\_\+\+Window}} $\ast$}]{window }\end{DoxyParamCaption})}
+
+
+
+Initialise a new renderer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em renderer} & Pointer to renderer to be initialised \\
+\hline
+{\em window} & Pointer to window where this renderer will operate \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a82a6c4a47e0c58996b0432bacb221b66}\label{quo_8h_a82a6c4a47e0c58996b0432bacb221b66}} 
+\index{quo.h@{quo.h}!quo\_init\_texture\_from\_bmp@{quo\_init\_texture\_from\_bmp}}
+\index{quo\_init\_texture\_from\_bmp@{quo\_init\_texture\_from\_bmp}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_init\_texture\_from\_bmp()}{quo\_init\_texture\_from\_bmp()}}
+{\footnotesize\ttfamily void quo\+\_\+init\+\_\+texture\+\_\+from\+\_\+bmp (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Texture}{quo\+\_\+\+Texture}} $\ast$}]{texture,  }\item[{\mbox{\hyperlink{structquo__BitmapImage}{quo\+\_\+\+Bitmap\+Image}} $\ast$}]{bitmap }\end{DoxyParamCaption})}
+
+
+
+Create a texture. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em texture} & Resulting texture \\
+\hline
+{\em bitmap} & Raw image data \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a8d75b04770914fb2700c7c8f00ace1c0}\label{quo_8h_a8d75b04770914fb2700c7c8f00ace1c0}} 
+\index{quo.h@{quo.h}!quo\_init\_window@{quo\_init\_window}}
+\index{quo\_init\_window@{quo\_init\_window}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_init\_window()}{quo\_init\_window()}}
+{\footnotesize\ttfamily void quo\+\_\+init\+\_\+window (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Window}{quo\+\_\+\+Window}} $\ast$}]{window,  }\item[{int}]{w,  }\item[{int}]{h,  }\item[{quo\+\_\+bool}]{resizable }\end{DoxyParamCaption})}
+
+
+
+Open a new window. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em window} & Pointer to the window to initialise \\
+\hline
+{\em w} & Height of the new window \\
+\hline
+{\em h} & Width of the new window \\
+\hline
+{\em resizeable} & Flag to set whether the window should be resizable or not \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_ab289c2d010a3be7ca761e7d1250b279e}\label{quo_8h_ab289c2d010a3be7ca761e7d1250b279e}} 
+\index{quo.h@{quo.h}!quo\_key\_just\_pressed@{quo\_key\_just\_pressed}}
+\index{quo\_key\_just\_pressed@{quo\_key\_just\_pressed}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_key\_just\_pressed()}{quo\_key\_just\_pressed()}}
+{\footnotesize\ttfamily quo\+\_\+bool quo\+\_\+key\+\_\+just\+\_\+pressed (\begin{DoxyParamCaption}\item[{int}]{key }\end{DoxyParamCaption})}
+
+
+
+Check whether a key has been pressed in the current frame. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Keycode to be checked \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the key has been pressed in the current frame 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_a7b466f4a3733e75e995b9205377d094e}\label{quo_8h_a7b466f4a3733e75e995b9205377d094e}} 
+\index{quo.h@{quo.h}!quo\_key\_just\_released@{quo\_key\_just\_released}}
+\index{quo\_key\_just\_released@{quo\_key\_just\_released}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_key\_just\_released()}{quo\_key\_just\_released()}}
+{\footnotesize\ttfamily quo\+\_\+bool quo\+\_\+key\+\_\+just\+\_\+released (\begin{DoxyParamCaption}\item[{int}]{key }\end{DoxyParamCaption})}
+
+
+
+Check whether a key has been released in the current frame. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Keycode to be checked \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the key has been released in the current frame 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_ab98d51ab165d3885be06701cfd072a37}\label{quo_8h_ab98d51ab165d3885be06701cfd072a37}} 
+\index{quo.h@{quo.h}!quo\_key\_pressed@{quo\_key\_pressed}}
+\index{quo\_key\_pressed@{quo\_key\_pressed}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_key\_pressed()}{quo\_key\_pressed()}}
+{\footnotesize\ttfamily quo\+\_\+bool quo\+\_\+key\+\_\+pressed (\begin{DoxyParamCaption}\item[{int}]{key }\end{DoxyParamCaption})}
+
+
+
+Check whether a key is currently held down. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Keycode to be checked \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the key is pressed 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_a86e2abd9d30f10d14fa6da5193b46468}\label{quo_8h_a86e2abd9d30f10d14fa6da5193b46468}} 
+\index{quo.h@{quo.h}!quo\_load\_bitmap\_from\_file@{quo\_load\_bitmap\_from\_file}}
+\index{quo\_load\_bitmap\_from\_file@{quo\_load\_bitmap\_from\_file}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_load\_bitmap\_from\_file()}{quo\_load\_bitmap\_from\_file()}}
+{\footnotesize\ttfamily quo\+\_\+bool quo\+\_\+load\+\_\+bitmap\+\_\+from\+\_\+file (\begin{DoxyParamCaption}\item[{const char $\ast$}]{filename,  }\item[{\mbox{\hyperlink{structquo__BitmapImage}{quo\+\_\+\+Bitmap\+Image}} $\ast$}]{image,  }\item[{unsigned int}]{components }\end{DoxyParamCaption})}
+
+
+
+Load a bitmap from a file. The file must not have a colour space written to it\textquotesingle{}s header. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Filename string \\
+\hline
+{\em image} & Raw image data \\
+\hline
+{\em components} & Component count, 3 for RGB, 4 for RGBA \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_a26c27314a148ba20cd112e13a1e8255d}\label{quo_8h_a26c27314a148ba20cd112e13a1e8255d}} 
+\index{quo.h@{quo.h}!quo\_mouse\_button\_just\_pressed@{quo\_mouse\_button\_just\_pressed}}
+\index{quo\_mouse\_button\_just\_pressed@{quo\_mouse\_button\_just\_pressed}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_mouse\_button\_just\_pressed()}{quo\_mouse\_button\_just\_pressed()}}
+{\footnotesize\ttfamily quo\+\_\+bool quo\+\_\+mouse\+\_\+button\+\_\+just\+\_\+pressed (\begin{DoxyParamCaption}\item[{int}]{button }\end{DoxyParamCaption})}
+
+
+
+Check whether a mouse button has been pressed in the current frame. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em button} & Mouse button code to be checked \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the mouse button has been pressed in the current frame 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_a36330d881cf604bd33b36cb1ce24dfd4}\label{quo_8h_a36330d881cf604bd33b36cb1ce24dfd4}} 
+\index{quo.h@{quo.h}!quo\_mouse\_button\_just\_released@{quo\_mouse\_button\_just\_released}}
+\index{quo\_mouse\_button\_just\_released@{quo\_mouse\_button\_just\_released}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_mouse\_button\_just\_released()}{quo\_mouse\_button\_just\_released()}}
+{\footnotesize\ttfamily quo\+\_\+bool quo\+\_\+mouse\+\_\+button\+\_\+just\+\_\+released (\begin{DoxyParamCaption}\item[{int}]{button }\end{DoxyParamCaption})}
+
+
+
+Check whether a mouse button has been released in the current frame. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em button} & Mouse button code to be checked \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the mouse button has been released in the current frame 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_a3cebdb1f32fdc64aae539f785ced682d}\label{quo_8h_a3cebdb1f32fdc64aae539f785ced682d}} 
+\index{quo.h@{quo.h}!quo\_mouse\_button\_pressed@{quo\_mouse\_button\_pressed}}
+\index{quo\_mouse\_button\_pressed@{quo\_mouse\_button\_pressed}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_mouse\_button\_pressed()}{quo\_mouse\_button\_pressed()}}
+{\footnotesize\ttfamily quo\+\_\+bool quo\+\_\+mouse\+\_\+button\+\_\+pressed (\begin{DoxyParamCaption}\item[{int}]{button }\end{DoxyParamCaption})}
+
+
+
+Check whether a mouse button is currently held down. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em button} & Mouse button code to be checked \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the mouse button is pressed 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_affec23d8d3b444e7755999c746b5bf1c}\label{quo_8h_affec23d8d3b444e7755999c746b5bf1c}} 
+\index{quo.h@{quo.h}!quo\_multiply\_vec2@{quo\_multiply\_vec2}}
+\index{quo\_multiply\_vec2@{quo\_multiply\_vec2}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_multiply\_vec2()}{quo\_multiply\_vec2()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} quo\+\_\+multiply\+\_\+vec2 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}}}]{a,  }\item[{\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}}}]{b }\end{DoxyParamCaption})}
+
+
+
+Multiply two quo\+\_\+vec2s. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & First vector to multiply \\
+\hline
+{\em b} & Second vector to multiply \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result of multiplication 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_a03fbb85d9a0693d84c59ca0226915914}\label{quo_8h_a03fbb85d9a0693d84c59ca0226915914}} 
+\index{quo.h@{quo.h}!quo\_multiply\_vec3@{quo\_multiply\_vec3}}
+\index{quo\_multiply\_vec3@{quo\_multiply\_vec3}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_multiply\_vec3()}{quo\_multiply\_vec3()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} quo\+\_\+multiply\+\_\+vec3 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}}}]{a,  }\item[{\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}}}]{b }\end{DoxyParamCaption})}
+
+
+
+Multiply two quo\+\_\+vec3s. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & First vector to multiply \\
+\hline
+{\em b} & Second vector to multiply \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result of multiplication 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_aaf87d01b7bb3df94b5e1bdd43e19978d}\label{quo_8h_aaf87d01b7bb3df94b5e1bdd43e19978d}} 
+\index{quo.h@{quo.h}!quo\_normalise\_vec2@{quo\_normalise\_vec2}}
+\index{quo\_normalise\_vec2@{quo\_normalise\_vec2}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_normalise\_vec2()}{quo\_normalise\_vec2()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} quo\+\_\+normalise\+\_\+vec2 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}}}]{v }\end{DoxyParamCaption})}
+
+
+
+Normalise a \mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & Vector to be normalised \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The normalised \mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_ad4cd7aa02697cc0abcc98275d2761eec}\label{quo_8h_ad4cd7aa02697cc0abcc98275d2761eec}} 
+\index{quo.h@{quo.h}!quo\_normalise\_vec3@{quo\_normalise\_vec3}}
+\index{quo\_normalise\_vec3@{quo\_normalise\_vec3}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_normalise\_vec3()}{quo\_normalise\_vec3()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} quo\+\_\+normalise\+\_\+vec3 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}}}]{v }\end{DoxyParamCaption})}
+
+
+
+Normalise a \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & Vector to be normalised \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Normalised vector 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_aa044b3f89a965b92cd197519c327fc3b}\label{quo_8h_aa044b3f89a965b92cd197519c327fc3b}} 
+\index{quo.h@{quo.h}!quo\_orthographic@{quo\_orthographic}}
+\index{quo\_orthographic@{quo\_orthographic}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_orthographic()}{quo\_orthographic()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structquo__Matrix}{quo\+\_\+\+Matrix}} quo\+\_\+orthographic (\begin{DoxyParamCaption}\item[{float}]{left,  }\item[{float}]{right,  }\item[{float}]{bottom,  }\item[{float}]{top,  }\item[{float}]{near\+\_\+plane,  }\item[{float}]{far\+\_\+plane }\end{DoxyParamCaption})}
+
+
+
+Create an orthographic projection matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & Left bound \\
+\hline
+{\em right} & Right bound \\
+\hline
+{\em bottom} & Lower bound \\
+\hline
+{\em top} & Upper bound \\
+\hline
+{\em near\+\_\+plane} & Near clipping plane \\
+\hline
+{\em far\+\_\+plane} & Far clipping plane \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The new orthographic projection matrix 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_a407c9c82e69c60f812114b238fc0b5e1}\label{quo_8h_a407c9c82e69c60f812114b238fc0b5e1}} 
+\index{quo.h@{quo.h}!quo\_perspective@{quo\_perspective}}
+\index{quo\_perspective@{quo\_perspective}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_perspective()}{quo\_perspective()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structquo__Matrix}{quo\+\_\+\+Matrix}} quo\+\_\+perspective (\begin{DoxyParamCaption}\item[{float}]{fov,  }\item[{float}]{aspect,  }\item[{float}]{near\+\_\+plane,  }\item[{float}]{far\+\_\+plane }\end{DoxyParamCaption})}
+
+
+
+Create a perspective projection matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fov} & Field of view in degrees \\
+\hline
+{\em aspect} & Aspect ratio \\
+\hline
+{\em near\+\_\+plane} & Near clipping plane \\
+\hline
+{\em far\+\_\+plane} & Far clipping plane \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The new perspective projection matrix 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_ae684eeb1e92384573855dbb668227aba}\label{quo_8h_ae684eeb1e92384573855dbb668227aba}} 
+\index{quo.h@{quo.h}!quo\_resize\_byte\_buffer@{quo\_resize\_byte\_buffer}}
+\index{quo\_resize\_byte\_buffer@{quo\_resize\_byte\_buffer}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_resize\_byte\_buffer()}{quo\_resize\_byte\_buffer()}}
+{\footnotesize\ttfamily void quo\+\_\+resize\+\_\+byte\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} $\ast$}]{buffer,  }\item[{unsigned int}]{capacity }\end{DoxyParamCaption})}
+
+
+
+Resize a byte buffer to contain more elements. This happens automatically when writing. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & Pointer to buffer to resize \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_abf02b3f778da754072721250b5c9da53}\label{quo_8h_abf02b3f778da754072721250b5c9da53}} 
+\index{quo.h@{quo.h}!quo\_rotate@{quo\_rotate}}
+\index{quo\_rotate@{quo\_rotate}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_rotate()}{quo\_rotate()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structquo__Matrix}{quo\+\_\+\+Matrix}} quo\+\_\+rotate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Matrix}{quo\+\_\+\+Matrix}}}]{m,  }\item[{float}]{angle,  }\item[{\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}}}]{axis }\end{DoxyParamCaption})}
+
+
+
+Rotate a matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em m} & Matrix to be rotated \\
+\hline
+{\em angle} & Angle of rotation to be applied in degrees \\
+\hline
+{\em axis} & Axis on which to apply rotation \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The rotated matrix 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_a459944d4f9ba0d65ac39fcdaf7c7f209}\label{quo_8h_a459944d4f9ba0d65ac39fcdaf7c7f209}} 
+\index{quo.h@{quo.h}!quo\_scale@{quo\_scale}}
+\index{quo\_scale@{quo\_scale}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_scale()}{quo\_scale()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structquo__Matrix}{quo\+\_\+\+Matrix}} quo\+\_\+scale (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Matrix}{quo\+\_\+\+Matrix}}}]{m,  }\item[{\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}}}]{scale }\end{DoxyParamCaption})}
+
+
+
+Scale a matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em m} & Matrix to be scaled \\
+\hline
+{\em scale} & Rotation to be applied \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The rotated matrix 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_afaf708f70b4c0441f7c833de04acdd39}\label{quo_8h_afaf708f70b4c0441f7c833de04acdd39}} 
+\index{quo.h@{quo.h}!quo\_set\_window\_title@{quo\_set\_window\_title}}
+\index{quo\_set\_window\_title@{quo\_set\_window\_title}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_set\_window\_title()}{quo\_set\_window\_title()}}
+{\footnotesize\ttfamily void quo\+\_\+set\+\_\+window\+\_\+title (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Window}{quo\+\_\+\+Window}} $\ast$}]{window,  }\item[{const char $\ast$}]{title }\end{DoxyParamCaption})}
+
+
+
+Set the title/caption of a window. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em window} & Pointer to the window to set title \\
+\hline
+{\em title} & New title string \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a78f72cc1b4b9afd1d94115d5e71929e1}\label{quo_8h_a78f72cc1b4b9afd1d94115d5e71929e1}} 
+\index{quo.h@{quo.h}!quo\_shader\_set\_color@{quo\_shader\_set\_color}}
+\index{quo\_shader\_set\_color@{quo\_shader\_set\_color}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_shader\_set\_color()}{quo\_shader\_set\_color()}}
+{\footnotesize\ttfamily void quo\+\_\+shader\+\_\+set\+\_\+color (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$}]{renderer,  }\item[{\mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}}}]{shader,  }\item[{const char $\ast$}]{uniform\+\_\+name,  }\item[{unsigned long}]{color }\end{DoxyParamCaption})}
+
+
+
+Set a uniform colour. Note\+: Shader must be bound before calling this function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em renderer} & Pointer to renderer where the shader is stored \\
+\hline
+{\em shader} & Handle to the shader who\textquotesingle{}s uniform to set \\
+\hline
+{\em uniform\+\_\+name} & Name of the uniform to be set \\
+\hline
+{\em color} & Value to be set in the shader \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a107476f0c5c2f36b8582c5e3d0ce2168}\label{quo_8h_a107476f0c5c2f36b8582c5e3d0ce2168}} 
+\index{quo.h@{quo.h}!quo\_shader\_set\_float@{quo\_shader\_set\_float}}
+\index{quo\_shader\_set\_float@{quo\_shader\_set\_float}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_shader\_set\_float()}{quo\_shader\_set\_float()}}
+{\footnotesize\ttfamily void quo\+\_\+shader\+\_\+set\+\_\+float (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$}]{renderer,  }\item[{\mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}}}]{shader,  }\item[{const char $\ast$}]{uniform\+\_\+name,  }\item[{float}]{val }\end{DoxyParamCaption})}
+
+
+
+Set a uniform float. Note\+: Shader must be bound before calling this function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em renderer} & Pointer to renderer where the shader is stored \\
+\hline
+{\em shader} & Handle to the shader who\textquotesingle{}s uniform to set \\
+\hline
+{\em uniform\+\_\+name} & Name of the uniform to be set \\
+\hline
+{\em val} & Value to be set in the shader \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a12e1b06bf812c7c0ebdbc7316f5499a4}\label{quo_8h_a12e1b06bf812c7c0ebdbc7316f5499a4}} 
+\index{quo.h@{quo.h}!quo\_shader\_set\_int@{quo\_shader\_set\_int}}
+\index{quo\_shader\_set\_int@{quo\_shader\_set\_int}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_shader\_set\_int()}{quo\_shader\_set\_int()}}
+{\footnotesize\ttfamily void quo\+\_\+shader\+\_\+set\+\_\+int (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$}]{renderer,  }\item[{\mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}}}]{shader,  }\item[{const char $\ast$}]{uniform\+\_\+name,  }\item[{int}]{val }\end{DoxyParamCaption})}
+
+
+
+Set a uniform integer. Note\+: Shader must be bound before calling this function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em renderer} & Pointer to renderer where the shader is stored \\
+\hline
+{\em shader} & Handle to the shader who\textquotesingle{}s uniform to set \\
+\hline
+{\em uniform\+\_\+name} & Name of the uniform to be set \\
+\hline
+{\em val} & Value to be set in the shader \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a2a6a236f8d4965059f12dbcdb68b94dc}\label{quo_8h_a2a6a236f8d4965059f12dbcdb68b94dc}} 
+\index{quo.h@{quo.h}!quo\_shader\_set\_matrix@{quo\_shader\_set\_matrix}}
+\index{quo\_shader\_set\_matrix@{quo\_shader\_set\_matrix}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_shader\_set\_matrix()}{quo\_shader\_set\_matrix()}}
+{\footnotesize\ttfamily void quo\+\_\+shader\+\_\+set\+\_\+matrix (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$}]{renderer,  }\item[{\mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}}}]{shader,  }\item[{const char $\ast$}]{uniform\+\_\+name,  }\item[{\mbox{\hyperlink{structquo__Matrix}{quo\+\_\+\+Matrix}}}]{m }\end{DoxyParamCaption})}
+
+
+
+Set a uniform matrix. Note\+: Shader must be bound before calling this function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em renderer} & Pointer to renderer where the shader is stored \\
+\hline
+{\em shader} & Handle to the shader who\textquotesingle{}s uniform to set \\
+\hline
+{\em uniform\+\_\+name} & Name of the uniform to be set \\
+\hline
+{\em m} & Matrix to be set in the shader \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a7a0826c80033bc1219205f65310c6475}\label{quo_8h_a7a0826c80033bc1219205f65310c6475}} 
+\index{quo.h@{quo.h}!quo\_shader\_set\_vec2@{quo\_shader\_set\_vec2}}
+\index{quo\_shader\_set\_vec2@{quo\_shader\_set\_vec2}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_shader\_set\_vec2()}{quo\_shader\_set\_vec2()}}
+{\footnotesize\ttfamily void quo\+\_\+shader\+\_\+set\+\_\+vec2 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$}]{renderer,  }\item[{\mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}}}]{shader,  }\item[{const char $\ast$}]{uniform\+\_\+name,  }\item[{\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}}}]{val }\end{DoxyParamCaption})}
+
+
+
+Set a uniform 2D vector. Note\+: Shader must be bound before calling this function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em renderer} & Pointer to renderer where the shader is stored \\
+\hline
+{\em shader} & Handle to the shader who\textquotesingle{}s uniform to set \\
+\hline
+{\em uniform\+\_\+name} & Name of the uniform to be set \\
+\hline
+{\em val} & Vector to be set in the shader \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a965f6a42b6c3d16b56f7c658304fdb60}\label{quo_8h_a965f6a42b6c3d16b56f7c658304fdb60}} 
+\index{quo.h@{quo.h}!quo\_shader\_set\_vec3@{quo\_shader\_set\_vec3}}
+\index{quo\_shader\_set\_vec3@{quo\_shader\_set\_vec3}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_shader\_set\_vec3()}{quo\_shader\_set\_vec3()}}
+{\footnotesize\ttfamily void quo\+\_\+shader\+\_\+set\+\_\+vec3 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$}]{renderer,  }\item[{\mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}}}]{shader,  }\item[{const char $\ast$}]{uniform\+\_\+name,  }\item[{\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}}}]{val }\end{DoxyParamCaption})}
+
+
+
+Set a uniform 3D vector. Note\+: Shader must be bound before calling this function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em renderer} & Pointer to renderer where the shader is stored \\
+\hline
+{\em shader} & Handle to the shader who\textquotesingle{}s uniform to set \\
+\hline
+{\em uniform\+\_\+name} & Name of the uniform to be set \\
+\hline
+{\em val} & Vector to be set in the shader \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a4b35f564178f80fb821d3671b4b543cf}\label{quo_8h_a4b35f564178f80fb821d3671b4b543cf}} 
+\index{quo.h@{quo.h}!quo\_shader\_set\_vec4@{quo\_shader\_set\_vec4}}
+\index{quo\_shader\_set\_vec4@{quo\_shader\_set\_vec4}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_shader\_set\_vec4()}{quo\_shader\_set\_vec4()}}
+{\footnotesize\ttfamily void quo\+\_\+shader\+\_\+set\+\_\+vec4 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$}]{renderer,  }\item[{\mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}}}]{shader,  }\item[{const char $\ast$}]{uniform\+\_\+name,  }\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{float}]{w }\end{DoxyParamCaption})}
+
+
+
+Set a uniform vector. Note\+: Shader must be bound before calling this function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em renderer} & Pointer to renderer where the shader is stored \\
+\hline
+{\em shader} & Handle to the shader who\textquotesingle{}s uniform to set \\
+\hline
+{\em uniform\+\_\+name} & Name of the uniform to be set \\
+\hline
+{\em x} & X value to be set in the shader \\
+\hline
+{\em y} & Y value to be set in the shader \\
+\hline
+{\em z} & Z value to be set in the \\
+\hline
+{\em w} & W value to be set in the shader \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_ae522c02fda64f0af8523a29d658d85a6}\label{quo_8h_ae522c02fda64f0af8523a29d658d85a6}} 
+\index{quo.h@{quo.h}!quo\_subtract\_vec2@{quo\_subtract\_vec2}}
+\index{quo\_subtract\_vec2@{quo\_subtract\_vec2}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_subtract\_vec2()}{quo\_subtract\_vec2()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} quo\+\_\+subtract\+\_\+vec2 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}}}]{a,  }\item[{\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}}}]{b }\end{DoxyParamCaption})}
+
+
+
+Subtract a \mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}} from another. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & Vector to subtract from \\
+\hline
+{\em b} & Vector to subtract \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result of subtraction 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_ac98bb9271f3becddd67460aa369877e3}\label{quo_8h_ac98bb9271f3becddd67460aa369877e3}} 
+\index{quo.h@{quo.h}!quo\_subtract\_vec3@{quo\_subtract\_vec3}}
+\index{quo\_subtract\_vec3@{quo\_subtract\_vec3}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_subtract\_vec3()}{quo\_subtract\_vec3()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} quo\+\_\+subtract\+\_\+vec3 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}}}]{a,  }\item[{\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}}}]{b }\end{DoxyParamCaption})}
+
+
+
+Subtract a \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}} from another. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & Vector to subtract from \\
+\hline
+{\em b} & Vector to subtract \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result of subtraction 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_ae2f25c0dacdac4f2f73ba1ead7520f93}\label{quo_8h_ae2f25c0dacdac4f2f73ba1ead7520f93}} 
+\index{quo.h@{quo.h}!quo\_translate@{quo\_translate}}
+\index{quo\_translate@{quo\_translate}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_translate()}{quo\_translate()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structquo__Matrix}{quo\+\_\+\+Matrix}} quo\+\_\+translate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Matrix}{quo\+\_\+\+Matrix}}}]{m,  }\item[{\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}}}]{translation }\end{DoxyParamCaption})}
+
+
+
+Translate a matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em m} & Matrix to be translated \\
+\hline
+{\em translation} & Translation to be applied \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The translated matrix 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_a1ea781ff70f0b0d450b159e571dfcb89}\label{quo_8h_a1ea781ff70f0b0d450b159e571dfcb89}} 
+\index{quo.h@{quo.h}!quo\_update\_renderer@{quo\_update\_renderer}}
+\index{quo\_update\_renderer@{quo\_update\_renderer}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_update\_renderer()}{quo\_update\_renderer()}}
+{\footnotesize\ttfamily void quo\+\_\+update\+\_\+renderer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$}]{renderer }\end{DoxyParamCaption})}
+
+
+
+Update a renderer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em renderer} & Pointer to renderer to be updated \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a200f5e3fa4c5e7dc26cc9fe3a601ee3e}\label{quo_8h_a200f5e3fa4c5e7dc26cc9fe3a601ee3e}} 
+\index{quo.h@{quo.h}!quo\_update\_window@{quo\_update\_window}}
+\index{quo\_update\_window@{quo\_update\_window}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_update\_window()}{quo\_update\_window()}}
+{\footnotesize\ttfamily void quo\+\_\+update\+\_\+window (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Window}{quo\+\_\+\+Window}} $\ast$}]{window }\end{DoxyParamCaption})}
+
+
+
+Update a window, to be called at the end of each frame. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em window} & Pointer to the window to update \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_ab382aab2d60d824053a5f0057b55e0bd}\label{quo_8h_ab382aab2d60d824053a5f0057b55e0bd}} 
+\index{quo.h@{quo.h}!quo\_update\_window\_events@{quo\_update\_window\_events}}
+\index{quo\_update\_window\_events@{quo\_update\_window\_events}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_update\_window\_events()}{quo\_update\_window\_events()}}
+{\footnotesize\ttfamily void quo\+\_\+update\+\_\+window\+\_\+events (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Window}{quo\+\_\+\+Window}} $\ast$}]{window }\end{DoxyParamCaption})}
+
+
+
+Update a window\textquotesingle{}s events, to be called at the start of each frame. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em window} & Pointer to the window to update events \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a29c61a30d8c52546aa3d89ac3d9b4c7a}\label{quo_8h_a29c61a30d8c52546aa3d89ac3d9b4c7a}} 
+\index{quo.h@{quo.h}!quo\_vec2\_magnitude@{quo\_vec2\_magnitude}}
+\index{quo\_vec2\_magnitude@{quo\_vec2\_magnitude}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_vec2\_magnitude()}{quo\_vec2\_magnitude()}}
+{\footnotesize\ttfamily float quo\+\_\+vec2\+\_\+magnitude (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}}}]{v }\end{DoxyParamCaption})}
+
+
+
+Calculate the magnitude of a \mbox{\hyperlink{structquo__vec2}{quo\+\_\+vec2}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & Vector to calculate magnitude \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The magnitude of the vector 
+\end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_a7e3a6705faa947dc4a19a8a6868019a6}\label{quo_8h_a7e3a6705faa947dc4a19a8a6868019a6}} 
+\index{quo.h@{quo.h}!quo\_vec3\_magnitude@{quo\_vec3\_magnitude}}
+\index{quo\_vec3\_magnitude@{quo\_vec3\_magnitude}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_vec3\_magnitude()}{quo\_vec3\_magnitude()}}
+{\footnotesize\ttfamily float quo\+\_\+vec3\+\_\+magnitude (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}}}]{v }\end{DoxyParamCaption})}
+
+
+
+Calculate the magnitude of a \mbox{\hyperlink{structquo__vec3}{quo\+\_\+vec3}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & Vector to calculate magnitude \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The magnitude of the vector 
+\end{DoxyReturn}

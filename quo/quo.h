@@ -81,6 +81,8 @@ int main() {
 extern "C" {
 #endif
 
+#include <stdio.h>
+
 /* Boolean type */
 typedef char quo_bool;
 #define true 1
@@ -1107,6 +1109,95 @@ quo_bool quo_imgui_text(const char* text);
  * END IMGUI
  * -----------------------*/
 
+/* -----------------------
+ * START SERIALISATION
+ * -----------------------*/
+
+/**
+ * @brief The default size of a byte buffer
+ */
+#define QUO_BYTE_BUFFER_DEFAULT_CAPACITY 1024
+
+/**
+ * @brief A buffer for holding generic data
+ */
+typedef struct quo_ByteBuffer {
+	char* data;  /**< Raw data array */
+	unsigned int position;  /**< Position of where to read the next byte from */
+	unsigned int size;  /**< Current size of the buffer, increases as elements are added */
+	unsigned int capacity;  /**< Maximum capacity of the buffer */
+} quo_ByteBuffer;
+
+/**
+ * @brief Dump the contents of a byte buffer to a file
+ * @param buffer Pointer to the buffer which to dump
+ * @param file File stream to dump the buffer to
+ */
+void quo_byte_buffer_dump(quo_ByteBuffer* buffer, FILE* file);
+
+/**
+ * @brief Read a dumped buffer back from a file
+ * @param buffer Pointer to the buffer to read into
+ * @param file File stream containing the raw buffer data
+ */
+void quo_byte_buffer_read_file(quo_ByteBuffer* buffer, FILE* file);
+
+/**
+ * @brief Initialise a new byte buffer, with a capacity of QUO_BYTE_BUFFER_DEFAULT_CAPACITY
+ * @param buffer Pointer to the buffer to initialise
+ */
+void quo_init_byte_buffer(quo_ByteBuffer* buffer);
+
+/**
+ * @brief Free a byte buffer's memory
+ * @param buffer Pointer to the buffer to free
+ */
+void quo_free_byte_buffer(quo_ByteBuffer* buffer);
+
+/**
+ * @brief Resize a byte buffer to contain more elements. This happens automatically when writing.
+ * @param buffer Pointer to buffer to resize
+ */
+void quo_resize_byte_buffer(quo_ByteBuffer* buffer, unsigned int capacity);
+
+/**
+ * @brief FOR INTERNAL USE ONLY. Use the quo_byte_buffer_write macro instead.
+ */
+void i_quo_byte_buffer_write_impl(quo_ByteBuffer* buffer, void* data, unsigned int size);
+
+
+/**
+ * @brief Write some data to a byte buffer at the current position
+ * @param _buffer Pointer to buffer to write to
+ * @param _type Type of data to be written, eg. int, float
+ * @param _val Value to write
+ */
+#define quo_byte_buffer_write(_buffer, _type, _val) \
+do {\
+	quo_ByteBuffer* _bb = (_buffer); \
+	unsigned int _size = sizeof(_type); \
+	_type _v = _val; \
+	i_quo_byte_buffer_write_impl(_bb, (void*)&(_v), _size); \
+} while (0)
+
+/**
+ * @brief Read some data from a byte buffer at the current position
+ * @param _buffer Pointer to buffer to read from
+ * @param _type Type of data to be read, eg. int, float
+ * @param _val_p Pointer to value to read into
+ */
+#define quo_byte_buffer_read(_buffer, _type, _val_p) \
+do {\
+	_type* _v = (_type*)(_val_p); \
+	quo_ByteBuffer* _bb = (_buffer); \
+	*(_v) = *(_type*)(_bb->data + _bb->position); \
+	_bb->position += sizeof(_type); \
+} while (0)
+
+/* -----------------------
+ * END SERIALISATION
+ * -----------------------*/
+
 /*  _____                 _                           _        _   _
  * |_   _|               | |                         | |      | | (_)
  *   | |  _ __ ___  _ __ | | ___ _ __ ___   ___ _ __ | |_ __ _| |_ _  ___  _ __
@@ -1125,7 +1216,6 @@ static unsigned char dos_image_font_data[] = {0xFF,0x00,0xFF,0xFF,0x00,0xFF,0xFF
 /* C standard includes */
 #include <assert.h>
 #include <math.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
@@ -2783,6 +2873,77 @@ quo_bool quo_imgui_text(const char* text) {
 
 /* -----------------------
  * END IMGUI
+ * -----------------------*/
+
+/* -----------------------
+ * START SERIALISATION
+ * -----------------------*/
+
+void quo_init_byte_buffer(quo_ByteBuffer* buffer) {
+	assert(buffer != NULL);
+
+	buffer->data = malloc(QUO_BYTE_BUFFER_DEFAULT_CAPACITY);
+	memset(buffer->data, 0, QUO_BYTE_BUFFER_DEFAULT_CAPACITY);
+	buffer->capacity = QUO_BYTE_BUFFER_DEFAULT_CAPACITY;
+	buffer->size = 0;
+	buffer->position = 0;
+}
+
+void quo_free_byte_buffer(quo_ByteBuffer* buffer) {
+	assert(buffer != NULL);
+
+	free(buffer->data);
+
+	buffer->capacity = 0;
+	buffer->size = 0;
+	buffer->position = 0;
+}
+
+void quo_resize_byte_buffer(quo_ByteBuffer* buffer, unsigned int capacity) {
+	buffer->data = realloc(buffer->data, capacity);
+}
+
+void quo_byte_buffer_dump(quo_ByteBuffer* buffer, FILE* file) {
+	assert(buffer != NULL);
+	assert(file != NULL);
+
+	fwrite(&buffer->size, 1, sizeof(uint32_t), file);
+	fwrite(&buffer->capacity, 1, sizeof(uint32_t), file);
+
+	fwrite(buffer->data, 1, buffer->size, file);
+}
+
+void quo_byte_buffer_read_file(quo_ByteBuffer* buffer, FILE* file) {
+	assert(buffer != NULL);
+	assert(file != NULL);
+
+	fread(&buffer->size, sizeof(uint32_t), 1, file);
+	fread(&buffer->capacity, sizeof(uint32_t), 1, file);
+
+	buffer->data = malloc(buffer->capacity);
+	memset(buffer->data, 0, buffer->capacity);
+
+	fread(buffer->data, buffer->size, 1, file);
+
+	buffer->position = 0;
+}
+
+void i_quo_byte_buffer_write_impl(quo_ByteBuffer* buffer, void* data, unsigned int size) {
+	unsigned int total_write_size = buffer->position + size;
+	if (total_write_size >= buffer->capacity) {
+		unsigned int new_capacity = buffer->capacity ? buffer->capacity * 2 : QUO_BYTE_BUFFER_DEFAULT_CAPACITY;
+		while (new_capacity < total_write_size) {
+			new_capacity *= 2;
+		}
+		quo_resize_byte_buffer(buffer, new_capacity);
+	}
+	memcpy(buffer->data + buffer->position, data, size);
+	buffer->position += size;
+	buffer->size += size;
+}
+
+/* -----------------------
+ * END SERIALISATION
  * -----------------------*/
 
 

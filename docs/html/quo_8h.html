@@ -77,7 +77,13 @@ $(function() {
 
 <p>Quo is a single-header game library written in C.  
 <a href="#details">More...</a></p>
-
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for quo.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="quo_8h__incl.png" border="0" usemap="#aquo_2quo_8h" alt=""/></div>
+</div>
+</div>
 <p><a href="quo_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -117,6 +123,9 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structquo__IMGUIState.html">quo_IMGUIState</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">State for the immediate mode GUI.  <a href="structquo__IMGUIState.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structquo__ByteBuffer.html">quo_ByteBuffer</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A buffer for holding generic data.  <a href="structquo__ByteBuffer.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -566,6 +575,16 @@ Macros</h2></td></tr>
 <tr class="memitem:a3e190188962f75ff0feba9b2fa868941"><td class="memItemLeft" align="right" valign="top"><a id="a3e190188962f75ff0feba9b2fa868941"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>QUO_IMGUI_ATTRIB_COUNT</b>&#160;&#160;&#160;10</td></tr>
 <tr class="separator:a3e190188962f75ff0feba9b2fa868941"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5bb3c825ce47a067bc49b899447d41fe"><td class="memItemLeft" align="right" valign="top"><a id="a5bb3c825ce47a067bc49b899447d41fe"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a5bb3c825ce47a067bc49b899447d41fe">QUO_BYTE_BUFFER_DEFAULT_CAPACITY</a>&#160;&#160;&#160;1024</td></tr>
+<tr class="memdesc:a5bb3c825ce47a067bc49b899447d41fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default size of a byte buffer. <br /></td></tr>
+<tr class="separator:a5bb3c825ce47a067bc49b899447d41fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99ac6db25386417803a7b1d3e07f1846"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a99ac6db25386417803a7b1d3e07f1846">quo_byte_buffer_write</a>(_buffer,  _type,  _val)</td></tr>
+<tr class="memdesc:a99ac6db25386417803a7b1d3e07f1846"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write some data to a byte buffer at the current position.  <a href="quo_8h.html#a99ac6db25386417803a7b1d3e07f1846">More...</a><br /></td></tr>
+<tr class="separator:a99ac6db25386417803a7b1d3e07f1846"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa48ebf5b1b755751cfceac53ee4b2ba3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#aa48ebf5b1b755751cfceac53ee4b2ba3">quo_byte_buffer_read</a>(_buffer,  _type,  _val_p)</td></tr>
+<tr class="memdesc:aa48ebf5b1b755751cfceac53ee4b2ba3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read some data from a byte buffer at the current position.  <a href="quo_8h.html#aa48ebf5b1b755751cfceac53ee4b2ba3">More...</a><br /></td></tr>
+<tr class="separator:aa48ebf5b1b755751cfceac53ee4b2ba3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -624,6 +643,10 @@ typedef struct <a class="el" href="structquo__InputSystem.html">quo_InputSystem<
 typedef struct <a class="el" href="structquo__IMGUIState.html">quo_IMGUIState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a3019bec11d87ccb19ea25672ca0b676c">quo_IMGUIState</a></td></tr>
 <tr class="memdesc:a3019bec11d87ccb19ea25672ca0b676c"><td class="mdescLeft">&#160;</td><td class="mdescRight">State for the immediate mode GUI. <br /></td></tr>
 <tr class="separator:a3019bec11d87ccb19ea25672ca0b676c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f905e5ef753c5909a30475bfd5c337f"><td class="memItemLeft" align="right" valign="top"><a id="a6f905e5ef753c5909a30475bfd5c337f"></a>
+typedef struct <a class="el" href="structquo__ByteBuffer.html">quo_ByteBuffer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a6f905e5ef753c5909a30475bfd5c337f">quo_ByteBuffer</a></td></tr>
+<tr class="memdesc:a6f905e5ef753c5909a30475bfd5c337f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A buffer for holding generic data. <br /></td></tr>
+<tr class="separator:a6f905e5ef753c5909a30475bfd5c337f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -880,11 +903,131 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
 <tr class="memitem:aeddea9fc8555a4bfb59907bb8c912010"><td class="memItemLeft" align="right" valign="top">quo_bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#aeddea9fc8555a4bfb59907bb8c912010">quo_imgui_text</a> (const char *text)</td></tr>
 <tr class="memdesc:aeddea9fc8555a4bfb59907bb8c912010"><td class="mdescLeft">&#160;</td><td class="mdescRight">IMGUI text element (allows the use of \n)  <a href="quo_8h.html#aeddea9fc8555a4bfb59907bb8c912010">More...</a><br /></td></tr>
 <tr class="separator:aeddea9fc8555a4bfb59907bb8c912010"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e78bb4006a62fda91dd477a2668ec0d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a6e78bb4006a62fda91dd477a2668ec0d">quo_byte_buffer_dump</a> (<a class="el" href="structquo__ByteBuffer.html">quo_ByteBuffer</a> *buffer, FILE *file)</td></tr>
+<tr class="memdesc:a6e78bb4006a62fda91dd477a2668ec0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dump the contents of a byte buffer to a file.  <a href="quo_8h.html#a6e78bb4006a62fda91dd477a2668ec0d">More...</a><br /></td></tr>
+<tr class="separator:a6e78bb4006a62fda91dd477a2668ec0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56024746c8c08be18b0ec3bf7deda0ad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a56024746c8c08be18b0ec3bf7deda0ad">quo_byte_buffer_read_file</a> (<a class="el" href="structquo__ByteBuffer.html">quo_ByteBuffer</a> *buffer, FILE *file)</td></tr>
+<tr class="memdesc:a56024746c8c08be18b0ec3bf7deda0ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a dumped buffer back from a file.  <a href="quo_8h.html#a56024746c8c08be18b0ec3bf7deda0ad">More...</a><br /></td></tr>
+<tr class="separator:a56024746c8c08be18b0ec3bf7deda0ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28ac3df224cf30209f359391ad00cd7d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a28ac3df224cf30209f359391ad00cd7d">quo_init_byte_buffer</a> (<a class="el" href="structquo__ByteBuffer.html">quo_ByteBuffer</a> *buffer)</td></tr>
+<tr class="memdesc:a28ac3df224cf30209f359391ad00cd7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialise a new byte buffer, with a capacity of QUO_BYTE_BUFFER_DEFAULT_CAPACITY.  <a href="quo_8h.html#a28ac3df224cf30209f359391ad00cd7d">More...</a><br /></td></tr>
+<tr class="separator:a28ac3df224cf30209f359391ad00cd7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4926047538d8e6c5c191d32c3230abc6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a4926047538d8e6c5c191d32c3230abc6">quo_free_byte_buffer</a> (<a class="el" href="structquo__ByteBuffer.html">quo_ByteBuffer</a> *buffer)</td></tr>
+<tr class="memdesc:a4926047538d8e6c5c191d32c3230abc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free a byte buffer's memory.  <a href="quo_8h.html#a4926047538d8e6c5c191d32c3230abc6">More...</a><br /></td></tr>
+<tr class="separator:a4926047538d8e6c5c191d32c3230abc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae684eeb1e92384573855dbb668227aba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#ae684eeb1e92384573855dbb668227aba">quo_resize_byte_buffer</a> (<a class="el" href="structquo__ByteBuffer.html">quo_ByteBuffer</a> *buffer, unsigned int capacity)</td></tr>
+<tr class="memdesc:ae684eeb1e92384573855dbb668227aba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resize a byte buffer to contain more elements. This happens automatically when writing.  <a href="quo_8h.html#ae684eeb1e92384573855dbb668227aba">More...</a><br /></td></tr>
+<tr class="separator:ae684eeb1e92384573855dbb668227aba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a548d0bcb6eb7f9ebcf3d3be3ef9ef96e"><td class="memItemLeft" align="right" valign="top"><a id="a548d0bcb6eb7f9ebcf3d3be3ef9ef96e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a548d0bcb6eb7f9ebcf3d3be3ef9ef96e">i_quo_byte_buffer_write_impl</a> (<a class="el" href="structquo__ByteBuffer.html">quo_ByteBuffer</a> *buffer, void *data, unsigned int size)</td></tr>
+<tr class="memdesc:a548d0bcb6eb7f9ebcf3d3be3ef9ef96e"><td class="mdescLeft">&#160;</td><td class="mdescRight">FOR INTERNAL USE ONLY. Use the quo_byte_buffer_write macro instead. <br /></td></tr>
+<tr class="separator:a548d0bcb6eb7f9ebcf3d3be3ef9ef96e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Quo is a single-header game library written in C. </p>
 <p>This library is standalone, meaning it doesn't depend on anything that doesn't come with the operating system. </p>
-</div><h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="aa48ebf5b1b755751cfceac53ee4b2ba3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa48ebf5b1b755751cfceac53ee4b2ba3">&#9670;&nbsp;</a></span>quo_byte_buffer_read</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define quo_byte_buffer_read</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">_buffer, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">_type, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">_val_p&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> {\</div>
+<div class="line">    _type* _v = (_type*)(_val_p); \</div>
+<div class="line">    quo_ByteBuffer* _bb = (_buffer); \</div>
+<div class="line">    *(_v) = *(_type*)(_bb-&gt;data + _bb-&gt;position); \</div>
+<div class="line">    _bb-&gt;position += <span class="keyword">sizeof</span>(_type); \</div>
+<div class="line">} <span class="keywordflow">while</span> (0)</div>
+</div><!-- fragment -->
+<p>Read some data from a byte buffer at the current position. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_buffer</td><td>Pointer to buffer to read from </td></tr>
+    <tr><td class="paramname">_type</td><td>Type of data to be read, eg. int, float </td></tr>
+    <tr><td class="paramname">_val_p</td><td>Pointer to value to read into </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a99ac6db25386417803a7b1d3e07f1846"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99ac6db25386417803a7b1d3e07f1846">&#9670;&nbsp;</a></span>quo_byte_buffer_write</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define quo_byte_buffer_write</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">_buffer, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">_type, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">_val&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> {\</div>
+<div class="line">    quo_ByteBuffer* _bb = (_buffer); \</div>
+<div class="line">    unsigned <span class="keywordtype">int</span> _size = <span class="keyword">sizeof</span>(_type); \</div>
+<div class="line">    _type _v = _val; \</div>
+<div class="line">    i_quo_byte_buffer_write_impl(_bb, (<span class="keywordtype">void</span>*)&amp;(_v), _size); \</div>
+<div class="line">} <span class="keywordflow">while</span> (0)</div>
+</div><!-- fragment -->
+<p>Write some data to a byte buffer at the current position. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_buffer</td><td>Pointer to buffer to write to </td></tr>
+    <tr><td class="paramname">_type</td><td>Type of data to be written, eg. int, float </td></tr>
+    <tr><td class="paramname">_val</td><td>Value to write </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
 <a id="aa385f9ba3950f3675036edea653e7552"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa385f9ba3950f3675036edea653e7552">&#9670;&nbsp;</a></span>quo_add_vec2()</h2>
 
@@ -1028,6 +1171,80 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">unit</td><td>Texture unit where the texture will be bound. Should be &lt; 32 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6e78bb4006a62fda91dd477a2668ec0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e78bb4006a62fda91dd477a2668ec0d">&#9670;&nbsp;</a></span>quo_byte_buffer_dump()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void quo_byte_buffer_dump </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structquo__ByteBuffer.html">quo_ByteBuffer</a> *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>file</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Dump the contents of a byte buffer to a file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>Pointer to the buffer which to dump </td></tr>
+    <tr><td class="paramname">file</td><td>File stream to dump the buffer to </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a56024746c8c08be18b0ec3bf7deda0ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56024746c8c08be18b0ec3bf7deda0ad">&#9670;&nbsp;</a></span>quo_byte_buffer_read_file()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void quo_byte_buffer_read_file </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structquo__ByteBuffer.html">quo_ByteBuffer</a> *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>file</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read a dumped buffer back from a file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>Pointer to the buffer to read into </td></tr>
+    <tr><td class="paramname">file</td><td>File stream containing the raw buffer data </td></tr>
   </table>
   </dd>
 </dl>
@@ -1468,6 +1685,32 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
 
 </div>
 </div>
+<a id="a4926047538d8e6c5c191d32c3230abc6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4926047538d8e6c5c191d32c3230abc6">&#9670;&nbsp;</a></span>quo_free_byte_buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void quo_free_byte_buffer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structquo__ByteBuffer.html">quo_ByteBuffer</a> *&#160;</td>
+          <td class="paramname"><em>buffer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Free a byte buffer's memory. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>Pointer to the buffer to free </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="af72acdde635cc9e7f5c32b320c09bbde"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af72acdde635cc9e7f5c32b320c09bbde">&#9670;&nbsp;</a></span>quo_free_renderer()</h2>
 
@@ -1683,6 +1926,32 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Whether the text is hovered </dd></dl>
+
+</div>
+</div>
+<a id="a28ac3df224cf30209f359391ad00cd7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28ac3df224cf30209f359391ad00cd7d">&#9670;&nbsp;</a></span>quo_init_byte_buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void quo_init_byte_buffer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structquo__ByteBuffer.html">quo_ByteBuffer</a> *&#160;</td>
+          <td class="paramname"><em>buffer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialise a new byte buffer, with a capacity of QUO_BYTE_BUFFER_DEFAULT_CAPACITY. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>Pointer to the buffer to initialise </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -2289,6 +2558,42 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The new perspective projection matrix </dd></dl>
+
+</div>
+</div>
+<a id="ae684eeb1e92384573855dbb668227aba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae684eeb1e92384573855dbb668227aba">&#9670;&nbsp;</a></span>quo_resize_byte_buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void quo_resize_byte_buffer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structquo__ByteBuffer.html">quo_ByteBuffer</a> *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>capacity</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resize a byte buffer to contain more elements. This happens automatically when writing. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>Pointer to buffer to resize </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
