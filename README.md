@@ -5,11 +5,12 @@
 This library is standalone, meaning it doesn't depend on anything that doesn't come with the operating system.
 
 ## Current Features
- - Window management for Windows and X11
+ - Window management for Windows and Linux (X11)
  - 2D rendering
  - Basic maths
  - Input
  - Bare-bones IMGUI
+ - Binary serialisation
 
 ## Planned Features
  - 3D rendering pipeline
@@ -28,7 +29,7 @@ On Windows with MSVC, linking is done automatically via `#pragma comment`s. On n
 For older computers, you can enable the use of GLSL version 1.3, by `#defining QUO_LEGACY` before including the library.
 
 ## Example Usage
-See a more complete example in the `sbox` folder.
+See more complete examples in the [`examples`](https://github.com/georgelam6/quo/tree/master/examples) folder.
 
 ```c
 #define QUO_IMPL
