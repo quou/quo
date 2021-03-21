@@ -793,6 +793,11 @@ unsigned long quo_color_from_rgb(int r, int g, int b);
 void quo_init_renderer(quo_Renderer* renderer, quo_Window* window);
 
 /**
+ * @brief Turns on 3D specific features such as depth testing. Call after quo_init_renderer
+ */
+void quo_enable_3d();
+
+/**
  * @brief Free a renderer
  * @param renderer Pointer to renderer to be freed
  */
@@ -909,6 +914,66 @@ void quo_shader_set_vec3(quo_Renderer* renderer, quo_ShaderHandle shader, const 
  * @param w W value to be set in the shader
  */
 void quo_shader_set_vec4(quo_Renderer* renderer, quo_ShaderHandle shader, const char* uniform_name, float x, float y, float z, float w);
+
+/**
+ * @brief A buffer for vertices
+ */
+typedef struct quo_VertexBuffer {
+	unsigned int va_id; /**< OpenGL vertex array ID */
+	unsigned int vb_id; /**< OpenGL vertex buffer ID */
+	unsigned int ib_id; /**< OpenGL index buffer ID */
+	unsigned int index_count; /**< Stores the number of indices */
+} quo_VertexBuffer;
+
+/**
+ * @brief Start the initialisation of a vertex buffer
+ * @param vb Pointer to the vertex buffer
+ */
+void quo_begin_vertex_buffer(quo_VertexBuffer* vb);
+
+/**
+ * @brief End the initialisation of a vertex buffer
+ * @param vb Pointer to the vertex buffer
+ */
+void quo_finalise_vertex_buffer(quo_VertexBuffer* vb);
+
+/**
+ * @brief Push an array of vertices into the vertex buffer
+ * @param vb Pointer to the vertex buffer
+ * @param vertices Array of vertices
+ * @param array_size Number of elements in the array of vertices
+ */
+void quo_push_vertices(quo_VertexBuffer* vb, float* vertices, unsigned int array_size);
+
+/**
+ * @brief Push an array of indices into the vertex buffer
+ * @param vb Pointer to the vertex buffer
+ * @param indices Array of indices
+ * @param index_count Number of indices
+ */
+void quo_push_indices(quo_VertexBuffer* vb, unsigned int* indices, unsigned int index_count);
+
+/**
+ * @brief Configure the kayout of the vertices in the buffer; You can set the location of positions, normals, texture coordinates, etc.
+ * @param vb Pointer to the vertex buffer
+ * @param index Index of the layout, to be referenced in the shader
+ * @param component_count Number of components in the element; 2 for vec2, 3 for vec3, etc.
+ * @param stride The amount of elements until the next layout location
+ * @param start_offset Offset to start at
+ */
+void quo_configure_vertices(quo_VertexBuffer* vb, unsigned int index, unsigned int component_count, unsigned int stride, unsigned int start_offset);
+
+/**
+ * @brief Draw a vertex buffer
+ * @param vb Pointer to the vertex buffer
+ */
+void quo_draw_vertex_buffer(quo_VertexBuffer* vb);
+
+/**
+ * @brief Free a vertex buffer
+ * @param vb Pointer to the vertex buffer
+ */
+void quo_free_vertex_buffer(quo_VertexBuffer* vb);
 
 /* -----------------------
  * END RENDERER
@@ -1791,6 +1856,7 @@ static void quo_update_window_events_x11(quo_Window* window) {
 	XEvent e;
 	while (XPending(window->display)) {
 		XNextEvent(window->display, &e);
+
 		if (e.type == ClientMessage) {
 			window->is_open = false;
 		} else if (e.type == Expose) {
@@ -2427,6 +2493,11 @@ void quo_init_renderer(quo_Renderer* renderer, quo_Window* window) {
 	quo_bind_shader(renderer, renderer->sprite_shader);
 }
 
+void quo_enable_3d() {
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+}
+
 void quo_update_renderer(quo_Renderer* renderer) {
 	assert(renderer != NULL);
 	assert(renderer->window != NULL);
@@ -2496,7 +2567,7 @@ void quo_clear_renderer(unsigned long color) {
 	float bf = (float)b / 255.0f;
 
 	glClearColor(rf, gf, bf, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 quo_ShaderHandle quo_create_shader(quo_Renderer* renderer, const char* vertex_source, const char* fragment_source) {
@@ -2609,6 +2680,64 @@ void quo_shader_set_vec4(quo_Renderer* renderer, quo_ShaderHandle shader, const 
 	unsigned int location = glGetUniformLocation(shader_id, uniform_name);
 
 	glUniform4f(location, x, y, z, w);
+}
+
+void quo_begin_vertex_buffer(quo_VertexBuffer* vb) {
+	assert(vb != NULL);
+
+	glGenVertexArrays(1, &vb->va_id);
+	glGenBuffers(1, &vb->vb_id);
+	glGenBuffers(1, &vb->ib_id);
+}
+
+void quo_finalise_vertex_buffer(quo_VertexBuffer* vb) {
+	assert(vb != NULL);
+
+	glBindVertexArray(0);
+}
+
+void quo_push_vertices(quo_VertexBuffer* vb, float* vertices, unsigned int array_size) {
+	assert(vb != NULL);
+
+	glBindVertexArray(vb->va_id);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vb->vb_id);
+	glBufferData(GL_ARRAY_BUFFER, array_size, vertices, GL_STATIC_DRAW);
+}
+
+void quo_push_indices(quo_VertexBuffer* vb, unsigned int* indices, unsigned int index_count) {
+	assert(vb != NULL);
+
+	glBindVertexArray(vb->va_id);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vb->ib_id);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_count * sizeof(indices[0]), indices, GL_STATIC_DRAW);
+
+	vb->index_count = index_count;
+}
+
+void quo_configure_vertices(quo_VertexBuffer* vb, unsigned int index, unsigned int component_count, unsigned int stride, unsigned int start_offset) {
+	assert(vb != NULL);
+
+	glBindVertexArray(vb->va_id);
+
+	glVertexAttribPointer(index, component_count, GL_FLOAT, GL_FALSE, stride * sizeof(float), (void*)(long unsigned int)start_offset);
+	glEnableVertexAttribArray(index);
+}
+
+
+void quo_draw_vertex_buffer(quo_VertexBuffer* vb) {
+	assert(vb != NULL);
+
+	glBindVertexArray(vb->va_id);
+	glDrawElements(GL_TRIANGLES, vb->index_count, GL_UNSIGNED_INT, 0);
+	glBindVertexArray(0);
+}
+
+void quo_free_vertex_buffer(quo_VertexBuffer* vb) {
+	glDeleteVertexArrays(1, &vb->va_id);
+	glDeleteBuffers(1, &vb->vb_id);
+	glDeleteBuffers(1, &vb->ib_id);
 }
 
 /* -----------------------
