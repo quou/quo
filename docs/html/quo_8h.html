@@ -118,6 +118,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structquo__Renderer.html">quo_Renderer</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Responsible for drawing things to the screen.  <a href="structquo__Renderer.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structquo__VertexBuffer.html">quo_VertexBuffer</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A buffer for vertices.  <a href="structquo__VertexBuffer.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structquo__InputSystem.html">quo_InputSystem</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles keyboard and mouse input.  <a href="structquo__InputSystem.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -635,6 +638,10 @@ typedef unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class
 typedef struct <a class="el" href="structquo__Renderer.html">quo_Renderer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a370e7745513bf46694319ab62c3cd560">quo_Renderer</a></td></tr>
 <tr class="memdesc:a370e7745513bf46694319ab62c3cd560"><td class="mdescLeft">&#160;</td><td class="mdescRight">Responsible for drawing things to the screen. <br /></td></tr>
 <tr class="separator:a370e7745513bf46694319ab62c3cd560"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8dccfb72abd950a28b20b77f91b707ab"><td class="memItemLeft" align="right" valign="top"><a id="a8dccfb72abd950a28b20b77f91b707ab"></a>
+typedef struct <a class="el" href="structquo__VertexBuffer.html">quo_VertexBuffer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a8dccfb72abd950a28b20b77f91b707ab">quo_VertexBuffer</a></td></tr>
+<tr class="memdesc:a8dccfb72abd950a28b20b77f91b707ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">A buffer for vertices. <br /></td></tr>
+<tr class="separator:a8dccfb72abd950a28b20b77f91b707ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82c579ebb79a06c26ed86cb420545ba4"><td class="memItemLeft" align="right" valign="top"><a id="a82c579ebb79a06c26ed86cb420545ba4"></a>
 typedef struct <a class="el" href="structquo__InputSystem.html">quo_InputSystem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a82c579ebb79a06c26ed86cb420545ba4">quo_InputSystem</a></td></tr>
 <tr class="memdesc:a82c579ebb79a06c26ed86cb420545ba4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles keyboard and mouse input. <br /></td></tr>
@@ -773,6 +780,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
 <tr class="memitem:aa64c90c273791526b411ee4d1aea3ed1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#aa64c90c273791526b411ee4d1aea3ed1">quo_init_renderer</a> (<a class="el" href="structquo__Renderer.html">quo_Renderer</a> *renderer, <a class="el" href="structquo__Window.html">quo_Window</a> *window)</td></tr>
 <tr class="memdesc:aa64c90c273791526b411ee4d1aea3ed1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialise a new renderer.  <a href="quo_8h.html#aa64c90c273791526b411ee4d1aea3ed1">More...</a><br /></td></tr>
 <tr class="separator:aa64c90c273791526b411ee4d1aea3ed1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab642fe3061a864d54f538afb25b872f3"><td class="memItemLeft" align="right" valign="top"><a id="ab642fe3061a864d54f538afb25b872f3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#ab642fe3061a864d54f538afb25b872f3">quo_enable_3d</a> ()</td></tr>
+<tr class="memdesc:ab642fe3061a864d54f538afb25b872f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns on 3D specific features such as depth testing. Call after quo_init_renderer. <br /></td></tr>
+<tr class="separator:ab642fe3061a864d54f538afb25b872f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af72acdde635cc9e7f5c32b320c09bbde"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#af72acdde635cc9e7f5c32b320c09bbde">quo_free_renderer</a> (<a class="el" href="structquo__Renderer.html">quo_Renderer</a> *renderer)</td></tr>
 <tr class="memdesc:af72acdde635cc9e7f5c32b320c09bbde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free a renderer.  <a href="quo_8h.html#af72acdde635cc9e7f5c32b320c09bbde">More...</a><br /></td></tr>
 <tr class="separator:af72acdde635cc9e7f5c32b320c09bbde"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -815,6 +826,27 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
 <tr class="memitem:a4b35f564178f80fb821d3671b4b543cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a4b35f564178f80fb821d3671b4b543cf">quo_shader_set_vec4</a> (<a class="el" href="structquo__Renderer.html">quo_Renderer</a> *renderer, <a class="el" href="quo_8h.html#a6c48124a8ce2225be23f46043eccd910">quo_ShaderHandle</a> shader, const char *uniform_name, float x, float y, float z, float w)</td></tr>
 <tr class="memdesc:a4b35f564178f80fb821d3671b4b543cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a uniform vector. Note: Shader must be bound before calling this function.  <a href="quo_8h.html#a4b35f564178f80fb821d3671b4b543cf">More...</a><br /></td></tr>
 <tr class="separator:a4b35f564178f80fb821d3671b4b543cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdbae99ad6969e1e665c24982d07d804"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#abdbae99ad6969e1e665c24982d07d804">quo_begin_vertex_buffer</a> (<a class="el" href="structquo__VertexBuffer.html">quo_VertexBuffer</a> *vb)</td></tr>
+<tr class="memdesc:abdbae99ad6969e1e665c24982d07d804"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the initialisation of a vertex buffer.  <a href="quo_8h.html#abdbae99ad6969e1e665c24982d07d804">More...</a><br /></td></tr>
+<tr class="separator:abdbae99ad6969e1e665c24982d07d804"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a843b49016d7b1775efd4eda8784cce0a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a843b49016d7b1775efd4eda8784cce0a">quo_finalise_vertex_buffer</a> (<a class="el" href="structquo__VertexBuffer.html">quo_VertexBuffer</a> *vb)</td></tr>
+<tr class="memdesc:a843b49016d7b1775efd4eda8784cce0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">End the initialisation of a vertex buffer.  <a href="quo_8h.html#a843b49016d7b1775efd4eda8784cce0a">More...</a><br /></td></tr>
+<tr class="separator:a843b49016d7b1775efd4eda8784cce0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae360d1746f9a552704e5099e731d1de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#aae360d1746f9a552704e5099e731d1de">quo_push_vertices</a> (<a class="el" href="structquo__VertexBuffer.html">quo_VertexBuffer</a> *vb, float *vertices, unsigned int array_size)</td></tr>
+<tr class="memdesc:aae360d1746f9a552704e5099e731d1de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push an array of vertices into the vertex buffer.  <a href="quo_8h.html#aae360d1746f9a552704e5099e731d1de">More...</a><br /></td></tr>
+<tr class="separator:aae360d1746f9a552704e5099e731d1de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fc3a05f2e978ec8e3a66b4a57009fc4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a1fc3a05f2e978ec8e3a66b4a57009fc4">quo_push_indices</a> (<a class="el" href="structquo__VertexBuffer.html">quo_VertexBuffer</a> *vb, unsigned int *indices, unsigned int index_count)</td></tr>
+<tr class="memdesc:a1fc3a05f2e978ec8e3a66b4a57009fc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push an array of indices into the vertex buffer.  <a href="quo_8h.html#a1fc3a05f2e978ec8e3a66b4a57009fc4">More...</a><br /></td></tr>
+<tr class="separator:a1fc3a05f2e978ec8e3a66b4a57009fc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02effba0537e8f5b7be350d7587cb6fb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a02effba0537e8f5b7be350d7587cb6fb">quo_configure_vertices</a> (<a class="el" href="structquo__VertexBuffer.html">quo_VertexBuffer</a> *vb, unsigned int index, unsigned int component_count, unsigned int stride, unsigned int start_offset)</td></tr>
+<tr class="memdesc:a02effba0537e8f5b7be350d7587cb6fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the kayout of the vertices in the buffer; You can set the location of positions, normals, texture coordinates, etc.  <a href="quo_8h.html#a02effba0537e8f5b7be350d7587cb6fb">More...</a><br /></td></tr>
+<tr class="separator:a02effba0537e8f5b7be350d7587cb6fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f551a4e2cd493a116c84f8d21dff138"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a5f551a4e2cd493a116c84f8d21dff138">quo_draw_vertex_buffer</a> (<a class="el" href="structquo__VertexBuffer.html">quo_VertexBuffer</a> *vb)</td></tr>
+<tr class="memdesc:a5f551a4e2cd493a116c84f8d21dff138"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw a vertex buffer.  <a href="quo_8h.html#a5f551a4e2cd493a116c84f8d21dff138">More...</a><br /></td></tr>
+<tr class="separator:a5f551a4e2cd493a116c84f8d21dff138"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a1419c5cc4e32c289bd059e6834a8dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a7a1419c5cc4e32c289bd059e6834a8dd">quo_free_vertex_buffer</a> (<a class="el" href="structquo__VertexBuffer.html">quo_VertexBuffer</a> *vb)</td></tr>
+<tr class="memdesc:a7a1419c5cc4e32c289bd059e6834a8dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free a vertex buffer.  <a href="quo_8h.html#a7a1419c5cc4e32c289bd059e6834a8dd">More...</a><br /></td></tr>
+<tr class="separator:a7a1419c5cc4e32c289bd059e6834a8dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a914f62962ae315772b617cfec963e105"><td class="memItemLeft" align="right" valign="top"><a id="a914f62962ae315772b617cfec963e105"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a914f62962ae315772b617cfec963e105">quo_init_input_system</a> ()</td></tr>
 <tr class="memdesc:a914f62962ae315772b617cfec963e105"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialise the static input system. Called in quo_init_window. <br /></td></tr>
@@ -1104,6 +1136,32 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
 
 </div>
 </div>
+<a id="abdbae99ad6969e1e665c24982d07d804"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abdbae99ad6969e1e665c24982d07d804">&#9670;&nbsp;</a></span>quo_begin_vertex_buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void quo_begin_vertex_buffer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structquo__VertexBuffer.html">quo_VertexBuffer</a> *&#160;</td>
+          <td class="paramname"><em>vb</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Start the initialisation of a vertex buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vb</td><td>Pointer to the vertex buffer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a6c7a4d1722bd00087834ace2fa581a4d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6c7a4d1722bd00087834ace2fa581a4d">&#9670;&nbsp;</a></span>quo_bind_shader()</h2>
 
@@ -1319,6 +1377,64 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Hex colour </dd></dl>
+
+</div>
+</div>
+<a id="a02effba0537e8f5b7be350d7587cb6fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02effba0537e8f5b7be350d7587cb6fb">&#9670;&nbsp;</a></span>quo_configure_vertices()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void quo_configure_vertices </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structquo__VertexBuffer.html">quo_VertexBuffer</a> *&#160;</td>
+          <td class="paramname"><em>vb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>component_count</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>stride</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>start_offset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Configure the kayout of the vertices in the buffer; You can set the location of positions, normals, texture coordinates, etc. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vb</td><td>Pointer to the vertex buffer </td></tr>
+    <tr><td class="paramname">index</td><td>Index of the layout, to be referenced in the shader </td></tr>
+    <tr><td class="paramname">component_count</td><td>Number of components in the element; 2 for vec2, 3 for vec3, etc. </td></tr>
+    <tr><td class="paramname">stride</td><td>The amount of elements until the next layout location </td></tr>
+    <tr><td class="paramname">start_offset</td><td>Offset to start at </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1659,6 +1775,58 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
 
 </div>
 </div>
+<a id="a5f551a4e2cd493a116c84f8d21dff138"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f551a4e2cd493a116c84f8d21dff138">&#9670;&nbsp;</a></span>quo_draw_vertex_buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void quo_draw_vertex_buffer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structquo__VertexBuffer.html">quo_VertexBuffer</a> *&#160;</td>
+          <td class="paramname"><em>vb</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Draw a vertex buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vb</td><td>Pointer to the vertex buffer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a843b49016d7b1775efd4eda8784cce0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a843b49016d7b1775efd4eda8784cce0a">&#9670;&nbsp;</a></span>quo_finalise_vertex_buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void quo_finalise_vertex_buffer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structquo__VertexBuffer.html">quo_VertexBuffer</a> *&#160;</td>
+          <td class="paramname"><em>vb</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>End the initialisation of a vertex buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vb</td><td>Pointer to the vertex buffer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ababd61559d20e5ab1583fb4f346e3c3a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ababd61559d20e5ab1583fb4f346e3c3a">&#9670;&nbsp;</a></span>quo_free_bitmap()</h2>
 
@@ -1757,6 +1925,32 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">texture</td><td>Texture to free </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7a1419c5cc4e32c289bd059e6834a8dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a1419c5cc4e32c289bd059e6834a8dd">&#9670;&nbsp;</a></span>quo_free_vertex_buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void quo_free_vertex_buffer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structquo__VertexBuffer.html">quo_VertexBuffer</a> *&#160;</td>
+          <td class="paramname"><em>vb</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Free a vertex buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vb</td><td>Pointer to the vertex buffer </td></tr>
   </table>
   </dd>
 </dl>
@@ -2558,6 +2752,94 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The new perspective projection matrix </dd></dl>
+
+</div>
+</div>
+<a id="a1fc3a05f2e978ec8e3a66b4a57009fc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fc3a05f2e978ec8e3a66b4a57009fc4">&#9670;&nbsp;</a></span>quo_push_indices()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void quo_push_indices </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structquo__VertexBuffer.html">quo_VertexBuffer</a> *&#160;</td>
+          <td class="paramname"><em>vb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int *&#160;</td>
+          <td class="paramname"><em>indices</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>index_count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Push an array of indices into the vertex buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vb</td><td>Pointer to the vertex buffer </td></tr>
+    <tr><td class="paramname">indices</td><td>Array of indices </td></tr>
+    <tr><td class="paramname">index_count</td><td>Number of indices </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aae360d1746f9a552704e5099e731d1de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae360d1746f9a552704e5099e731d1de">&#9670;&nbsp;</a></span>quo_push_vertices()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void quo_push_vertices </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structquo__VertexBuffer.html">quo_VertexBuffer</a> *&#160;</td>
+          <td class="paramname"><em>vb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *&#160;</td>
+          <td class="paramname"><em>vertices</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>array_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Push an array of vertices into the vertex buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vb</td><td>Pointer to the vertex buffer </td></tr>
+    <tr><td class="paramname">vertices</td><td>Array of vertices </td></tr>
+    <tr><td class="paramname">array_size</td><td>Number of elements in the array of vertices </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

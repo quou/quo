@@ -31,6 +31,8 @@ struct \mbox{\hyperlink{structquo__Texture}{quo\+\_\+\+Texture}}
 \begin{DoxyCompactList}\small\item\em A texture that lives on the GPU. Should be created from a bitmap image. \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}}
 \begin{DoxyCompactList}\small\item\em Responsible for drawing things to the screen. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}}
+\begin{DoxyCompactList}\small\item\em A buffer for vertices. \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{structquo__InputSystem}{quo\+\_\+\+Input\+System}}
 \begin{DoxyCompactList}\small\item\em Handles keyboard and mouse input. \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{structquo__IMGUIState}{quo\+\_\+\+IMGUIState}}
@@ -530,6 +532,9 @@ typedef unsigned int \mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{
 \mbox{\Hypertarget{quo_8h_a370e7745513bf46694319ab62c3cd560}\label{quo_8h_a370e7745513bf46694319ab62c3cd560}} 
 typedef struct \mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} \mbox{\hyperlink{quo_8h_a370e7745513bf46694319ab62c3cd560}{quo\+\_\+\+Renderer}}
 \begin{DoxyCompactList}\small\item\em Responsible for drawing things to the screen. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a8dccfb72abd950a28b20b77f91b707ab}\label{quo_8h_a8dccfb72abd950a28b20b77f91b707ab}} 
+typedef struct \mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} \mbox{\hyperlink{quo_8h_a8dccfb72abd950a28b20b77f91b707ab}{quo\+\_\+\+Vertex\+Buffer}}
+\begin{DoxyCompactList}\small\item\em A buffer for vertices. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{quo_8h_a82c579ebb79a06c26ed86cb420545ba4}\label{quo_8h_a82c579ebb79a06c26ed86cb420545ba4}} 
 typedef struct \mbox{\hyperlink{structquo__InputSystem}{quo\+\_\+\+Input\+System}} \mbox{\hyperlink{quo_8h_a82c579ebb79a06c26ed86cb420545ba4}{quo\+\_\+\+Input\+System}}
 \begin{DoxyCompactList}\small\item\em Handles keyboard and mouse input. \end{DoxyCompactList}\item 
@@ -626,6 +631,9 @@ unsigned long \mbox{\hyperlink{quo_8h_a9d8857f236d29e03fcfd3121f7c04e7e}{quo\+\_
 \begin{DoxyCompactList}\small\item\em Create a hex colour from red, green and blue values. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{quo_8h_aa64c90c273791526b411ee4d1aea3ed1}{quo\+\_\+init\+\_\+renderer}} (\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$renderer, \mbox{\hyperlink{structquo__Window}{quo\+\_\+\+Window}} $\ast$window)
 \begin{DoxyCompactList}\small\item\em Initialise a new renderer. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_ab642fe3061a864d54f538afb25b872f3}\label{quo_8h_ab642fe3061a864d54f538afb25b872f3}} 
+void \mbox{\hyperlink{quo_8h_ab642fe3061a864d54f538afb25b872f3}{quo\+\_\+enable\+\_\+3d}} ()
+\begin{DoxyCompactList}\small\item\em Turns on 3D specific features such as depth testing. Call after quo\+\_\+init\+\_\+renderer. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{quo_8h_af72acdde635cc9e7f5c32b320c09bbde}{quo\+\_\+free\+\_\+renderer}} (\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$renderer)
 \begin{DoxyCompactList}\small\item\em Free a renderer. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{quo_8h_a1ea781ff70f0b0d450b159e571dfcb89}{quo\+\_\+update\+\_\+renderer}} (\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$renderer)
@@ -654,6 +662,20 @@ void \mbox{\hyperlink{quo_8h_a965f6a42b6c3d16b56f7c658304fdb60}{quo\+\_\+shader\
 \begin{DoxyCompactList}\small\item\em Set a uniform 3D vector. Note\+: Shader must be bound before calling this function. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{quo_8h_a4b35f564178f80fb821d3671b4b543cf}{quo\+\_\+shader\+\_\+set\+\_\+vec4}} (\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$renderer, \mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}} shader, const char $\ast$uniform\+\_\+name, float x, float y, float z, float w)
 \begin{DoxyCompactList}\small\item\em Set a uniform vector. Note\+: Shader must be bound before calling this function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_abdbae99ad6969e1e665c24982d07d804}{quo\+\_\+begin\+\_\+vertex\+\_\+buffer}} (\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$vb)
+\begin{DoxyCompactList}\small\item\em Start the initialisation of a vertex buffer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a843b49016d7b1775efd4eda8784cce0a}{quo\+\_\+finalise\+\_\+vertex\+\_\+buffer}} (\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$vb)
+\begin{DoxyCompactList}\small\item\em End the initialisation of a vertex buffer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_aae360d1746f9a552704e5099e731d1de}{quo\+\_\+push\+\_\+vertices}} (\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$vb, float $\ast$vertices, unsigned int array\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Push an array of vertices into the vertex buffer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a1fc3a05f2e978ec8e3a66b4a57009fc4}{quo\+\_\+push\+\_\+indices}} (\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$vb, unsigned int $\ast$indices, unsigned int index\+\_\+count)
+\begin{DoxyCompactList}\small\item\em Push an array of indices into the vertex buffer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a02effba0537e8f5b7be350d7587cb6fb}{quo\+\_\+configure\+\_\+vertices}} (\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$vb, unsigned int index, unsigned int component\+\_\+count, unsigned int stride, unsigned int start\+\_\+offset)
+\begin{DoxyCompactList}\small\item\em Configure the kayout of the vertices in the buffer; You can set the location of positions, normals, texture coordinates, etc. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a5f551a4e2cd493a116c84f8d21dff138}{quo\+\_\+draw\+\_\+vertex\+\_\+buffer}} (\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$vb)
+\begin{DoxyCompactList}\small\item\em Draw a vertex buffer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a7a1419c5cc4e32c289bd059e6834a8dd}{quo\+\_\+free\+\_\+vertex\+\_\+buffer}} (\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$vb)
+\begin{DoxyCompactList}\small\item\em Free a vertex buffer. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{quo_8h_a914f62962ae315772b617cfec963e105}\label{quo_8h_a914f62962ae315772b617cfec963e105}} 
 void \mbox{\hyperlink{quo_8h_a914f62962ae315772b617cfec963e105}{quo\+\_\+init\+\_\+input\+\_\+system}} ()
 \begin{DoxyCompactList}\small\item\em Initialise the static input system. Called in quo\+\_\+init\+\_\+window. \end{DoxyCompactList}\item 
@@ -839,6 +861,21 @@ Add two quo\+\_\+vec3s together.
 \begin{DoxyReturn}{Returns}
 Result of addition 
 \end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_abdbae99ad6969e1e665c24982d07d804}\label{quo_8h_abdbae99ad6969e1e665c24982d07d804}} 
+\index{quo.h@{quo.h}!quo\_begin\_vertex\_buffer@{quo\_begin\_vertex\_buffer}}
+\index{quo\_begin\_vertex\_buffer@{quo\_begin\_vertex\_buffer}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_begin\_vertex\_buffer()}{quo\_begin\_vertex\_buffer()}}
+{\footnotesize\ttfamily void quo\+\_\+begin\+\_\+vertex\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$}]{vb }\end{DoxyParamCaption})}
+
+
+
+Start the initialisation of a vertex buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vb} & Pointer to the vertex buffer \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{quo_8h_a6c7a4d1722bd00087834ace2fa581a4d}\label{quo_8h_a6c7a4d1722bd00087834ace2fa581a4d}} 
 \index{quo.h@{quo.h}!quo\_bind\_shader@{quo\_bind\_shader}}
 \index{quo\_bind\_shader@{quo\_bind\_shader}!quo.h@{quo.h}}
@@ -942,6 +979,29 @@ Create a hex colour from red, green and blue values.
 \begin{DoxyReturn}{Returns}
 Hex colour 
 \end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_a02effba0537e8f5b7be350d7587cb6fb}\label{quo_8h_a02effba0537e8f5b7be350d7587cb6fb}} 
+\index{quo.h@{quo.h}!quo\_configure\_vertices@{quo\_configure\_vertices}}
+\index{quo\_configure\_vertices@{quo\_configure\_vertices}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_configure\_vertices()}{quo\_configure\_vertices()}}
+{\footnotesize\ttfamily void quo\+\_\+configure\+\_\+vertices (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$}]{vb,  }\item[{unsigned int}]{index,  }\item[{unsigned int}]{component\+\_\+count,  }\item[{unsigned int}]{stride,  }\item[{unsigned int}]{start\+\_\+offset }\end{DoxyParamCaption})}
+
+
+
+Configure the kayout of the vertices in the buffer; You can set the location of positions, normals, texture coordinates, etc. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vb} & Pointer to the vertex buffer \\
+\hline
+{\em index} & Index of the layout, to be referenced in the shader \\
+\hline
+{\em component\+\_\+count} & Number of components in the element; 2 for vec2, 3 for vec3, etc. \\
+\hline
+{\em stride} & The amount of elements until the next layout location \\
+\hline
+{\em start\+\_\+offset} & Offset to start at \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{quo_8h_a8c74d495f6ecdb7d5fe24b08aa965444}\label{quo_8h_a8c74d495f6ecdb7d5fe24b08aa965444}} 
 \index{quo.h@{quo.h}!quo\_create\_shader@{quo\_create\_shader}}
 \index{quo\_create\_shader@{quo\_create\_shader}!quo.h@{quo.h}}
@@ -1106,6 +1166,36 @@ Draw a \mbox{\hyperlink{structquo__Texture}{quo\+\_\+\+Texture}} on the screen.
 {\em color} & Hex colour that the texture will be drawn as. Use 0xffffff (White) to use the original image colours. \\
 \hline
 \end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a5f551a4e2cd493a116c84f8d21dff138}\label{quo_8h_a5f551a4e2cd493a116c84f8d21dff138}} 
+\index{quo.h@{quo.h}!quo\_draw\_vertex\_buffer@{quo\_draw\_vertex\_buffer}}
+\index{quo\_draw\_vertex\_buffer@{quo\_draw\_vertex\_buffer}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_draw\_vertex\_buffer()}{quo\_draw\_vertex\_buffer()}}
+{\footnotesize\ttfamily void quo\+\_\+draw\+\_\+vertex\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$}]{vb }\end{DoxyParamCaption})}
+
+
+
+Draw a vertex buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vb} & Pointer to the vertex buffer \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a843b49016d7b1775efd4eda8784cce0a}\label{quo_8h_a843b49016d7b1775efd4eda8784cce0a}} 
+\index{quo.h@{quo.h}!quo\_finalise\_vertex\_buffer@{quo\_finalise\_vertex\_buffer}}
+\index{quo\_finalise\_vertex\_buffer@{quo\_finalise\_vertex\_buffer}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_finalise\_vertex\_buffer()}{quo\_finalise\_vertex\_buffer()}}
+{\footnotesize\ttfamily void quo\+\_\+finalise\+\_\+vertex\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$}]{vb }\end{DoxyParamCaption})}
+
+
+
+End the initialisation of a vertex buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vb} & Pointer to the vertex buffer \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{quo_8h_ababd61559d20e5ab1583fb4f346e3c3a}\label{quo_8h_ababd61559d20e5ab1583fb4f346e3c3a}} 
 \index{quo.h@{quo.h}!quo\_free\_bitmap@{quo\_free\_bitmap}}
 \index{quo\_free\_bitmap@{quo\_free\_bitmap}!quo.h@{quo.h}}
@@ -1164,6 +1254,21 @@ Free a texture.
 
 \begin{DoxyParams}{Parameters}
 {\em texture} & Texture to free \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a7a1419c5cc4e32c289bd059e6834a8dd}\label{quo_8h_a7a1419c5cc4e32c289bd059e6834a8dd}} 
+\index{quo.h@{quo.h}!quo\_free\_vertex\_buffer@{quo\_free\_vertex\_buffer}}
+\index{quo\_free\_vertex\_buffer@{quo\_free\_vertex\_buffer}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_free\_vertex\_buffer()}{quo\_free\_vertex\_buffer()}}
+{\footnotesize\ttfamily void quo\+\_\+free\+\_\+vertex\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$}]{vb }\end{DoxyParamCaption})}
+
+
+
+Free a vertex buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vb} & Pointer to the vertex buffer \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{quo_8h_ab35da0414c26e9abe1781a01c52510d7}\label{quo_8h_ab35da0414c26e9abe1781a01c52510d7}} 
@@ -1614,6 +1719,44 @@ Create a perspective projection matrix.
 \begin{DoxyReturn}{Returns}
 The new perspective projection matrix 
 \end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_a1fc3a05f2e978ec8e3a66b4a57009fc4}\label{quo_8h_a1fc3a05f2e978ec8e3a66b4a57009fc4}} 
+\index{quo.h@{quo.h}!quo\_push\_indices@{quo\_push\_indices}}
+\index{quo\_push\_indices@{quo\_push\_indices}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_push\_indices()}{quo\_push\_indices()}}
+{\footnotesize\ttfamily void quo\+\_\+push\+\_\+indices (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$}]{vb,  }\item[{unsigned int $\ast$}]{indices,  }\item[{unsigned int}]{index\+\_\+count }\end{DoxyParamCaption})}
+
+
+
+Push an array of indices into the vertex buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vb} & Pointer to the vertex buffer \\
+\hline
+{\em indices} & Array of indices \\
+\hline
+{\em index\+\_\+count} & Number of indices \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_aae360d1746f9a552704e5099e731d1de}\label{quo_8h_aae360d1746f9a552704e5099e731d1de}} 
+\index{quo.h@{quo.h}!quo\_push\_vertices@{quo\_push\_vertices}}
+\index{quo\_push\_vertices@{quo\_push\_vertices}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_push\_vertices()}{quo\_push\_vertices()}}
+{\footnotesize\ttfamily void quo\+\_\+push\+\_\+vertices (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$}]{vb,  }\item[{float $\ast$}]{vertices,  }\item[{unsigned int}]{array\+\_\+size }\end{DoxyParamCaption})}
+
+
+
+Push an array of vertices into the vertex buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vb} & Pointer to the vertex buffer \\
+\hline
+{\em vertices} & Array of vertices \\
+\hline
+{\em array\+\_\+size} & Number of elements in the array of vertices \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{quo_8h_ae684eeb1e92384573855dbb668227aba}\label{quo_8h_ae684eeb1e92384573855dbb668227aba}} 
 \index{quo.h@{quo.h}!quo\_resize\_byte\_buffer@{quo\_resize\_byte\_buffer}}
 \index{quo\_resize\_byte\_buffer@{quo\_resize\_byte\_buffer}!quo.h@{quo.h}}
