@@ -11,9 +11,9 @@ This library is standalone, meaning it doesn't depend on anything that doesn't c
  - Input
  - Bare-bones IMGUI
  - Binary serialisation
+ - 3D rendering API
 
 ## Planned Features
- - 3D rendering pipeline
  - Wayland and Android support
  - Audio
  - MacOS support (This is going to take a while, as it will mean adding support for Metal as well as OpenGL, since MacOS's OpenGL support is pretty shaky).
@@ -26,7 +26,7 @@ On Linux you must link with `libX11`, `libGL`, and `libm` to avoid linking error
 On Windows with MSVC, linking is done automatically via `#pragma comment`s. On none-MSVC Windows compilers, you must link with `user32.lib`, `gdi32.lib` and `opengl32.lib`.
 
 ## Legacy mode
-For older computers, you can enable the use of GLSL version 1.3, by `#defining QUO_LEGACY` before including the library.
+For older computers, you can enable the use of GLSL version 1.3 in the default sprite shader, by `#defining QUO_LEGACY` before including the library.
 
 ## Example Usage
 See more complete examples in the [`examples`](https://github.com/georgelam6/quo/tree/master/examples) folder.
