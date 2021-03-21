@@ -4,6 +4,9 @@
 
 This library is standalone, meaning it doesn't depend on anything that doesn't come with the operating system.
 
+## Documentation
+You can view the Doxygen generated documentation here: https://georgelamb.net/quo/html/quo_8h.html
+
 ## Current Features
  - Window management for Windows and Linux (X11)
  - 2D rendering
