@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['shader_5fcount_301',['shader_count',['../structquo__Renderer.html#a15ef30176ad5a112b703128e13b26351',1,'quo_Renderer']]],
-  ['shaders_302',['shaders',['../structquo__Renderer.html#a2bbfdd9460f7d595c0be8e7098eafe84',1,'quo_Renderer']]],
-  ['size_303',['size',['../structquo__ByteBuffer.html#a1f3e59975c18562cb4409fed7cc76dd0',1,'quo_ByteBuffer']]],
-  ['sprite_5fshader_304',['sprite_shader',['../structquo__Renderer.html#a576867c738754cab772e42bdec2f2738',1,'quo_Renderer']]]
+  ['render_5fbuffer_316',['render_buffer',['../structquo__RenderTarget.html#aff0069c9108e401b35cd322a88b84c52',1,'quo_RenderTarget']]],
+  ['render_5fcontext_317',['render_context',['../structquo__Window.html#a456f607e75c5126b4c85468da289e523',1,'quo_Window']]],
+  ['renderer_318',['renderer',['../structquo__IMGUIState.html#a7cc60ec82b5e8679b7d89d1b8a681b26',1,'quo_IMGUIState']]]
 ];

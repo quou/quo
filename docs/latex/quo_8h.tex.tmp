@@ -33,6 +33,8 @@ struct \mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}}
 \begin{DoxyCompactList}\small\item\em Responsible for drawing things to the screen. \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}}
 \begin{DoxyCompactList}\small\item\em A buffer for vertices. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structquo__RenderTarget}{quo\+\_\+\+Render\+Target}}
+\begin{DoxyCompactList}\small\item\em For offscreen rendering, ie. Rendering to a texture. \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{structquo__InputSystem}{quo\+\_\+\+Input\+System}}
 \begin{DoxyCompactList}\small\item\em Handles keyboard and mouse input. \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{structquo__IMGUIState}{quo\+\_\+\+IMGUIState}}
@@ -535,6 +537,9 @@ typedef struct \mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} \mbox
 \mbox{\Hypertarget{quo_8h_a8dccfb72abd950a28b20b77f91b707ab}\label{quo_8h_a8dccfb72abd950a28b20b77f91b707ab}} 
 typedef struct \mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} \mbox{\hyperlink{quo_8h_a8dccfb72abd950a28b20b77f91b707ab}{quo\+\_\+\+Vertex\+Buffer}}
 \begin{DoxyCompactList}\small\item\em A buffer for vertices. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_adb6aef9ab19fcba8d57239cdd9cf931a}\label{quo_8h_adb6aef9ab19fcba8d57239cdd9cf931a}} 
+typedef struct \mbox{\hyperlink{structquo__RenderTarget}{quo\+\_\+\+Render\+Target}} \mbox{\hyperlink{quo_8h_adb6aef9ab19fcba8d57239cdd9cf931a}{quo\+\_\+\+Render\+Target}}
+\begin{DoxyCompactList}\small\item\em For offscreen rendering, ie. Rendering to a texture. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{quo_8h_a82c579ebb79a06c26ed86cb420545ba4}\label{quo_8h_a82c579ebb79a06c26ed86cb420545ba4}} 
 typedef struct \mbox{\hyperlink{structquo__InputSystem}{quo\+\_\+\+Input\+System}} \mbox{\hyperlink{quo_8h_a82c579ebb79a06c26ed86cb420545ba4}{quo\+\_\+\+Input\+System}}
 \begin{DoxyCompactList}\small\item\em Handles keyboard and mouse input. \end{DoxyCompactList}\item 
@@ -676,6 +681,17 @@ void \mbox{\hyperlink{quo_8h_a5f551a4e2cd493a116c84f8d21dff138}{quo\+\_\+draw\+\
 \begin{DoxyCompactList}\small\item\em Draw a vertex buffer. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{quo_8h_a7a1419c5cc4e32c289bd059e6834a8dd}{quo\+\_\+free\+\_\+vertex\+\_\+buffer}} (\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$vb)
 \begin{DoxyCompactList}\small\item\em Free a vertex buffer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_ab333896543c1ad6e238ea7a81c76b745}{quo\+\_\+init\+\_\+render\+\_\+target}} (\mbox{\hyperlink{structquo__RenderTarget}{quo\+\_\+\+Render\+Target}} $\ast$target, int width, int height)
+\begin{DoxyCompactList}\small\item\em Initialise a render target. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a3b849879b7c2d2eb65b1d10f7989fd5b}{quo\+\_\+free\+\_\+render\+\_\+target}} (\mbox{\hyperlink{structquo__RenderTarget}{quo\+\_\+\+Render\+Target}} $\ast$target)
+\begin{DoxyCompactList}\small\item\em Free a render target. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_ada099c9f2cec8998e425995701829071}{quo\+\_\+bind\+\_\+render\+\_\+target}} (\mbox{\hyperlink{structquo__RenderTarget}{quo\+\_\+\+Render\+Target}} $\ast$target)
+\begin{DoxyCompactList}\small\item\em Bind a render target. Everything after this call will be rendered to the target. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_af47ea643eb46438d25ae6b09e505bd1f}\label{quo_8h_af47ea643eb46438d25ae6b09e505bd1f}} 
+void \mbox{\hyperlink{quo_8h_af47ea643eb46438d25ae6b09e505bd1f}{quo\+\_\+bind\+\_\+default\+\_\+render\+\_\+target}} ()
+\begin{DoxyCompactList}\small\item\em Bind the default render target, causing everything to continue rendering to the window (default frame buffer). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a8e0c8c94f7ddd3bed93df2db2666bea8}{quo\+\_\+resize\+\_\+render\+\_\+target}} (\mbox{\hyperlink{structquo__RenderTarget}{quo\+\_\+\+Render\+Target}} $\ast$target, int width, int height)
+\begin{DoxyCompactList}\small\item\em Resize a render target. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{quo_8h_a914f62962ae315772b617cfec963e105}\label{quo_8h_a914f62962ae315772b617cfec963e105}} 
 void \mbox{\hyperlink{quo_8h_a914f62962ae315772b617cfec963e105}{quo\+\_\+init\+\_\+input\+\_\+system}} ()
 \begin{DoxyCompactList}\small\item\em Initialise the static input system. Called in quo\+\_\+init\+\_\+window. \end{DoxyCompactList}\item 
@@ -874,6 +890,21 @@ Start the initialisation of a vertex buffer.
 
 \begin{DoxyParams}{Parameters}
 {\em vb} & Pointer to the vertex buffer \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_ada099c9f2cec8998e425995701829071}\label{quo_8h_ada099c9f2cec8998e425995701829071}} 
+\index{quo.h@{quo.h}!quo\_bind\_render\_target@{quo\_bind\_render\_target}}
+\index{quo\_bind\_render\_target@{quo\_bind\_render\_target}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_bind\_render\_target()}{quo\_bind\_render\_target()}}
+{\footnotesize\ttfamily void quo\+\_\+bind\+\_\+render\+\_\+target (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__RenderTarget}{quo\+\_\+\+Render\+Target}} $\ast$}]{target }\end{DoxyParamCaption})}
+
+
+
+Bind a render target. Everything after this call will be rendered to the target. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em target} & The render target to bind \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{quo_8h_a6c7a4d1722bd00087834ace2fa581a4d}\label{quo_8h_a6c7a4d1722bd00087834ace2fa581a4d}} 
@@ -1226,6 +1257,21 @@ Free a byte buffer\textquotesingle{}s memory.
 {\em buffer} & Pointer to the buffer to free \\
 \hline
 \end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a3b849879b7c2d2eb65b1d10f7989fd5b}\label{quo_8h_a3b849879b7c2d2eb65b1d10f7989fd5b}} 
+\index{quo.h@{quo.h}!quo\_free\_render\_target@{quo\_free\_render\_target}}
+\index{quo\_free\_render\_target@{quo\_free\_render\_target}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_free\_render\_target()}{quo\_free\_render\_target()}}
+{\footnotesize\ttfamily void quo\+\_\+free\+\_\+render\+\_\+target (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__RenderTarget}{quo\+\_\+\+Render\+Target}} $\ast$}]{target }\end{DoxyParamCaption})}
+
+
+
+Free a render target. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em target} & The render target to free \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{quo_8h_af72acdde635cc9e7f5c32b320c09bbde}\label{quo_8h_af72acdde635cc9e7f5c32b320c09bbde}} 
 \index{quo.h@{quo.h}!quo\_free\_renderer@{quo\_free\_renderer}}
 \index{quo\_free\_renderer@{quo\_free\_renderer}!quo.h@{quo.h}}
@@ -1404,6 +1450,25 @@ Initialise the IMGUI. To be called before any other IMGUI functions.
 
 \begin{DoxyParams}{Parameters}
 {\em renderer} & Pointer to the renderer for the IMGUI \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_ab333896543c1ad6e238ea7a81c76b745}\label{quo_8h_ab333896543c1ad6e238ea7a81c76b745}} 
+\index{quo.h@{quo.h}!quo\_init\_render\_target@{quo\_init\_render\_target}}
+\index{quo\_init\_render\_target@{quo\_init\_render\_target}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_init\_render\_target()}{quo\_init\_render\_target()}}
+{\footnotesize\ttfamily void quo\+\_\+init\+\_\+render\+\_\+target (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__RenderTarget}{quo\+\_\+\+Render\+Target}} $\ast$}]{target,  }\item[{int}]{width,  }\item[{int}]{height }\end{DoxyParamCaption})}
+
+
+
+Initialise a render target. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em target} & The render target to initialise \\
+\hline
+{\em width} & The initial width of the render target. Does not have to be the same as the window\textquotesingle{}s width \\
+\hline
+{\em height} & The initial height of the render target. Does not have to be the same as the window\textquotesingle{}s height \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{quo_8h_aa64c90c273791526b411ee4d1aea3ed1}\label{quo_8h_aa64c90c273791526b411ee4d1aea3ed1}} 
@@ -1770,6 +1835,25 @@ Resize a byte buffer to contain more elements. This happens automatically when w
 
 \begin{DoxyParams}{Parameters}
 {\em buffer} & Pointer to buffer to resize \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a8e0c8c94f7ddd3bed93df2db2666bea8}\label{quo_8h_a8e0c8c94f7ddd3bed93df2db2666bea8}} 
+\index{quo.h@{quo.h}!quo\_resize\_render\_target@{quo\_resize\_render\_target}}
+\index{quo\_resize\_render\_target@{quo\_resize\_render\_target}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_resize\_render\_target()}{quo\_resize\_render\_target()}}
+{\footnotesize\ttfamily void quo\+\_\+resize\+\_\+render\+\_\+target (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__RenderTarget}{quo\+\_\+\+Render\+Target}} $\ast$}]{target,  }\item[{int}]{width,  }\item[{int}]{height }\end{DoxyParamCaption})}
+
+
+
+Resize a render target. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em target} & The render target to resize \\
+\hline
+{\em width} & The new width for the target \\
+\hline
+{\em height} & The new height for the target \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{quo_8h_abf02b3f778da754072721250b5c9da53}\label{quo_8h_abf02b3f778da754072721250b5c9da53}} 

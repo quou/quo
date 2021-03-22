@@ -100,7 +100,7 @@ int main() {
 	quo_finalise_vertex_buffer(&cube_vb);
 
 	quo_BitmapImage image;
-	quo_load_bitmap_from_file("res/unnamed.bmp", &image, 3);
+	quo_load_bitmap_from_file("res/frog.bmp", &image, 3);
 
 	quo_Texture texture;
 	quo_init_texture_from_bmp(&texture, &image);

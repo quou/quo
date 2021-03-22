@@ -350,6 +350,15 @@ typedef void CALLSTYLE quo_gl_vertex_attrib_pointer(unsigned int, int, unsigned 
 typedef void CALLSTYLE quo_gl_delete_vertex_arrays(unsigned int, unsigned int*);
 typedef void CALLSTYLE quo_gl_delete_buffers(unsigned int, unsigned int*);
 typedef void CALLSTYLE quo_gl_active_texture(unsigned int);
+typedef void CALLSTYLE quo_gl_gen_frame_buffers(unsigned int, unsigned int*);
+typedef void CALLSTYLE quo_gl_bind_frame_buffer(unsigned int, unsigned int);
+typedef void CALLSTYLE quo_gl_frame_buffer_texture_2d(unsigned int, unsigned int, unsigned int, unsigned int, int);
+typedef void CALLSTYLE quo_gl_gen_render_buffers(unsigned int, unsigned int*);
+typedef void CALLSTYLE quo_gl_bind_render_buffer(unsigned int, unsigned int);
+typedef void CALLSTYLE quo_gl_render_buffer_storage(unsigned int, unsigned int, unsigned int, unsigned int);
+typedef void CALLSTYLE quo_gl_frame_buffer_render_buffer(unsigned int, unsigned int, unsigned int, int);
+typedef void CALLSTYLE quo_gl_delete_render_buffers(unsigned int, unsigned int*);
+typedef void CALLSTYLE quo_gl_delete_frame_buffers(unsigned int, unsigned int*);
 
 /* Load all OpenGL functions */
 void quo_load_gl();
@@ -975,6 +984,50 @@ void quo_draw_vertex_buffer(quo_VertexBuffer* vb);
  */
 void quo_free_vertex_buffer(quo_VertexBuffer* vb);
 
+/**
+ * @brief For offscreen rendering, ie. Rendering to a texture
+ */
+typedef struct quo_RenderTarget {
+	unsigned int frame_buffer; /**< OpenGL frame buffer ID */
+	unsigned int render_buffer; /**< OpenGL render buffer ID */
+
+	quo_Texture output; /**< Output texture: Can be rendered using a quo_Renderer */
+} quo_RenderTarget;
+
+/**
+ * @brief Initialise a render target
+ * @param target The render target to initialise
+ * @param width The initial width of the render target. Does not have to be the same as the window's width
+ * @param height The initial height of the render target. Does not have to be the same as the window's height
+ */
+void quo_init_render_target(quo_RenderTarget* target, int width, int height);
+
+/**
+ * @brief Free a render target
+ * @param target The render target to free
+ */
+void quo_free_render_target(quo_RenderTarget* target);
+
+/**
+ * @brief Bind a render target. Everything after this call will be rendered to the target.
+ * @param target The render target to bind
+ */
+void quo_bind_render_target(quo_RenderTarget* target);
+
+/**
+ * @brief Bind the default render target, causing everything to continue rendering to the window (default frame buffer).
+ */
+void quo_bind_default_render_target();
+
+/**
+ * @brief Resize a render target.
+ * @param target The render target to resize
+ * @param width The new width for the target
+ * @param height The new height for the target
+ */
+void quo_resize_render_target(quo_RenderTarget* target, int width, int height);
+
+
 /* -----------------------
  * END RENDERER
  * -----------------------*/
@@ -1315,6 +1368,15 @@ quo_gl_use_program* glUseProgram = NULL;
 quo_gl_vertex_attrib_pointer* glVertexAttribPointer = NULL;
 quo_gl_delete_buffers* glDeleteBuffers = NULL;
 quo_gl_delete_vertex_arrays* glDeleteVertexArrays = NULL;
+quo_gl_gen_frame_buffers* glGenFramebuffers = NULL;
+quo_gl_bind_frame_buffer* glBindFramebuffer = NULL;
+quo_gl_frame_buffer_texture_2d* glFramebufferTexture2D = NULL;
+quo_gl_gen_render_buffers* glGenRenderbuffers = NULL;
+quo_gl_bind_render_buffer* glBindRenderbuffer = NULL;
+quo_gl_render_buffer_storage* glRenderbufferStorage = NULL;
+quo_gl_frame_buffer_render_buffer* glFramebufferRenderbuffer = NULL;
+quo_gl_delete_render_buffers* glDeleteRenderbuffers = NULL;
+quo_gl_delete_frame_buffers* glDeleteFramebuffers = NULL;
 
 #ifdef QUO_PLATFORM_WINDOWS
 /* X11 already defines this, on Windows it has to be done manually */
@@ -1351,6 +1413,16 @@ void quo_load_gl() {
 	glVertexAttribPointer = QUO_LOAD_GL_FUNC(quo_gl_vertex_attrib_pointer, "glVertexAttribPointer");
 	glDeleteVertexArrays = QUO_LOAD_GL_FUNC(quo_gl_delete_vertex_arrays, "glDeleteVertexArrays");
 	glDeleteBuffers = QUO_LOAD_GL_FUNC(quo_gl_delete_buffers, "glDeleteBuffers");
+	glGenFramebuffers = QUO_LOAD_GL_FUNC(quo_gl_gen_frame_buffers, "glGenFramebuffers");
+	glBindFramebuffer = QUO_LOAD_GL_FUNC(quo_gl_bind_frame_buffer, "glBindFramebuffer");
+	glFramebufferTexture2D = QUO_LOAD_GL_FUNC(quo_gl_frame_buffer_texture_2d, "glFramebufferTexture2D");
+	glGenRenderbuffers = QUO_LOAD_GL_FUNC(quo_gl_gen_render_buffers, "glGenRenderbuffers");
+	glBindRenderbuffer = QUO_LOAD_GL_FUNC(quo_gl_bind_render_buffer, "glBindRenderbuffer");
+	glRenderbufferStorage = QUO_LOAD_GL_FUNC(quo_gl_render_buffer_storage, "glRenderbufferStorage");
+	glFramebufferRenderbuffer = QUO_LOAD_GL_FUNC(quo_gl_frame_buffer_render_buffer, "glFramebufferRenderbuffer");
+	glDeleteRenderbuffers = QUO_LOAD_GL_FUNC(quo_gl_delete_render_buffers, "glDeleteRenderbuffers");
+	glDeleteFramebuffers = QUO_LOAD_GL_FUNC(quo_gl_delete_frame_buffers, "glDeleteFramebuffers");
+
 
 #ifdef QUO_PLATFORM_WINDOWS
 	/* X11 already defines this, on Windows it has to be done manually */
@@ -2725,7 +2797,6 @@ void quo_configure_vertices(quo_VertexBuffer* vb, unsigned int index, unsigned i
 	glEnableVertexAttribArray(index);
 }
 
-
 void quo_draw_vertex_buffer(quo_VertexBuffer* vb) {
 	assert(vb != NULL);
 
@@ -2734,10 +2805,90 @@ void quo_draw_vertex_buffer(quo_VertexBuffer* vb) {
 	glBindVertexArray(0);
 }
 
+static unsigned int i_g_quo_old_frame_buffer_width = 0;
+static unsigned int i_g_quo_old_frame_buffer_height = 0;
+
 void quo_free_vertex_buffer(quo_VertexBuffer* vb) {
 	glDeleteVertexArrays(1, &vb->va_id);
 	glDeleteBuffers(1, &vb->vb_id);
 	glDeleteBuffers(1, &vb->ib_id);
+}
+
+void quo_init_render_target(quo_RenderTarget* target, int width, int height) {
+	assert(target != NULL);
+
+	target->output.width = width;
+	target->output.height = height;
+
+	glGenFramebuffers(1, &target->frame_buffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, target->frame_buffer);
+
+	glGenTextures(1, &target->output.id);
+	glBindTexture(GL_TEXTURE_2D, target->output.id);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, target->output.id, 0);
+
+	glGenRenderbuffers(1, &target->render_buffer);
+	glBindRenderbuffer(GL_RENDERBUFFER, target->render_buffer);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, target->render_buffer);
+}
+
+void quo_free_render_target(quo_RenderTarget* target) {
+	assert(target != NULL);
+
+	quo_free_texture(&target->output);
+	glDeleteRenderbuffers(1, &target->render_buffer);
+	glDeleteFramebuffers(1, &target->frame_buffer);
+}
+
+void quo_bind_render_target(quo_RenderTarget* target) {
+	assert(target != NULL);
+
+	int viewport[4];
+	glGetIntegerv(GL_VIEWPORT, viewport);
+
+	i_g_quo_old_frame_buffer_width = viewport[2];
+	i_g_quo_old_frame_buffer_height = viewport[3];
+
+	glBindFramebuffer(GL_FRAMEBUFFER, target->frame_buffer);
+	glBindRenderbuffer(GL_RENDERBUFFER, target->render_buffer);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glViewport(0, 0, target->output.width, target->output.height);
+}
+
+void quo_bind_default_render_target() {
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	glViewport(0, 0, i_g_quo_old_frame_buffer_width, i_g_quo_old_frame_buffer_height);
+}
+
+void quo_resize_render_target(quo_RenderTarget* target, int width, int height) {
+	assert(target != NULL);
+
+	target->output.width = width;
+	target->output.height = height;
+
+	glBindFramebuffer(GL_FRAMEBUFFER, target->frame_buffer);
+	glBindTexture(GL_TEXTURE_2D, target->output.id);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+
+	glBindRenderbuffer(GL_RENDERBUFFER, target->render_buffer);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, target->render_buffer);
+
+	quo_bind_default_render_target();
 }
 
 /* -----------------------

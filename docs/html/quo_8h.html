@@ -121,6 +121,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structquo__VertexBuffer.html">quo_VertexBuffer</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A buffer for vertices.  <a href="structquo__VertexBuffer.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structquo__RenderTarget.html">quo_RenderTarget</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">For offscreen rendering, ie. Rendering to a texture.  <a href="structquo__RenderTarget.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structquo__InputSystem.html">quo_InputSystem</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles keyboard and mouse input.  <a href="structquo__InputSystem.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -642,6 +645,10 @@ typedef struct <a class="el" href="structquo__Renderer.html">quo_Renderer</a>&#1
 typedef struct <a class="el" href="structquo__VertexBuffer.html">quo_VertexBuffer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a8dccfb72abd950a28b20b77f91b707ab">quo_VertexBuffer</a></td></tr>
 <tr class="memdesc:a8dccfb72abd950a28b20b77f91b707ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">A buffer for vertices. <br /></td></tr>
 <tr class="separator:a8dccfb72abd950a28b20b77f91b707ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb6aef9ab19fcba8d57239cdd9cf931a"><td class="memItemLeft" align="right" valign="top"><a id="adb6aef9ab19fcba8d57239cdd9cf931a"></a>
+typedef struct <a class="el" href="structquo__RenderTarget.html">quo_RenderTarget</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#adb6aef9ab19fcba8d57239cdd9cf931a">quo_RenderTarget</a></td></tr>
+<tr class="memdesc:adb6aef9ab19fcba8d57239cdd9cf931a"><td class="mdescLeft">&#160;</td><td class="mdescRight">For offscreen rendering, ie. Rendering to a texture. <br /></td></tr>
+<tr class="separator:adb6aef9ab19fcba8d57239cdd9cf931a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82c579ebb79a06c26ed86cb420545ba4"><td class="memItemLeft" align="right" valign="top"><a id="a82c579ebb79a06c26ed86cb420545ba4"></a>
 typedef struct <a class="el" href="structquo__InputSystem.html">quo_InputSystem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a82c579ebb79a06c26ed86cb420545ba4">quo_InputSystem</a></td></tr>
 <tr class="memdesc:a82c579ebb79a06c26ed86cb420545ba4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles keyboard and mouse input. <br /></td></tr>
@@ -847,6 +854,22 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
 <tr class="memitem:a7a1419c5cc4e32c289bd059e6834a8dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a7a1419c5cc4e32c289bd059e6834a8dd">quo_free_vertex_buffer</a> (<a class="el" href="structquo__VertexBuffer.html">quo_VertexBuffer</a> *vb)</td></tr>
 <tr class="memdesc:a7a1419c5cc4e32c289bd059e6834a8dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free a vertex buffer.  <a href="quo_8h.html#a7a1419c5cc4e32c289bd059e6834a8dd">More...</a><br /></td></tr>
 <tr class="separator:a7a1419c5cc4e32c289bd059e6834a8dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab333896543c1ad6e238ea7a81c76b745"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#ab333896543c1ad6e238ea7a81c76b745">quo_init_render_target</a> (<a class="el" href="structquo__RenderTarget.html">quo_RenderTarget</a> *target, int width, int height)</td></tr>
+<tr class="memdesc:ab333896543c1ad6e238ea7a81c76b745"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialise a render target.  <a href="quo_8h.html#ab333896543c1ad6e238ea7a81c76b745">More...</a><br /></td></tr>
+<tr class="separator:ab333896543c1ad6e238ea7a81c76b745"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b849879b7c2d2eb65b1d10f7989fd5b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a3b849879b7c2d2eb65b1d10f7989fd5b">quo_free_render_target</a> (<a class="el" href="structquo__RenderTarget.html">quo_RenderTarget</a> *target)</td></tr>
+<tr class="memdesc:a3b849879b7c2d2eb65b1d10f7989fd5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free a render target.  <a href="quo_8h.html#a3b849879b7c2d2eb65b1d10f7989fd5b">More...</a><br /></td></tr>
+<tr class="separator:a3b849879b7c2d2eb65b1d10f7989fd5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada099c9f2cec8998e425995701829071"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#ada099c9f2cec8998e425995701829071">quo_bind_render_target</a> (<a class="el" href="structquo__RenderTarget.html">quo_RenderTarget</a> *target)</td></tr>
+<tr class="memdesc:ada099c9f2cec8998e425995701829071"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bind a render target. Everything after this call will be rendered to the target.  <a href="quo_8h.html#ada099c9f2cec8998e425995701829071">More...</a><br /></td></tr>
+<tr class="separator:ada099c9f2cec8998e425995701829071"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af47ea643eb46438d25ae6b09e505bd1f"><td class="memItemLeft" align="right" valign="top"><a id="af47ea643eb46438d25ae6b09e505bd1f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#af47ea643eb46438d25ae6b09e505bd1f">quo_bind_default_render_target</a> ()</td></tr>
+<tr class="memdesc:af47ea643eb46438d25ae6b09e505bd1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bind the default render target, causing everything to continue rendering to the window (default frame buffer). <br /></td></tr>
+<tr class="separator:af47ea643eb46438d25ae6b09e505bd1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e0c8c94f7ddd3bed93df2db2666bea8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a8e0c8c94f7ddd3bed93df2db2666bea8">quo_resize_render_target</a> (<a class="el" href="structquo__RenderTarget.html">quo_RenderTarget</a> *target, int width, int height)</td></tr>
+<tr class="memdesc:a8e0c8c94f7ddd3bed93df2db2666bea8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resize a render target.  <a href="quo_8h.html#a8e0c8c94f7ddd3bed93df2db2666bea8">More...</a><br /></td></tr>
+<tr class="separator:a8e0c8c94f7ddd3bed93df2db2666bea8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a914f62962ae315772b617cfec963e105"><td class="memItemLeft" align="right" valign="top"><a id="a914f62962ae315772b617cfec963e105"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a914f62962ae315772b617cfec963e105">quo_init_input_system</a> ()</td></tr>
 <tr class="memdesc:a914f62962ae315772b617cfec963e105"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialise the static input system. Called in quo_init_window. <br /></td></tr>
@@ -1156,6 +1179,32 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">vb</td><td>Pointer to the vertex buffer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ada099c9f2cec8998e425995701829071"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada099c9f2cec8998e425995701829071">&#9670;&nbsp;</a></span>quo_bind_render_target()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void quo_bind_render_target </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structquo__RenderTarget.html">quo_RenderTarget</a> *&#160;</td>
+          <td class="paramname"><em>target</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Bind a render target. Everything after this call will be rendered to the target. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">target</td><td>The render target to bind </td></tr>
   </table>
   </dd>
 </dl>
@@ -1879,6 +1928,32 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
 
 </div>
 </div>
+<a id="a3b849879b7c2d2eb65b1d10f7989fd5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b849879b7c2d2eb65b1d10f7989fd5b">&#9670;&nbsp;</a></span>quo_free_render_target()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void quo_free_render_target </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structquo__RenderTarget.html">quo_RenderTarget</a> *&#160;</td>
+          <td class="paramname"><em>target</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Free a render target. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">target</td><td>The render target to free </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="af72acdde635cc9e7f5c32b320c09bbde"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af72acdde635cc9e7f5c32b320c09bbde">&#9670;&nbsp;</a></span>quo_free_renderer()</h2>
 
@@ -2169,6 +2244,50 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">renderer</td><td>Pointer to the renderer for the IMGUI </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab333896543c1ad6e238ea7a81c76b745"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab333896543c1ad6e238ea7a81c76b745">&#9670;&nbsp;</a></span>quo_init_render_target()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void quo_init_render_target </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structquo__RenderTarget.html">quo_RenderTarget</a> *&#160;</td>
+          <td class="paramname"><em>target</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>height</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialise a render target. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">target</td><td>The render target to initialise </td></tr>
+    <tr><td class="paramname">width</td><td>The initial width of the render target. Does not have to be the same as the window's width </td></tr>
+    <tr><td class="paramname">height</td><td>The initial height of the render target. Does not have to be the same as the window's height </td></tr>
   </table>
   </dd>
 </dl>
@@ -2873,6 +2992,50 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">buffer</td><td>Pointer to buffer to resize </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a8e0c8c94f7ddd3bed93df2db2666bea8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e0c8c94f7ddd3bed93df2db2666bea8">&#9670;&nbsp;</a></span>quo_resize_render_target()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void quo_resize_render_target </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structquo__RenderTarget.html">quo_RenderTarget</a> *&#160;</td>
+          <td class="paramname"><em>target</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>height</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resize a render target. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">target</td><td>The render target to resize </td></tr>
+    <tr><td class="paramname">width</td><td>The new width for the target </td></tr>
+    <tr><td class="paramname">height</td><td>The new height for the target </td></tr>
   </table>
   </dd>
 </dl>

@@ -15,6 +15,7 @@ You can view the Doxygen generated documentation here: https://georgelamb.net/qu
  - Bare-bones IMGUI
  - Binary serialisation
  - 3D rendering API
+ - Offscreen rendering
 
 ## Planned Features
  - Wayland and Android support
