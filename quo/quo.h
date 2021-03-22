@@ -82,6 +82,7 @@ extern "C" {
 #endif
 
 #include <stdio.h>
+#include <stdint.h>
 
 /* Boolean type */
 typedef char quo_bool;
@@ -316,6 +317,21 @@ typedef HGLRC quo_GLRenderContext;
 #define GL_TEXTURE29 0x84DD
 #define GL_TEXTURE30 0x84DE
 #define GL_TEXTURE31 0x84DF
+#ifndef GL_FRAMEBUFFER 
+	#define GL_FRAMEBUFFER 0x8D40 
+#endif
+#ifndef GL_COLOR_ATTACHMENT0 
+	#define GL_COLOR_ATTACHMENT0 0x8CE0 
+#endif
+#ifndef GL_RENDERBUFFER
+	#define GL_RENDERBUFFER 0x8D41
+#endif
+#ifndef GL_DEPTH24_STENCIL8
+	#define GL_DEPTH24_STENCIL8 0x88F0
+#endif
+#ifndef GL_DEPTH_STENCIL_ATTACHMENT
+	#define GL_DEPTH_STENCIL_ATTACHMENT 0x821A
+#endif
 #endif
 
 #ifndef DOXYGEN_IGNORE
