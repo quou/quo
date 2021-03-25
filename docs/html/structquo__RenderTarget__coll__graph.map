@@ -1,0 +1,4 @@
+<map id="quo_RenderTarget" name="quo_RenderTarget">
+<area shape="rect" id="node1" title="For offscreen rendering, ie. Rendering to a texture." alt="" coords="5,95,144,121"/>
+<area shape="rect" id="node2" href="$structquo__Texture.html" title="A texture that lives on the GPU. Should be created from a bitmap image." alt="" coords="24,5,125,32"/>
+</map>

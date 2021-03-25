@@ -1,0 +1,5 @@
+<map id="quo_Window" name="quo_Window">
+<area shape="rect" id="node1" title="Platform window structure. Responsible for storing data about a window&#39;s state and it&#39;s OpenGL contex..." alt="" coords="44,184,149,211"/>
+<area shape="rect" id="node2" href="$structquo__InputHashTable.html" title="[internal use only] Hash table for storing keymaps" alt="" coords="20,95,173,121"/>
+<area shape="rect" id="node3" href="$structquo__InputHashTableItem.html" title="[internal use only] Key value pair, for storing system input map items" alt="" coords="5,5,188,32"/>
+</map>
