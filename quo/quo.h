@@ -317,11 +317,11 @@ typedef HGLRC quo_GLRenderContext;
 #define GL_TEXTURE29 0x84DD
 #define GL_TEXTURE30 0x84DE
 #define GL_TEXTURE31 0x84DF
-#ifndef GL_FRAMEBUFFER 
-	#define GL_FRAMEBUFFER 0x8D40 
+#ifndef GL_FRAMEBUFFER
+	#define GL_FRAMEBUFFER 0x8D40
 #endif
-#ifndef GL_COLOR_ATTACHMENT0 
-	#define GL_COLOR_ATTACHMENT0 0x8CE0 
+#ifndef GL_COLOR_ATTACHMENT0
+	#define GL_COLOR_ATTACHMENT0 0x8CE0
 #endif
 #ifndef GL_RENDERBUFFER
 	#define GL_RENDERBUFFER 0x8D41
@@ -1208,6 +1208,13 @@ void quo_imgui_use_custom_font(quo_Texture* font_texture, const char* char_order
  * @param attribs Array where to place the attribs
  */
 void quo_imgui_get_attribs(int* attribs);
+
+/**
+ * @brief Set an element in the attribute array for the IMGUI
+ * @param attrib Attribute to set
+ * @param value Value to set to the attribute
+ */
+void quo_imgui_set_attrib(int attrib, int value);
 
 /**
  * @brief Initialise the IMGUI. To be called before any other IMGUI functions
@@ -3084,6 +3091,10 @@ void quo_imgui_use_custom_font(quo_Texture* font_texture, const char* char_order
 
 void quo_imgui_get_attribs(int* attribs) {
 	attribs = imgui_state.attribs;
+}
+
+void quo_imgui_set_attrib(int attrib, int value) {
+	imgui_state.attribs[attrib] = value;
 }
 
 void quo_imgui_end_frame() {
