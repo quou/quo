@@ -746,6 +746,11 @@ quo_bool quo_load_bitmap_from_file(const char* filename, quo_BitmapImage* image,
  */
 void quo_free_bitmap(quo_BitmapImage* image);
 
+typedef enum quo_TextureFlags {
+	QUO_TEXTUREFLAGS_ANTIALIASED = 1 << 0,
+	QUO_TEXTUREFLAGS_ALIASED = 1 << 1,
+} quo_TextureFlags;
+
 /**
  * @brief A texture that lives on the GPU. Should be created from a bitmap image
  */
@@ -759,7 +764,7 @@ typedef struct quo_Texture {
  * @param texture Resulting texture
  * @param bitmap Raw image data
  */
-void quo_init_texture_from_bmp(quo_Texture* texture, quo_BitmapImage* bitmap);
+void quo_init_texture_from_bmp(quo_Texture* texture, quo_BitmapImage* bitmap, quo_TextureFlags flags);
 
 /**
  * @brief Free a texture
@@ -873,6 +878,12 @@ quo_ShaderHandle quo_create_shader(quo_Renderer* renderer, const char* vertex_so
  * @param shader Handle to shader to be bound
  */
 void quo_bind_shader(quo_Renderer* renderer, quo_ShaderHandle shader);
+
+/**
+ * @brief Bind the default shader
+ * @param renderer Pointer to renderer where the shader is stored
+ */
+void quo_bind_default_shader(quo_Renderer* renderer);
 
 /**
  * @brief Set a uniform colour. Note: Shader must be bound before calling this function
@@ -1064,6 +1075,9 @@ typedef struct quo_InputSystem {
 	quo_bool down_mouse_buttons[QUO_MOUSE_BUTTON_COUNT]; /**< Mouse buttons that have been pressed in the current frame */
 	quo_bool up_mouse_buttons[QUO_MOUSE_BUTTON_COUNT]; /**< Mouse buttons that have been released in the current frame */
 
+	char ascii_keys[QUO_KEY_COUNT];
+	char ascii_shifted_keys[QUO_KEY_COUNT];
+
 	int mouse_x; /**< Mouse X coordinate */
 	int mouse_y; /**< Mouse Y coordinate */
 } quo_InputSystem;
@@ -1077,6 +1091,11 @@ void quo_init_input_system();
  * @brief Update the input system. Called in quo_update
  */
 void quo_update_input_system();
+
+/**
+ * @brief Get any keys pressed as a character. Returnes '\0' if none are pressed
+ */
+char quo_get_input_character();
 
 /**
  * @brief Check whether a key is currently held down
@@ -2390,7 +2409,7 @@ void quo_free_bitmap(quo_BitmapImage* image) {
 }
 
 
-void quo_init_texture_from_bmp(quo_Texture* texture, quo_BitmapImage* bitmap) {
+void quo_init_texture_from_bmp(quo_Texture* texture, quo_BitmapImage* bitmap, quo_TextureFlags flags) {
 	assert(texture != NULL);
 	assert(bitmap != NULL);
 
@@ -2403,6 +2422,13 @@ void quo_init_texture_from_bmp(quo_Texture* texture, quo_BitmapImage* bitmap) {
 
 	glGenTextures(1, &texture->id);
 	glBindTexture(GL_TEXTURE_2D, texture->id);
+
+	int alias_mode;
+	if (flags & QUO_TEXTUREFLAGS_ALIASED) {
+		alias_mode = GL_NEAREST;
+	} else if (flags & QUO_TEXTUREFLAGS_ANTIALIASED) {
+		alias_mode = GL_LINEAR;
+	}
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -2705,6 +2731,13 @@ void quo_bind_shader(quo_Renderer* renderer, quo_ShaderHandle shader) {
 	glUseProgram(renderer->shaders[shader]);
 }
 
+
+void quo_bind_default_shader(quo_Renderer* renderer) {
+	assert(renderer != NULL);
+
+	quo_bind_shader(renderer, renderer->sprite_shader);
+}
+
 void quo_shader_set_color(quo_Renderer* renderer, quo_ShaderHandle shader, const char* uniform_name, unsigned long color) {
 	int r = (color >> 16) & 0xFF;
 	int g = (color >> 8) & 0xFF;
@@ -2928,6 +2961,8 @@ static quo_InputSystem input_system;
 void quo_init_input_system() {
 	memset(input_system.held_keys, 0, QUO_KEY_COUNT * sizeof(quo_bool));
 	memset(input_system.held_mouse_buttons, 0, QUO_MOUSE_BUTTON_COUNT * sizeof(quo_bool));
+
+
 }
 
 void quo_update_input_system() {
@@ -2935,6 +2970,12 @@ void quo_update_input_system() {
 	memset(input_system.up_keys, 0, QUO_KEY_COUNT * sizeof(quo_bool));
 	memset(input_system.down_mouse_buttons, 0, QUO_MOUSE_BUTTON_COUNT * sizeof(quo_bool));
 	memset(input_system.up_mouse_buttons, 0, QUO_MOUSE_BUTTON_COUNT * sizeof(quo_bool));
+}
+
+char quo_get_input_character() {
+	quo_bool shift = quo_key_pressed(QUO_KEY_LEFT_SHIFT) || quo_key_pressed(QUO_KEY_RIGHT_SHIFT);
+
+
 }
 
 quo_bool quo_key_pressed(int key) {
@@ -3062,7 +3103,7 @@ void quo_imgui_use_default_settings() {
 	}
 	imgui_state.font_texture = malloc(sizeof(quo_Texture));
 
-	quo_init_texture_from_bmp(imgui_state.font_texture, &font_image);
+	quo_init_texture_from_bmp(imgui_state.font_texture, &font_image, QUO_TEXTUREFLAGS_ALIASED);
 
 	char char_order[128] = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{:}~";
 

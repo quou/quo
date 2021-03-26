@@ -103,7 +103,7 @@ int main() {
 	quo_load_bitmap_from_file("res/frog.bmp", &image, 3);
 
 	quo_Texture texture;
-	quo_init_texture_from_bmp(&texture, &image);
+	quo_init_texture_from_bmp(&texture, &image, QUO_TEXTUREFLAGS_ANTIALIASED);
 
 	quo_Matrix projection = quo_perspective(45.0f, (float)100.0f / (float)100.0f, 0.1f, 100.0f);
 
@@ -134,7 +134,7 @@ int main() {
 		quo_bind_default_render_target();
 		quo_clear_renderer(0x000000);
 
-		quo_bind_shader(&renderer, renderer.sprite_shader);
+		quo_bind_default_shader(&renderer);
 		quo_draw_texture(&renderer, &render_target.output, (quo_Rect){0, 0, 100, 100}, (quo_Rect){100, 100, 100, 100}, 0xffffff);
 		quo_draw_texture(&renderer, &render_target.output, (quo_Rect){0, 0, 100, 100}, (quo_Rect){100, 240, 100, 100}, 0xffffff);
 		quo_draw_texture(&renderer, &render_target.output, (quo_Rect){0, 0, 100, 100}, (quo_Rect){300, 100, 100, 100}, 0xffffff);

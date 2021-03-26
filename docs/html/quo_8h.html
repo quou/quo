@@ -69,6 +69,7 @@ $(function() {
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">quo.h File Reference</div>  </div>
@@ -635,6 +636,9 @@ typedef struct <a class="el" href="structquo__Rect.html">quo_Rect</a>&#160;</td>
 typedef struct <a class="el" href="structquo__BitmapImage.html">quo_BitmapImage</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a77df5dd130070cb18573dca6570e0f30">quo_BitmapImage</a></td></tr>
 <tr class="memdesc:a77df5dd130070cb18573dca6570e0f30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a bitmap image, containing it's raw pixel data, it's width and height and it's component count. <br /></td></tr>
 <tr class="separator:a77df5dd130070cb18573dca6570e0f30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56ee9030abc2d45b4b6563335b17be58"><td class="memItemLeft" align="right" valign="top"><a id="a56ee9030abc2d45b4b6563335b17be58"></a>
+typedef enum quo_TextureFlags&#160;</td><td class="memItemRight" valign="bottom"><b>quo_TextureFlags</b></td></tr>
+<tr class="separator:a56ee9030abc2d45b4b6563335b17be58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c00cb5f1d8811e5f7f4a14b3b46aad7"><td class="memItemLeft" align="right" valign="top"><a id="a5c00cb5f1d8811e5f7f4a14b3b46aad7"></a>
 typedef struct <a class="el" href="structquo__Texture.html">quo_Texture</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a5c00cb5f1d8811e5f7f4a14b3b46aad7">quo_Texture</a></td></tr>
 <tr class="memdesc:a5c00cb5f1d8811e5f7f4a14b3b46aad7"><td class="mdescLeft">&#160;</td><td class="mdescRight">A texture that lives on the GPU. Should be created from a bitmap image. <br /></td></tr>
@@ -667,6 +671,13 @@ typedef struct <a class="el" href="structquo__IMGUIState.html">quo_IMGUIState</a
 typedef struct <a class="el" href="structquo__ByteBuffer.html">quo_ByteBuffer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a6f905e5ef753c5909a30475bfd5c337f">quo_ByteBuffer</a></td></tr>
 <tr class="memdesc:a6f905e5ef753c5909a30475bfd5c337f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A buffer for holding generic data. <br /></td></tr>
 <tr class="separator:a6f905e5ef753c5909a30475bfd5c337f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:af2debe1e65dc9bda6465e52e19943212"><td class="memItemLeft" align="right" valign="top"><a id="af2debe1e65dc9bda6465e52e19943212"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>quo_TextureFlags</b> { <b>QUO_TEXTUREFLAGS_ANTIALIASED</b> = 1 &lt;&lt; 0
+, <b>QUO_TEXTUREFLAGS_ALIASED</b> = 1 &lt;&lt; 1
+ }</td></tr>
+<tr class="separator:af2debe1e65dc9bda6465e52e19943212"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -774,9 +785,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
 <tr class="memitem:ababd61559d20e5ab1583fb4f346e3c3a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#ababd61559d20e5ab1583fb4f346e3c3a">quo_free_bitmap</a> (<a class="el" href="structquo__BitmapImage.html">quo_BitmapImage</a> *image)</td></tr>
 <tr class="memdesc:ababd61559d20e5ab1583fb4f346e3c3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free a bitmap's pixel data. Should be called once converted into a texture.  <a href="quo_8h.html#ababd61559d20e5ab1583fb4f346e3c3a">More...</a><br /></td></tr>
 <tr class="separator:ababd61559d20e5ab1583fb4f346e3c3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82a6c4a47e0c58996b0432bacb221b66"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a82a6c4a47e0c58996b0432bacb221b66">quo_init_texture_from_bmp</a> (<a class="el" href="structquo__Texture.html">quo_Texture</a> *texture, <a class="el" href="structquo__BitmapImage.html">quo_BitmapImage</a> *bitmap)</td></tr>
-<tr class="memdesc:a82a6c4a47e0c58996b0432bacb221b66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a texture.  <a href="quo_8h.html#a82a6c4a47e0c58996b0432bacb221b66">More...</a><br /></td></tr>
-<tr class="separator:a82a6c4a47e0c58996b0432bacb221b66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8be06ba4866ecfbb711bcfad9bfe6c80"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a8be06ba4866ecfbb711bcfad9bfe6c80">quo_init_texture_from_bmp</a> (<a class="el" href="structquo__Texture.html">quo_Texture</a> *texture, <a class="el" href="structquo__BitmapImage.html">quo_BitmapImage</a> *bitmap, quo_TextureFlags flags)</td></tr>
+<tr class="memdesc:a8be06ba4866ecfbb711bcfad9bfe6c80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a texture.  <a href="quo_8h.html#a8be06ba4866ecfbb711bcfad9bfe6c80">More...</a><br /></td></tr>
+<tr class="separator:a8be06ba4866ecfbb711bcfad9bfe6c80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a296489ffd24e47fff56ad79e7bd807ad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a296489ffd24e47fff56ad79e7bd807ad">quo_free_texture</a> (<a class="el" href="structquo__Texture.html">quo_Texture</a> *texture)</td></tr>
 <tr class="memdesc:a296489ffd24e47fff56ad79e7bd807ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free a texture.  <a href="quo_8h.html#a296489ffd24e47fff56ad79e7bd807ad">More...</a><br /></td></tr>
 <tr class="separator:a296489ffd24e47fff56ad79e7bd807ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -818,6 +829,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
 <tr class="memitem:a6c7a4d1722bd00087834ace2fa581a4d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a6c7a4d1722bd00087834ace2fa581a4d">quo_bind_shader</a> (<a class="el" href="structquo__Renderer.html">quo_Renderer</a> *renderer, <a class="el" href="quo_8h.html#a6c48124a8ce2225be23f46043eccd910">quo_ShaderHandle</a> shader)</td></tr>
 <tr class="memdesc:a6c7a4d1722bd00087834ace2fa581a4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bind a shader.  <a href="quo_8h.html#a6c7a4d1722bd00087834ace2fa581a4d">More...</a><br /></td></tr>
 <tr class="separator:a6c7a4d1722bd00087834ace2fa581a4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6d2f7ad4164c97f82e39520cf75716e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#ab6d2f7ad4164c97f82e39520cf75716e">quo_bind_default_shader</a> (<a class="el" href="structquo__Renderer.html">quo_Renderer</a> *renderer)</td></tr>
+<tr class="memdesc:ab6d2f7ad4164c97f82e39520cf75716e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bind the default shader.  <a href="quo_8h.html#ab6d2f7ad4164c97f82e39520cf75716e">More...</a><br /></td></tr>
+<tr class="separator:ab6d2f7ad4164c97f82e39520cf75716e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78f72cc1b4b9afd1d94115d5e71929e1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a78f72cc1b4b9afd1d94115d5e71929e1">quo_shader_set_color</a> (<a class="el" href="structquo__Renderer.html">quo_Renderer</a> *renderer, <a class="el" href="quo_8h.html#a6c48124a8ce2225be23f46043eccd910">quo_ShaderHandle</a> shader, const char *uniform_name, unsigned long color)</td></tr>
 <tr class="memdesc:a78f72cc1b4b9afd1d94115d5e71929e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a uniform colour. Note: Shader must be bound before calling this function.  <a href="quo_8h.html#a78f72cc1b4b9afd1d94115d5e71929e1">More...</a><br /></td></tr>
 <tr class="separator:a78f72cc1b4b9afd1d94115d5e71929e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -884,6 +898,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a9c05cbf0e91ab669ffb040c903a00686">quo_update_input_system</a> ()</td></tr>
 <tr class="memdesc:a9c05cbf0e91ab669ffb040c903a00686"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the input system. Called in quo_update. <br /></td></tr>
 <tr class="separator:a9c05cbf0e91ab669ffb040c903a00686"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2977c57106c4bf2733fb455975e6f0bc"><td class="memItemLeft" align="right" valign="top"><a id="a2977c57106c4bf2733fb455975e6f0bc"></a>
+char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a2977c57106c4bf2733fb455975e6f0bc">quo_get_input_character</a> ()</td></tr>
+<tr class="memdesc:a2977c57106c4bf2733fb455975e6f0bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get any keys pressed as a character. Returnes '\0' if none are pressed. <br /></td></tr>
+<tr class="separator:a2977c57106c4bf2733fb455975e6f0bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab98d51ab165d3885be06701cfd072a37"><td class="memItemLeft" align="right" valign="top">quo_bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#ab98d51ab165d3885be06701cfd072a37">quo_key_pressed</a> (int key)</td></tr>
 <tr class="memdesc:ab98d51ab165d3885be06701cfd072a37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether a key is currently held down.  <a href="quo_8h.html#ab98d51ab165d3885be06701cfd072a37">More...</a><br /></td></tr>
 <tr class="separator:ab98d51ab165d3885be06701cfd072a37"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1188,6 +1206,32 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">vb</td><td>Pointer to the vertex buffer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab6d2f7ad4164c97f82e39520cf75716e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6d2f7ad4164c97f82e39520cf75716e">&#9670;&nbsp;</a></span>quo_bind_default_shader()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void quo_bind_default_shader </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structquo__Renderer.html">quo_Renderer</a> *&#160;</td>
+          <td class="paramname"><em>renderer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Bind the default shader. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">renderer</td><td>Pointer to renderer where the shader is stored </td></tr>
   </table>
   </dd>
 </dl>
@@ -2377,8 +2421,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
 
 </div>
 </div>
-<a id="a82a6c4a47e0c58996b0432bacb221b66"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a82a6c4a47e0c58996b0432bacb221b66">&#9670;&nbsp;</a></span>quo_init_texture_from_bmp()</h2>
+<a id="a8be06ba4866ecfbb711bcfad9bfe6c80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8be06ba4866ecfbb711bcfad9bfe6c80">&#9670;&nbsp;</a></span>quo_init_texture_from_bmp()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2393,7 +2437,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="structquo__BitmapImage.html">quo_BitmapImage</a> *&#160;</td>
-          <td class="paramname"><em>bitmap</em>&#160;</td>
+          <td class="paramname"><em>bitmap</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">quo_TextureFlags&#160;</td>
+          <td class="paramname"><em>flags</em>&#160;</td>
         </tr>
         <tr>
           <td></td>

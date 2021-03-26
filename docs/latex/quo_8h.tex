@@ -7,8 +7,7 @@ Quo is a single-\/header game library written in C.
 
 {\ttfamily \#include $<$stdio.\+h$>$}\newline
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
-Include dependency graph for quo.\+h\+:
-\nopagebreak
+Include dependency graph for quo.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -532,6 +531,9 @@ typedef struct \mbox{\hyperlink{structquo__Rect}{quo\+\_\+\+Rect}} \mbox{\hyperl
 \mbox{\Hypertarget{quo_8h_a77df5dd130070cb18573dca6570e0f30}\label{quo_8h_a77df5dd130070cb18573dca6570e0f30}} 
 typedef struct \mbox{\hyperlink{structquo__BitmapImage}{quo\+\_\+\+Bitmap\+Image}} \mbox{\hyperlink{quo_8h_a77df5dd130070cb18573dca6570e0f30}{quo\+\_\+\+Bitmap\+Image}}
 \begin{DoxyCompactList}\small\item\em Represents a bitmap image, containing it\textquotesingle{}s raw pixel data, it\textquotesingle{}s width and height and it\textquotesingle{}s component count. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a56ee9030abc2d45b4b6563335b17be58}\label{quo_8h_a56ee9030abc2d45b4b6563335b17be58}} 
+typedef enum quo\+\_\+\+Texture\+Flags {\bfseries quo\+\_\+\+Texture\+Flags}
+\item 
 \mbox{\Hypertarget{quo_8h_a5c00cb5f1d8811e5f7f4a14b3b46aad7}\label{quo_8h_a5c00cb5f1d8811e5f7f4a14b3b46aad7}} 
 typedef struct \mbox{\hyperlink{structquo__Texture}{quo\+\_\+\+Texture}} \mbox{\hyperlink{quo_8h_a5c00cb5f1d8811e5f7f4a14b3b46aad7}{quo\+\_\+\+Texture}}
 \begin{DoxyCompactList}\small\item\em A texture that lives on the GPU. Should be created from a bitmap image. \end{DoxyCompactList}\item 
@@ -556,6 +558,14 @@ typedef struct \mbox{\hyperlink{structquo__IMGUIState}{quo\+\_\+\+IMGUIState}} \
 \mbox{\Hypertarget{quo_8h_a6f905e5ef753c5909a30475bfd5c337f}\label{quo_8h_a6f905e5ef753c5909a30475bfd5c337f}} 
 typedef struct \mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} \mbox{\hyperlink{quo_8h_a6f905e5ef753c5909a30475bfd5c337f}{quo\+\_\+\+Byte\+Buffer}}
 \begin{DoxyCompactList}\small\item\em A buffer for holding generic data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{quo_8h_af2debe1e65dc9bda6465e52e19943212}\label{quo_8h_af2debe1e65dc9bda6465e52e19943212}} 
+enum {\bfseries quo\+\_\+\+Texture\+Flags} \{ {\bfseries QUO\+\_\+\+TEXTUREFLAGS\+\_\+\+ANTIALIASED} = 1 $<$$<$ 0
+, {\bfseries QUO\+\_\+\+TEXTUREFLAGS\+\_\+\+ALIASED} = 1 $<$$<$ 1
+ \}
+\end{DoxyCompactItemize}
 \doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -630,7 +640,7 @@ quo\+\_\+bool \mbox{\hyperlink{quo_8h_a86e2abd9d30f10d14fa6da5193b46468}{quo\+\_
 \begin{DoxyCompactList}\small\item\em Load a bitmap from a file. The file must not have a colour space written to it\textquotesingle{}s header. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{quo_8h_ababd61559d20e5ab1583fb4f346e3c3a}{quo\+\_\+free\+\_\+bitmap}} (\mbox{\hyperlink{structquo__BitmapImage}{quo\+\_\+\+Bitmap\+Image}} $\ast$image)
 \begin{DoxyCompactList}\small\item\em Free a bitmap\textquotesingle{}s pixel data. Should be called once converted into a texture. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{quo_8h_a82a6c4a47e0c58996b0432bacb221b66}{quo\+\_\+init\+\_\+texture\+\_\+from\+\_\+bmp}} (\mbox{\hyperlink{structquo__Texture}{quo\+\_\+\+Texture}} $\ast$texture, \mbox{\hyperlink{structquo__BitmapImage}{quo\+\_\+\+Bitmap\+Image}} $\ast$bitmap)
+void \mbox{\hyperlink{quo_8h_a8be06ba4866ecfbb711bcfad9bfe6c80}{quo\+\_\+init\+\_\+texture\+\_\+from\+\_\+bmp}} (\mbox{\hyperlink{structquo__Texture}{quo\+\_\+\+Texture}} $\ast$texture, \mbox{\hyperlink{structquo__BitmapImage}{quo\+\_\+\+Bitmap\+Image}} $\ast$bitmap, quo\+\_\+\+Texture\+Flags flags)
 \begin{DoxyCompactList}\small\item\em Create a texture. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{quo_8h_a296489ffd24e47fff56ad79e7bd807ad}{quo\+\_\+free\+\_\+texture}} (\mbox{\hyperlink{structquo__Texture}{quo\+\_\+\+Texture}} $\ast$texture)
 \begin{DoxyCompactList}\small\item\em Free a texture. \end{DoxyCompactList}\item 
@@ -660,6 +670,8 @@ void \mbox{\hyperlink{quo_8h_aace430c1e0ce2381a07dda88dfa20f6b}{quo\+\_\+draw\+\
 \begin{DoxyCompactList}\small\item\em Create a new shader. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{quo_8h_a6c7a4d1722bd00087834ace2fa581a4d}{quo\+\_\+bind\+\_\+shader}} (\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$renderer, \mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}} shader)
 \begin{DoxyCompactList}\small\item\em Bind a shader. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_ab6d2f7ad4164c97f82e39520cf75716e}{quo\+\_\+bind\+\_\+default\+\_\+shader}} (\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$renderer)
+\begin{DoxyCompactList}\small\item\em Bind the default shader. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{quo_8h_a78f72cc1b4b9afd1d94115d5e71929e1}{quo\+\_\+shader\+\_\+set\+\_\+color}} (\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$renderer, \mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}} shader, const char $\ast$uniform\+\_\+name, unsigned long color)
 \begin{DoxyCompactList}\small\item\em Set a uniform colour. Note\+: Shader must be bound before calling this function. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{quo_8h_a107476f0c5c2f36b8582c5e3d0ce2168}{quo\+\_\+shader\+\_\+set\+\_\+float}} (\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$renderer, \mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}} shader, const char $\ast$uniform\+\_\+name, float val)
@@ -705,6 +717,9 @@ void \mbox{\hyperlink{quo_8h_a914f62962ae315772b617cfec963e105}{quo\+\_\+init\+\
 \mbox{\Hypertarget{quo_8h_a9c05cbf0e91ab669ffb040c903a00686}\label{quo_8h_a9c05cbf0e91ab669ffb040c903a00686}} 
 void \mbox{\hyperlink{quo_8h_a9c05cbf0e91ab669ffb040c903a00686}{quo\+\_\+update\+\_\+input\+\_\+system}} ()
 \begin{DoxyCompactList}\small\item\em Update the input system. Called in quo\+\_\+update. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a2977c57106c4bf2733fb455975e6f0bc}\label{quo_8h_a2977c57106c4bf2733fb455975e6f0bc}} 
+char \mbox{\hyperlink{quo_8h_a2977c57106c4bf2733fb455975e6f0bc}{quo\+\_\+get\+\_\+input\+\_\+character}} ()
+\begin{DoxyCompactList}\small\item\em Get any keys pressed as a character. Returnes \textquotesingle{}\textbackslash{}0\textquotesingle{} if none are pressed. \end{DoxyCompactList}\item 
 quo\+\_\+bool \mbox{\hyperlink{quo_8h_ab98d51ab165d3885be06701cfd072a37}{quo\+\_\+key\+\_\+pressed}} (int key)
 \begin{DoxyCompactList}\small\item\em Check whether a key is currently held down. \end{DoxyCompactList}\item 
 quo\+\_\+bool \mbox{\hyperlink{quo_8h_ab289c2d010a3be7ca761e7d1250b279e}{quo\+\_\+key\+\_\+just\+\_\+pressed}} (int key)
@@ -899,6 +914,21 @@ Start the initialisation of a vertex buffer.
 
 \begin{DoxyParams}{Parameters}
 {\em vb} & Pointer to the vertex buffer \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_ab6d2f7ad4164c97f82e39520cf75716e}\label{quo_8h_ab6d2f7ad4164c97f82e39520cf75716e}} 
+\index{quo.h@{quo.h}!quo\_bind\_default\_shader@{quo\_bind\_default\_shader}}
+\index{quo\_bind\_default\_shader@{quo\_bind\_default\_shader}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_bind\_default\_shader()}{quo\_bind\_default\_shader()}}
+{\footnotesize\ttfamily void quo\+\_\+bind\+\_\+default\+\_\+shader (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$}]{renderer }\end{DoxyParamCaption})}
+
+
+
+Bind the default shader. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em renderer} & Pointer to renderer where the shader is stored \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{quo_8h_ada099c9f2cec8998e425995701829071}\label{quo_8h_ada099c9f2cec8998e425995701829071}} 
@@ -1514,11 +1544,11 @@ Initialise a new renderer.
 {\em window} & Pointer to window where this renderer will operate \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{quo_8h_a82a6c4a47e0c58996b0432bacb221b66}\label{quo_8h_a82a6c4a47e0c58996b0432bacb221b66}} 
+\mbox{\Hypertarget{quo_8h_a8be06ba4866ecfbb711bcfad9bfe6c80}\label{quo_8h_a8be06ba4866ecfbb711bcfad9bfe6c80}} 
 \index{quo.h@{quo.h}!quo\_init\_texture\_from\_bmp@{quo\_init\_texture\_from\_bmp}}
 \index{quo\_init\_texture\_from\_bmp@{quo\_init\_texture\_from\_bmp}!quo.h@{quo.h}}
 \doxysubsubsection{\texorpdfstring{quo\_init\_texture\_from\_bmp()}{quo\_init\_texture\_from\_bmp()}}
-{\footnotesize\ttfamily void quo\+\_\+init\+\_\+texture\+\_\+from\+\_\+bmp (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Texture}{quo\+\_\+\+Texture}} $\ast$}]{texture,  }\item[{\mbox{\hyperlink{structquo__BitmapImage}{quo\+\_\+\+Bitmap\+Image}} $\ast$}]{bitmap }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void quo\+\_\+init\+\_\+texture\+\_\+from\+\_\+bmp (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__Texture}{quo\+\_\+\+Texture}} $\ast$}]{texture,  }\item[{\mbox{\hyperlink{structquo__BitmapImage}{quo\+\_\+\+Bitmap\+Image}} $\ast$}]{bitmap,  }\item[{quo\+\_\+\+Texture\+Flags}]{flags }\end{DoxyParamCaption})}
 
 
 
