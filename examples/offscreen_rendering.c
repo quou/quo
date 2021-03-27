@@ -37,9 +37,6 @@ int main() {
 	quo_init_renderer(&renderer, &window);
 	quo_enable_3d();
 
-	quo_init_imgui(&renderer);
-	quo_imgui_use_default_settings();
-
 	quo_ShaderHandle cube_shader = quo_create_shader(&renderer, vshader, fshader);
 	quo_bind_shader(&renderer, cube_shader);
 
@@ -139,10 +136,7 @@ int main() {
 		quo_draw_texture(&renderer, &render_target.output, (quo_Rect){0, 0, 100, 100}, (quo_Rect){100, 240, 100, 100}, 0xffffff);
 		quo_draw_texture(&renderer, &render_target.output, (quo_Rect){0, 0, 100, 100}, (quo_Rect){300, 100, 100, 100}, 0xffffff);
 		quo_draw_texture(&renderer, &render_target.output, (quo_Rect){0, 0, 100, 100}, (quo_Rect){300, 300, 200, 200}, 0xffffff);
-		quo_imgui_text("Hello, welcome the offscreen-rendering demo!\nHere's a simple, textured cube,\nrendered once offscreen onto a quo_Texture\nand then drawn on the screen multiple times.");
-
-		quo_imgui_end_frame();
-
+		
 		quo_update_renderer(&renderer);
 		quo_update_window(&window);
 	}

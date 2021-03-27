@@ -44,11 +44,7 @@ int main() {
 	 * will slow down the program if 3D features are not
 	 * needed. */
 	quo_enable_3d();
-
-	/* Initialise the IMGUI */
-	quo_init_imgui(&renderer);
-	quo_imgui_use_default_settings();
-
+	
 	/* Create the cube shader */
 	quo_ShaderHandle cube_shader = quo_create_shader(&renderer, vshader, fshader);
 	quo_bind_shader(&renderer, cube_shader);
@@ -166,11 +162,7 @@ int main() {
 		/* Bind the renderer's default sprite shader */
 		quo_bind_shader(&renderer, renderer.sprite_shader);
 
-		/* Draw some text */
-		quo_imgui_text("Hello, welcome the 3D demo!\nHere's a simple, textured cube:");
-
 		/* Finish the frame */
-		quo_imgui_end_frame();
 		quo_update_renderer(&renderer);
 		quo_update_window(&window);
 	}
