@@ -659,6 +659,10 @@ typedef struct <a class="el" href="structquo__VertexBuffer.html">quo_VertexBuffe
 typedef struct <a class="el" href="structquo__RenderTarget.html">quo_RenderTarget</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#adb6aef9ab19fcba8d57239cdd9cf931a">quo_RenderTarget</a></td></tr>
 <tr class="memdesc:adb6aef9ab19fcba8d57239cdd9cf931a"><td class="mdescLeft">&#160;</td><td class="mdescRight">For offscreen rendering, ie. Rendering to a texture. <br /></td></tr>
 <tr class="separator:adb6aef9ab19fcba8d57239cdd9cf931a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c2287c4de928c8536b6435272934fdb"><td class="memItemLeft" align="right" valign="top"><a id="a1c2287c4de928c8536b6435272934fdb"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a1c2287c4de928c8536b6435272934fdb">quo_character_callback</a>) (char *)</td></tr>
+<tr class="memdesc:a1c2287c4de928c8536b6435272934fdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback that gives information about inputted characters. <br /></td></tr>
+<tr class="separator:a1c2287c4de928c8536b6435272934fdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82c579ebb79a06c26ed86cb420545ba4"><td class="memItemLeft" align="right" valign="top"><a id="a82c579ebb79a06c26ed86cb420545ba4"></a>
 typedef struct <a class="el" href="structquo__InputSystem.html">quo_InputSystem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a82c579ebb79a06c26ed86cb420545ba4">quo_InputSystem</a></td></tr>
 <tr class="memdesc:a82c579ebb79a06c26ed86cb420545ba4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles keyboard and mouse input. <br /></td></tr>
@@ -898,6 +902,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a9c05cbf0e91ab669ffb040c903a00686">quo_update_input_system</a> ()</td></tr>
 <tr class="memdesc:a9c05cbf0e91ab669ffb040c903a00686"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the input system. Called in quo_update. <br /></td></tr>
 <tr class="separator:a9c05cbf0e91ab669ffb040c903a00686"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d59d9465fd4021be22ac465de759665"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a6d59d9465fd4021be22ac465de759665">quo_set_character_callback</a> (<a class="el" href="quo_8h.html#a1c2287c4de928c8536b6435272934fdb">quo_character_callback</a> callback)</td></tr>
+<tr class="memdesc:a6d59d9465fd4021be22ac465de759665"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the character callback.  <a href="quo_8h.html#a6d59d9465fd4021be22ac465de759665">More...</a><br /></td></tr>
+<tr class="separator:a6d59d9465fd4021be22ac465de759665"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2977c57106c4bf2733fb455975e6f0bc"><td class="memItemLeft" align="right" valign="top"><a id="a2977c57106c4bf2733fb455975e6f0bc"></a>
 char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a2977c57106c4bf2733fb455975e6f0bc">quo_get_input_character</a> ()</td></tr>
 <tr class="memdesc:a2977c57106c4bf2733fb455975e6f0bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get any keys pressed as a character. Returnes '\0' if none are pressed. <br /></td></tr>
@@ -954,6 +961,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a805a7d0b877b9ddd9f5c16d62e295549">i_quo_update_mouse_pos</a> (int x, int y)</td></tr>
 <tr class="memdesc:a805a7d0b877b9ddd9f5c16d62e295549"><td class="mdescLeft">&#160;</td><td class="mdescRight">FOR INTERNAL USE ONLY. <br /></td></tr>
 <tr class="separator:a805a7d0b877b9ddd9f5c16d62e295549"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b4454f93a8f31bfb7d887a567054ad3"><td class="memItemLeft" align="right" valign="top"><a id="a9b4454f93a8f31bfb7d887a567054ad3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a9b4454f93a8f31bfb7d887a567054ad3">i_quo_call_char_callback</a> (char *characters)</td></tr>
+<tr class="memdesc:a9b4454f93a8f31bfb7d887a567054ad3"><td class="mdescLeft">&#160;</td><td class="mdescRight">FOR INTERNAL USE ONLY. <br /></td></tr>
+<tr class="separator:a9b4454f93a8f31bfb7d887a567054ad3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a163f96bb05cf0ecf49c2a7f622ac7b71"><td class="memItemLeft" align="right" valign="top"><a id="a163f96bb05cf0ecf49c2a7f622ac7b71"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_8h.html#a163f96bb05cf0ecf49c2a7f622ac7b71">quo_imgui_use_default_settings</a> ()</td></tr>
 <tr class="memdesc:a163f96bb05cf0ecf49c2a7f622ac7b71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialise the IMGUI with default settings. To be called after quo_init_imgui. <br /></td></tr>
@@ -3218,6 +3229,32 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="quo_
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The rotated matrix </dd></dl>
+
+</div>
+</div>
+<a id="a6d59d9465fd4021be22ac465de759665"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d59d9465fd4021be22ac465de759665">&#9670;&nbsp;</a></span>quo_set_character_callback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void quo_set_character_callback </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="quo_8h.html#a1c2287c4de928c8536b6435272934fdb">quo_character_callback</a>&#160;</td>
+          <td class="paramname"><em>callback</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the character callback. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">callback</td><td>The callback to be set </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

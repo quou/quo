@@ -3,6 +3,11 @@
 
 /* NOTE: A window is required for input to work. A renderer is optional */
 
+/* Print inputted text as characters */
+static void char_callback(char* characters) {
+	printf("%s\n", characters);
+}
+
 int main() {
 	/* Create window */
 	quo_Window window;
@@ -12,6 +17,9 @@ int main() {
 	/* Create renderer */
 	quo_Renderer renderer;
 	quo_init_renderer(&renderer, &window);
+
+	/* Set the character callback */
+	quo_set_character_callback(char_callback);
 
 	/* Game loop */
 	while (window.is_open) {

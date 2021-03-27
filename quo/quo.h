@@ -1064,6 +1064,11 @@ void quo_resize_render_target(quo_RenderTarget* target, int width, int height);
  * -----------------------*/
 
 /**
+ * @brief Callback that gives information about inputted characters
+ */
+typedef void (*quo_character_callback)(char*);
+
+/**
  * @brief Handles keyboard and mouse input
  */
 typedef struct quo_InputSystem {
@@ -1075,11 +1080,10 @@ typedef struct quo_InputSystem {
 	quo_bool down_mouse_buttons[QUO_MOUSE_BUTTON_COUNT]; /**< Mouse buttons that have been pressed in the current frame */
 	quo_bool up_mouse_buttons[QUO_MOUSE_BUTTON_COUNT]; /**< Mouse buttons that have been released in the current frame */
 
-	char ascii_keys[QUO_KEY_COUNT];
-	char ascii_shifted_keys[QUO_KEY_COUNT];
-
 	int mouse_x; /**< Mouse X coordinate */
 	int mouse_y; /**< Mouse Y coordinate */
+
+	quo_character_callback char_callback;
 } quo_InputSystem;
 
 /**
@@ -1091,6 +1095,12 @@ void quo_init_input_system();
  * @brief Update the input system. Called in quo_update
  */
 void quo_update_input_system();
+
+/**
+ * @brief Set the character callback
+ * @param callback The callback to be set
+ */
+void quo_set_character_callback(quo_character_callback callback);
 
 /**
  * @brief Get any keys pressed as a character. Returnes '\0' if none are pressed
@@ -1179,6 +1189,11 @@ void i_quo_set_mouse_button_up_state(int button, quo_bool status);
  * @brief FOR INTERNAL USE ONLY.
  */
 void i_quo_update_mouse_pos(int x, int y);
+
+/**
+ * @brief FOR INTERNAL USE ONLY.
+ */
+void i_quo_call_char_callback(char* characters);
 
 /* -----------------------
  * END INPUT
@@ -1379,6 +1394,7 @@ static unsigned char dos_image_font_data[] = {0xFF,0x00,0xFF,0xFF,0x00,0xFF,0xFF
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <ctype.h>
 
 /* OpenGL functions */
 quo_gl_attach_shader* glAttachShader = NULL;
@@ -1987,6 +2003,12 @@ static void quo_update_window_events_x11(quo_Window* window) {
 				int key = quo_search_input_table(&window->key_map, sym);
 				i_quo_set_key_held_state(key, true);
 				i_quo_set_key_down_state(key, true);
+
+				char buffer[16];
+				XLookupString(&e.xkey, buffer, 16, NULL, NULL);
+				if (strlen(buffer) > 0) {
+					i_quo_call_char_callback(buffer);
+				}
 			}
 		} else if (e.type == KeyRelease) {
 			if (window->is_focused) {
@@ -2962,7 +2984,7 @@ void quo_init_input_system() {
 	memset(input_system.held_keys, 0, QUO_KEY_COUNT * sizeof(quo_bool));
 	memset(input_system.held_mouse_buttons, 0, QUO_MOUSE_BUTTON_COUNT * sizeof(quo_bool));
 
-
+	input_system.char_callback = NULL;
 }
 
 void quo_update_input_system() {
@@ -2972,10 +2994,8 @@ void quo_update_input_system() {
 	memset(input_system.up_mouse_buttons, 0, QUO_MOUSE_BUTTON_COUNT * sizeof(quo_bool));
 }
 
-char quo_get_input_character() {
-	quo_bool shift = quo_key_pressed(QUO_KEY_LEFT_SHIFT) || quo_key_pressed(QUO_KEY_RIGHT_SHIFT);
-
-
+void quo_set_character_callback(quo_character_callback callback) {
+	input_system.char_callback = callback;
 }
 
 quo_bool quo_key_pressed(int key) {
@@ -3029,6 +3049,12 @@ void i_quo_set_mouse_button_up_state(int button, quo_bool status) {
 void i_quo_update_mouse_pos(int x, int y) {
 	input_system.mouse_x = x;
 	input_system.mouse_y = y;
+}
+
+void i_quo_call_char_callback(char* characters) {
+	if (input_system.char_callback != NULL) {
+		input_system.char_callback(characters);
+	}
 }
 
 int quo_get_mouse_x() { return input_system.mouse_x; }

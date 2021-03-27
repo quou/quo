@@ -549,6 +549,9 @@ typedef struct \mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buff
 \mbox{\Hypertarget{quo_8h_adb6aef9ab19fcba8d57239cdd9cf931a}\label{quo_8h_adb6aef9ab19fcba8d57239cdd9cf931a}} 
 typedef struct \mbox{\hyperlink{structquo__RenderTarget}{quo\+\_\+\+Render\+Target}} \mbox{\hyperlink{quo_8h_adb6aef9ab19fcba8d57239cdd9cf931a}{quo\+\_\+\+Render\+Target}}
 \begin{DoxyCompactList}\small\item\em For offscreen rendering, ie. Rendering to a texture. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a1c2287c4de928c8536b6435272934fdb}\label{quo_8h_a1c2287c4de928c8536b6435272934fdb}} 
+typedef void($\ast$ \mbox{\hyperlink{quo_8h_a1c2287c4de928c8536b6435272934fdb}{quo\+\_\+character\+\_\+callback}}) (char $\ast$)
+\begin{DoxyCompactList}\small\item\em Callback that gives information about inputted characters. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{quo_8h_a82c579ebb79a06c26ed86cb420545ba4}\label{quo_8h_a82c579ebb79a06c26ed86cb420545ba4}} 
 typedef struct \mbox{\hyperlink{structquo__InputSystem}{quo\+\_\+\+Input\+System}} \mbox{\hyperlink{quo_8h_a82c579ebb79a06c26ed86cb420545ba4}{quo\+\_\+\+Input\+System}}
 \begin{DoxyCompactList}\small\item\em Handles keyboard and mouse input. \end{DoxyCompactList}\item 
@@ -717,6 +720,8 @@ void \mbox{\hyperlink{quo_8h_a914f62962ae315772b617cfec963e105}{quo\+\_\+init\+\
 \mbox{\Hypertarget{quo_8h_a9c05cbf0e91ab669ffb040c903a00686}\label{quo_8h_a9c05cbf0e91ab669ffb040c903a00686}} 
 void \mbox{\hyperlink{quo_8h_a9c05cbf0e91ab669ffb040c903a00686}{quo\+\_\+update\+\_\+input\+\_\+system}} ()
 \begin{DoxyCompactList}\small\item\em Update the input system. Called in quo\+\_\+update. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a6d59d9465fd4021be22ac465de759665}{quo\+\_\+set\+\_\+character\+\_\+callback}} (\mbox{\hyperlink{quo_8h_a1c2287c4de928c8536b6435272934fdb}{quo\+\_\+character\+\_\+callback}} callback)
+\begin{DoxyCompactList}\small\item\em Set the character callback. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{quo_8h_a2977c57106c4bf2733fb455975e6f0bc}\label{quo_8h_a2977c57106c4bf2733fb455975e6f0bc}} 
 char \mbox{\hyperlink{quo_8h_a2977c57106c4bf2733fb455975e6f0bc}{quo\+\_\+get\+\_\+input\+\_\+character}} ()
 \begin{DoxyCompactList}\small\item\em Get any keys pressed as a character. Returnes \textquotesingle{}\textbackslash{}0\textquotesingle{} if none are pressed. \end{DoxyCompactList}\item 
@@ -756,6 +761,9 @@ void \mbox{\hyperlink{quo_8h_ad0a6f1deb9514c9dac292e0eee151c13}{i\+\_\+quo\+\_\+
 \begin{DoxyCompactList}\small\item\em FOR INTERNAL USE ONLY. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{quo_8h_a805a7d0b877b9ddd9f5c16d62e295549}\label{quo_8h_a805a7d0b877b9ddd9f5c16d62e295549}} 
 void \mbox{\hyperlink{quo_8h_a805a7d0b877b9ddd9f5c16d62e295549}{i\+\_\+quo\+\_\+update\+\_\+mouse\+\_\+pos}} (int x, int y)
+\begin{DoxyCompactList}\small\item\em FOR INTERNAL USE ONLY. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a9b4454f93a8f31bfb7d887a567054ad3}\label{quo_8h_a9b4454f93a8f31bfb7d887a567054ad3}} 
+void \mbox{\hyperlink{quo_8h_a9b4454f93a8f31bfb7d887a567054ad3}{i\+\_\+quo\+\_\+call\+\_\+char\+\_\+callback}} (char $\ast$characters)
 \begin{DoxyCompactList}\small\item\em FOR INTERNAL USE ONLY. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{quo_8h_a163f96bb05cf0ecf49c2a7f622ac7b71}\label{quo_8h_a163f96bb05cf0ecf49c2a7f622ac7b71}} 
 void \mbox{\hyperlink{quo_8h_a163f96bb05cf0ecf49c2a7f622ac7b71}{quo\+\_\+imgui\+\_\+use\+\_\+default\+\_\+settings}} ()
@@ -1954,6 +1962,21 @@ Scale a matrix.
 \begin{DoxyReturn}{Returns}
 The rotated matrix 
 \end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_a6d59d9465fd4021be22ac465de759665}\label{quo_8h_a6d59d9465fd4021be22ac465de759665}} 
+\index{quo.h@{quo.h}!quo\_set\_character\_callback@{quo\_set\_character\_callback}}
+\index{quo\_set\_character\_callback@{quo\_set\_character\_callback}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_set\_character\_callback()}{quo\_set\_character\_callback()}}
+{\footnotesize\ttfamily void quo\+\_\+set\+\_\+character\+\_\+callback (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{quo_8h_a1c2287c4de928c8536b6435272934fdb}{quo\+\_\+character\+\_\+callback}}}]{callback }\end{DoxyParamCaption})}
+
+
+
+Set the character callback. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em callback} & The callback to be set \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{quo_8h_afaf708f70b4c0441f7c833de04acdd39}\label{quo_8h_afaf708f70b4c0441f7c833de04acdd39}} 
 \index{quo.h@{quo.h}!quo\_set\_window\_title@{quo\_set\_window\_title}}
 \index{quo\_set\_window\_title@{quo\_set\_window\_title}!quo.h@{quo.h}}
