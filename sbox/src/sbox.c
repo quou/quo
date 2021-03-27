@@ -1,10 +1,6 @@
 #define QUO_IMPL
 #include <quo.h>
 
-static void char_callback(char* characters) {
-	printf("%s\n", characters);
-}
-
 int main() {
 	quo_Window window;
 	quo_init_window(&window, 640, 480, false);
@@ -12,8 +8,6 @@ int main() {
 
 	quo_Renderer renderer;
 	quo_init_renderer(&renderer, &window);
-
-	quo_set_character_callback(char_callback);
 
 	while (window.is_open) {
 		quo_update_window_events(&window);
