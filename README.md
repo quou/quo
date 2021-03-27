@@ -12,7 +12,6 @@ You can view the Doxygen generated documentation here: https://georgelamb.net/qu
  - 2D rendering
  - Basic maths
  - Input
- - Bare-bones IMGUI
  - Binary serialisation
  - 3D rendering API
  - Offscreen rendering
