@@ -1582,6 +1582,17 @@ static LRESULT CALLBACK quo_win32_event_callback(HWND hwnd, UINT msg, WPARAM wpa
 				int key = quo_search_input_table(&q_window->key_map, wparam);
 				i_quo_set_key_held_state(key, true);
 				i_quo_set_key_down_state(key, true);
+
+				char state[256];
+				char buffer[256];
+				GetKeyboardState(state);
+
+				unsigned int scan_code = (lparam >> 16) & 0xFF;
+				int i = ToUnicode(wparam, scan_code, state, buffer, 16, 0);
+				buffer[i] = 0;
+				if (strlen(buffer) > 0) {
+					i_quo_call_char_callback(buffer);
+				}
 			}
 			return 0;
 		}
