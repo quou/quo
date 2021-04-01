@@ -15,12 +15,10 @@ int main() {
 		quo_clear_renderer(0x000000);
 
 		quo_draw_rect(&renderer, (quo_Rect){100, 100, 50, 50}, 0xff1100);
-		
+
 		quo_update_renderer(&renderer);
 		quo_update_window(&window);
 	}
-
-	quo_free_imgui();
 
 	quo_free_renderer(&renderer);
 	quo_free_window(&window);
