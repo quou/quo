@@ -25,6 +25,11 @@
  * 	QUO_IMPL
  * in *one* c/cpp file, to provide an implementation.*/
 
+/* CONFIGURATION OPTIONS
+ * 	QUO_USE_STB_IMAGE - Allows loading of any image, not just
+ * 	bmp files. Make sure `stb_image.h' is in the same directory
+ * 	as this file. */
+
 /* COMPLETE EXAMPLE to render a red rectangle on the screen, seen in the
  * below preprocessor #if */
 #if 0
@@ -68,7 +73,7 @@ int main() {
 }
 #endif
 
-#define QUO_VERSION "1.1.1"
+#define QUO_VERSION "1.2.1"
 
 /**
  * @file quo.h
@@ -1314,6 +1319,10 @@ static unsigned char dos_image_font_data[] = {0xFF,0x00,0xFF,0xFF,0x00,0xFF,0xFF
 #include <time.h>
 #include <ctype.h>
 
+#ifdef QUO_USE_STB_IMAGE
+#include "stb_image.h"
+#endif
+
 /* OpenGL functions */
 quo_gl_attach_shader* glAttachShader = NULL;
 quo_gl_bind_buffer* glBindBuffer = NULL;
@@ -2253,6 +2262,9 @@ quo_Matrix quo_perspective(float fov, float aspect, float near_plane, float far_
 
 quo_bool quo_load_bitmap_from_file(const char* filename, quo_BitmapImage* image, unsigned int components) {
 	assert(image != NULL);
+	assert(filename != NULL);
+
+#ifndef QUO_USE_STB_IMAGE
 
 	FILE *f = fopen(filename, "rb");
 
@@ -2345,6 +2357,12 @@ quo_bool quo_load_bitmap_from_file(const char* filename, quo_BitmapImage* image,
 	image->component_count = 3;
 
 	fclose(f);
+
+#else
+
+	image->pixels = (unsigned char*)stbi_load(filename, &image->width, &image->height, &image->component_count, components);
+
+#endif
 
 	return true;
 }
