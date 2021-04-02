@@ -17,7 +17,7 @@ int main() {
 
 	/* Convert the bitmap into a texture that lives on the GPU */
 	quo_Texture texture;
-	quo_init_texture_from_bmp(&texture, &image, QUO_TEXTUREFLAGS_ANTIALIASED);
+	quo_init_texture_from_bmp(&texture, &image, QUO_TEXTUREFLAGS_ALIASED);
 
 	/* The bitmap has been sent to the GPU, we don't need it anymore */
 	quo_free_bitmap(&image);

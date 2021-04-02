@@ -68,7 +68,7 @@ int main() {
 }
 #endif
 
-#define QUO_VERSION "1.1.0"
+#define QUO_VERSION "1.1.1"
 
 /**
  * @file quo.h
@@ -434,6 +434,7 @@ typedef struct quo_Window {
 	quo_bool is_focused; /**< Stores whether or not the window is capturing keyboard and mouse input */
 	int width; /**< Stores the width of the window. If the window is resizable, then this will be updated on a window resize. */
 	int height; /**< Stores the height of the window. If the window is resizable, then this will be updated on a window resize. */
+	quo_bool resizable; /**< Stores whether the window is resizable or not. */
 
 	double frame_time; /**< Stores the time since the last frame. */
 	double now_time;
@@ -836,7 +837,7 @@ void quo_enable_3d();
 void quo_free_renderer(quo_Renderer* renderer);
 
 /**
- * @brief Update a renderer
+ * @brief Update a renderer. Should be called before quo_update_window
  * @param renderer Pointer to renderer to be updated
  */
 void quo_update_renderer(quo_Renderer* renderer);
@@ -1999,6 +2000,7 @@ void quo_init_window(quo_Window* window, int w, int h, quo_bool resizable) {
 	window->frame_time = 0;
 	window->now_time = 0;
 	window->old_time = 0;
+	window->resizable = resizable;
 
 #if defined(QUO_PLATFORM_X11)
 	quo_init_window_x11(window, w, h, resizable);
@@ -2501,7 +2503,7 @@ static const char* g_quad_shader_fragment = "#version 330 core\n"
 		"tex_color = texture(tex, uv);\n"
 	"}\n"
 
-	"if (tex_color.xyz == background_color){\n"
+	"if (tex_color.xyz == background_color || tex_color.a < 0.1){\n"
 		"discard;\n"
 	"}\n"
 
@@ -2573,7 +2575,10 @@ void quo_update_renderer(quo_Renderer* renderer) {
 	assert(renderer != NULL);
 	assert(renderer->window != NULL);
 
-	renderer->projection = quo_orthographic(0.0f, renderer->window->width, renderer->window->height, 0.0f, -1.0f, 1.0f);
+	/* Only recalculate the projection if the window can be resized. */
+	if (renderer->window->resizable) {
+		renderer->projection = quo_orthographic(0.0f, renderer->window->width, renderer->window->height, 0.0f, -1.0f, 1.0f);
+	}
 }
 
 void quo_draw_rect(quo_Renderer* renderer, quo_Rect rect, unsigned long color) {
