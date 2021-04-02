@@ -44,7 +44,7 @@ int main() {
 	 * will slow down the program if 3D features are not
 	 * needed. */
 	quo_enable_3d();
-	
+
 	/* Create the cube shader */
 	quo_ShaderHandle cube_shader = quo_create_shader(&renderer, vshader, fshader);
 	quo_bind_shader(&renderer, cube_shader);
@@ -121,7 +121,7 @@ int main() {
 
 	/* Send the bitmap to the GPU and delete it from memory */
 	quo_Texture texture;
-	quo_init_texture_from_bmp(&texture, &image);
+	quo_init_texture_from_bmp(&texture, &image, QUO_TEXTUREFLAGS_ANTIALIASED);
 	quo_free_bitmap(&image);
 
 	/* Setup the projection matrix */
