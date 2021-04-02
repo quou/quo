@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['attribs_0',['attribs',['../structquo__IMGUIState.html#af58c320d6066b3ab420b17bc9ec2dc04',1,'quo_IMGUIState']]]
+  ['background_5fcolor_0',['background_color',['../structquo__Renderer.html#a18de1cc37f55ef0d89ba062db5f19c5d',1,'quo_Renderer']]]
 ];

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['background_5fcolor_294',['background_color',['../structquo__Renderer.html#a18de1cc37f55ef0d89ba062db5f19c5d',1,'quo_Renderer']]]
+  ['capacity_269',['capacity',['../structquo__ByteBuffer.html#af849003ac444d58c06d131c7057e4f31',1,'quo_ByteBuffer']]],
+  ['component_5fcount_270',['component_count',['../structquo__BitmapImage.html#af2d7867a6222bf2b15c611f049563b84',1,'quo_BitmapImage']]]
 ];

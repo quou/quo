@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['capacity_295',['capacity',['../structquo__ByteBuffer.html#af849003ac444d58c06d131c7057e4f31',1,'quo_ByteBuffer']]],
-  ['component_5fcount_296',['component_count',['../structquo__BitmapImage.html#af2d7867a6222bf2b15c611f049563b84',1,'quo_BitmapImage']]],
-  ['current_5fx_297',['current_x',['../structquo__IMGUIState.html#a9cf04e72d8bf958facf2b8d5ecdf40f1',1,'quo_IMGUIState']]],
-  ['current_5fy_298',['current_y',['../structquo__IMGUIState.html#a188a3be98f7418a4382ef4884604fd8f',1,'quo_IMGUIState']]]
+  ['data_271',['data',['../structquo__ByteBuffer.html#a390d4883bebadb4dba9fe0272e27ec6f',1,'quo_ByteBuffer']]],
+  ['device_5fcontext_272',['device_context',['../structquo__Window.html#a2df436e1d1b78d55639470631478cc75',1,'quo_Window']]],
+  ['down_5fkeys_273',['down_keys',['../structquo__InputSystem.html#a8451eb92dab04e08ed8b5fa1b2c60d52',1,'quo_InputSystem']]],
+  ['down_5fmouse_5fbuttons_274',['down_mouse_buttons',['../structquo__InputSystem.html#a67dc236bc4f6b9d6b7a5c900759043ad',1,'quo_InputSystem']]]
 ];

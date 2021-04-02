@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['quad_5fva_325',['quad_va',['../structquo__Renderer.html#a64aa5120630afec63fd598d2e61a2ee9',1,'quo_Renderer']]],
-  ['quad_5fvb_326',['quad_vb',['../structquo__Renderer.html#a52fa39e50ad9131a92d7c6609c1addd0',1,'quo_Renderer']]]
+  ['render_5fbuffer_297',['render_buffer',['../structquo__RenderTarget.html#aff0069c9108e401b35cd322a88b84c52',1,'quo_RenderTarget']]],
+  ['render_5fcontext_298',['render_context',['../structquo__Window.html#a456f607e75c5126b4c85468da289e523',1,'quo_Window']]],
+  ['resizable_299',['resizable',['../structquo__Window.html#a7089a9067e73ea8d37730f2cbbdc32c3',1,'quo_Window']]]
 ];

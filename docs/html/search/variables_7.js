@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['key_317',['key',['../structquo__InputHashTableItem.html#a3c722b667fee5171f162fa93febb03c5',1,'quo_InputHashTableItem']]],
-  ['key_5fmap_318',['key_map',['../structquo__Window.html#ad5cbc39decef67e1e92c5044472ca45c',1,'quo_Window']]]
+  ['mouse_5fx_289',['mouse_x',['../structquo__InputSystem.html#a0159b0246bd86c89a3a5b202f0ab9c4c',1,'quo_InputSystem']]],
+  ['mouse_5fy_290',['mouse_y',['../structquo__InputSystem.html#a91177fc8c9f0db5d407e5778ac3bf352',1,'quo_InputSystem']]]
 ];
