@@ -1372,6 +1372,7 @@ quo_gl_active_texture* glActiveTexture = NULL;
 #endif
 
 void quo_load_gl() {
+	/* Load modern OpenGL functions */
 	glAttachShader = QUO_LOAD_GL_FUNC(quo_gl_attach_shader, "glAttachShader");
 	glBindBuffer = QUO_LOAD_GL_FUNC(quo_gl_bind_buffer, "glBindBuffer");
 	glBindFramebuffer = QUO_LOAD_GL_FUNC(quo_gl_bind_frame_buffer, "glBindFramebuffer");
@@ -1418,6 +1419,7 @@ void quo_load_gl() {
 #endif
 }
 
+/* Get the time since the program started in seconds */
 double quo_get_elapsed_time() {
 	return ((double)clock() / (double)CLOCKS_PER_SEC);
 }
@@ -1426,14 +1428,15 @@ double quo_get_elapsed_time() {
  * START WINDOW
  * -----------------------*/
 
+/* Hash a key code, for the input table */
 static int quo_input_hash_code(int key) {
 	return key % QUO_KEY_COUNT;
 }
 
+/* For sorting the elements of the input table */
 static int quo_input_table_compare_func(const void* a, const void* b) {
 	return (((quo_InputHashTableItem*)a)->key - ((quo_InputHashTableItem*)b)->key);
 }
-
 
 void quo_init_input_table(quo_InputHashTable* table) {
 	assert(table != NULL);
@@ -1446,6 +1449,8 @@ void quo_init_input_table(quo_InputHashTable* table) {
 void quo_prepare_input_table(quo_InputHashTable* table) {
 	assert(table != NULL);
 
+	/* STD quicksort function, so that we can use a binary
+	 * search instead of a linear one. */
 	qsort(table->hash_array, QUO_KEY_COUNT, sizeof(quo_InputHashTableItem), quo_input_table_compare_func);
 }
 
@@ -1495,11 +1500,13 @@ void quo_insert_input_table(quo_InputHashTable* table, int key, int value) {
 /* Win32 event callback */
 #if defined(QUO_PLATFORM_WINDOWS)
 static LRESULT CALLBACK quo_win32_event_callback(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
+	/* Grab the necessary data */
 	LONG_PTR lpUserData = GetWindowLongPtr(hwnd, GWLP_USERDATA);
 	quo_Window* q_window = (quo_Window*)lpUserData;
 
+	/* Make sure the window pointer is not null */
 	if (q_window) {
-		switch (msg) {
+		switch (msg) { /* Switch on the event message type */
 		case WM_DESTROY:
 			q_window->is_open = false;
 			return 0;
@@ -1509,10 +1516,12 @@ static LRESULT CALLBACK quo_win32_event_callback(HWND hwnd, UINT msg, WPARAM wpa
 				return 0;
 		case WM_KEYDOWN: {
 			if (q_window->is_focused) {
+				/* Set the correct inputs */
 				int key = quo_search_input_table(&q_window->key_map, wparam);
 				i_quo_set_key_held_state(key, true);
 				i_quo_set_key_down_state(key, true);
 
+				/* Get the input string, for the character callback */
 				char state[256];
 				char buffer[256];
 				GetKeyboardState(state);
@@ -1528,6 +1537,7 @@ static LRESULT CALLBACK quo_win32_event_callback(HWND hwnd, UINT msg, WPARAM wpa
 		}
 		case WM_KEYUP: {
 			if (q_window->is_focused) {
+				/* Set the correct inputs */
 				int key = quo_search_input_table(&q_window->key_map, wparam);
 				i_quo_set_key_held_state(key, false);
 				i_quo_set_key_up_state(key, true);
@@ -1587,12 +1597,14 @@ static LRESULT CALLBACK quo_win32_event_callback(HWND hwnd, UINT msg, WPARAM wpa
 		}
 	}
 
+	/* No inputs occured */
 	return DefWindowProc(hwnd, msg, wparam, lparam);
 }
 #endif
 
 #ifdef QUO_PLATFORM_WINDOWS
 static void quo_init_window_windows(quo_Window* window, int w, int h, quo_bool resizable) {
+	/* Configure the window */
 	WNDCLASS wc;
 	wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
@@ -1622,6 +1634,7 @@ static void quo_init_window_windows(quo_Window* window, int w, int h, quo_bool r
 	int width = rWndRect.right - rWndRect.left;
 	int height = rWndRect.bottom - rWndRect.top;
 
+	/* Create the window */
 	window->hwnd = CreateWindowEx(dwExStyle, "quo", "", dwStyle, 0, 0, width, height, NULL, NULL, GetModuleHandle(NULL), window);
 
 	SetWindowLongPtr(window->hwnd, GWLP_USERDATA, (LONG_PTR)window);
@@ -1635,6 +1648,7 @@ static void quo_init_window_windows(quo_Window* window, int w, int h, quo_bool r
 		PFD_MAIN_PLANE, 0, 0, 0, 0
 	};
 
+	/* Set the pixel format */
 	int pf = 0;
 	if (!(pf = ChoosePixelFormat(window->device_context, &pfd))) { return; }
 	SetPixelFormat(window->device_context, pf, &pfd);
@@ -1642,6 +1656,7 @@ static void quo_init_window_windows(quo_Window* window, int w, int h, quo_bool r
 	if (!(window->render_context = wglCreateContext(window->device_context))) { return; }
 	wglMakeCurrent(window->device_context, window->render_context);
 
+	/* Set the keyboard mapping */
 	quo_init_input_table(&window->key_map);
 	quo_insert_input_table(&window->key_map, 0x00, QUO_KEY_UNKNOWN);
 	quo_insert_input_table(&window->key_map, 0x41, QUO_KEY_A);
@@ -1744,6 +1759,7 @@ static void quo_init_window_windows(quo_Window* window, int w, int h, quo_bool r
 	quo_insert_input_table(&window->key_map, VK_CAPITAL, QUO_KEY_CAPS_LOCK);
 }
 
+/* Swap the window on Windows */
 static void quo_update_window_windows(quo_Window* window) {
 	SwapBuffers(window->device_context);
 }
@@ -1760,6 +1776,7 @@ static void quo_update_window_events_windows(quo_Window* window) {
 #endif /* QUO_PLATFORM_WINDOWS */
 
 #ifdef QUO_PLATFORM_X11
+/* Initialise an X11 window */
 static void quo_init_window_x11(quo_Window* window, int w, int h, quo_bool resizable) {
 	window->is_focused = true;
 
@@ -1975,12 +1992,14 @@ static void quo_update_window_events_x11(quo_Window* window) {
 			window->height = gwa.height;
 		} else if (e.type == KeyPress) {
 			if (window->is_focused) {
+				/* Set the necessary inputs */
 				KeySym sym = XLookupKeysym(&e.xkey, 0);
 
 				int key = quo_search_input_table(&window->key_map, sym);
 				i_quo_set_key_held_state(key, true);
 				i_quo_set_key_down_state(key, true);
 
+				/* Get the input string and call the string event callback */
 				char buffer[16];
 				XLookupString(&e.xkey, buffer, 16, NULL, NULL);
 				if (strlen(buffer) > 0) {
@@ -2041,9 +2060,11 @@ static void quo_update_window_events_x11(quo_Window* window) {
 
 #endif /* QUO_PLATFORM_X11 */
 
+/* Single wrapper around system calls */
 void quo_init_window(quo_Window* window, int w, int h, quo_bool resizable) {
 	assert(window != NULL);
 
+	/* Initialise window properties */
 	window->is_open = true;
 	window->frame_time = 0;
 	window->now_time = 0;
@@ -2058,10 +2079,13 @@ void quo_init_window(quo_Window* window, int w, int h, quo_bool resizable) {
 	quo_init_window_windows(window, w, h, resizable);
 #endif
 
+	/* Sort the input table for binary searching */
 	quo_prepare_input_table(&window->key_map);
 
+	/* Load OpenGL functions */
 	quo_load_gl();
 
+	/* Initialise the input system */
 	quo_init_input_system();
 }
 
@@ -2091,12 +2115,14 @@ void quo_update_window(quo_Window* window) {
 	quo_update_window_windows(window);
 #endif
 
+	/* Update the timing and fps counter */
 	window->now_time = quo_get_elapsed_time();
 	window->frame_time = window->now_time - window->old_time;
 	window->old_time = window->now_time;
 
 	window->fps = 1.0f / window->frame_time;
 
+	/* Update the input system */
 	quo_update_input_system();
 }
 
@@ -2116,6 +2142,7 @@ void quo_free_window(quo_Window* window) {
 	assert(window != NULL);
 
 #if defined(QUO_PLATFORM_X11)
+	/* Destroy the OpenGL context */
 	glXDestroyContext(window->display, window->device_context);
 
 	XFreeColormap(window->display, window->color_map);
@@ -2126,6 +2153,10 @@ void quo_free_window(quo_Window* window) {
 
 
 #if defined(QUO_PLATFORM_WINDOWS)
+	/* I'm not sure why the window has to be destroyed before the
+	 * context, it would make sense for it to be the other way around...
+	 * But it segfaulted when I swapped the order, so this must
+	 * correct, right? */
 	PostQuitMessage(0);
 	DestroyWindow(window->hwnd);
 	wglDeleteContext(window->render_context);
@@ -2303,6 +2334,7 @@ quo_bool quo_load_bitmap_from_file(const char* filename, quo_BitmapImage* image,
 	assert(image != NULL);
 	assert(filename != NULL);
 
+/* Load the bitmap image from a .bmp file */
 #ifndef QUO_USE_STB_IMAGE
 
 	FILE *f = fopen(filename, "rb");
@@ -2399,6 +2431,9 @@ quo_bool quo_load_bitmap_from_file(const char* filename, quo_BitmapImage* image,
 
 #else
 
+	/* If STB support is enabled, we can use stb's loader in order to laod
+	 * many other image formats, not just .bmp images */
+
 	image->pixels = (unsigned char*)stbi_load(filename, &image->width, &image->height, &image->component_count, components);
 
 #endif
@@ -2422,16 +2457,19 @@ void quo_init_texture_from_bmp(quo_Texture* texture, quo_BitmapImage* bitmap, qu
 	assert(texture != NULL);
 	assert(bitmap != NULL);
 
-	texture->width = bitmap->width;
-	texture->height = bitmap->height;
-
 	if (bitmap->pixels == NULL) {
 		return;
 	}
 
+	/* Setup initial texture data */
+	texture->width = bitmap->width;
+	texture->height = bitmap->height;
+
+	/* Create the OpenGL texture */
 	glGenTextures(1, &texture->id);
 	glBindTexture(GL_TEXTURE_2D, texture->id);
 
+	/* Choose the alias mode */
 	int alias_mode;
 	if (flags & QUO_TEXTUREFLAGS_ALIASED) {
 		alias_mode = GL_NEAREST;
@@ -2439,6 +2477,7 @@ void quo_init_texture_from_bmp(quo_Texture* texture, quo_BitmapImage* bitmap, qu
 		alias_mode = GL_LINEAR;
 	}
 
+	/* Configure the texture */
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, alias_mode);
@@ -2446,11 +2485,13 @@ void quo_init_texture_from_bmp(quo_Texture* texture, quo_BitmapImage* bitmap, qu
 
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
+	/* Choose the pixel mode */
 	int mode = GL_RGB;
 	if (bitmap->component_count == 4) {
 		mode = GL_RGBA;
 	}
 
+	/* Push the data onto the GPU */
 	glTexImage2D(GL_TEXTURE_2D, 0, mode, texture->width, texture->height, 0, mode, GL_UNSIGNED_BYTE, bitmap->pixels);
 }
 
@@ -2466,6 +2507,10 @@ void quo_free_texture(quo_Texture* texture) {
 void quo_bind_texture(quo_Texture* texture, unsigned int unit) {
 	assert(texture != NULL);
 
+	/* This causes a segfault if the texture hasn't been initialised
+	 * properly, eg. if the bitmap data was null and the init function
+	 * returned immediately. Too bad. */
+
 	glActiveTexture(GL_TEXTURE0 + unit);
 	glBindTexture(GL_TEXTURE_2D, texture->id);
 }
@@ -2474,6 +2519,7 @@ void quo_unbind_texture() {
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
+/* Legacy shaders. Doesn't work on some Windows AMD drivers */
 #ifdef QUO_LEGACY
 static const char* g_quad_shader_vertex = "#version 130\n"
 "attribute vec4 vertex;\n"
@@ -2521,6 +2567,7 @@ static const char* g_quad_shader_fragment = "#version 130\n"
     "out_color = tex_color * vec4(color, 1.0);\n"
 "}\n";
 #else
+/* Modern shaders. Should work on all platforms that support GLSL 3.3+ */
 static const char* g_quad_shader_vertex = "#version 330 core\n"
 "layout (location = 0) in vec4 vertex;\n"
 
@@ -2573,12 +2620,14 @@ static void check_shader_errors(unsigned int shader) {
 	char info_log[1024];
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &r);
 	if (!r) {
+		/* Get and print out the error message */
 		glGetShaderInfoLog(shader, 1024, 0, info_log);
 		fprintf(stderr, "Shader error %s\n", info_log);
 	}
 }
 
 unsigned long quo_color_from_rgb(int r, int g, int b) {
+	/* Some bitshifing magic */
 	return ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
 }
 
@@ -2588,16 +2637,24 @@ void quo_init_renderer(quo_Renderer* renderer, quo_Window* window) {
 
 	renderer->shader_count = 0;
 	renderer->window = window;
+
+	/* By default, the background colour will be
+	 * bright pink (RGB: {255, 0, 255}) */
 	renderer->background_color = 0xff00ff;
 
 	for (unsigned int i = 0; i < QUO_MAX_SHADERS; i++) {
 		renderer->shaders[i] = 0;
 	}
 
+	/* Create the projection matrix */
 	renderer->projection = quo_orthographic(0.0f, window->width, window->height, 0.0f, -1.0f, 1.0f);
 
+	/* Create the default sprite shader */
 	renderer->sprite_shader = quo_create_shader(renderer, g_quad_shader_vertex, g_quad_shader_fragment);
 
+	/* Quad vertices. Element buffer is not used, as it
+	 * is kind of pointless. There aren't enough vertices
+	 * to make duplicates have a performance impact. */
 	float vertices[] = {
 		0.0f, 1.0f, 0.0f, 1.0f,
 		1.0f, 0.0f, 1.0f, 0.0f,
@@ -2608,6 +2665,8 @@ void quo_init_renderer(quo_Renderer* renderer, quo_Window* window) {
 		1.0f, 0.0f, 1.0f, 0.0f
 	};
 
+	/* Create the quad vertex array. I plan to make this
+	 * use a quo_VertexBuffer in the future. */
 	glGenVertexArrays(1, &renderer->quad_va);
 	glGenBuffers(1, &renderer->quad_vb);
 
@@ -2641,15 +2700,18 @@ void quo_update_renderer(quo_Renderer* renderer) {
 void quo_draw_rect(quo_Renderer* renderer, quo_Rect rect, unsigned long color) {
 	assert(renderer != NULL);
 
+	/* Setup the transform. */
 	quo_Matrix model = quo_identity();
 	model = quo_translate(model, (quo_vec3){rect.x, rect.y, 0});
 	model = quo_scale(model, (quo_vec3){rect.w, rect.h, 1});
 
+	/* Set shader uniforms */
 	quo_shader_set_matrix(renderer, renderer->sprite_shader, "model", model);
 	quo_shader_set_matrix(renderer, renderer->sprite_shader, "projection", renderer->projection);
 	quo_shader_set_color(renderer, renderer->sprite_shader, "color", color);
 	quo_shader_set_int(renderer, renderer->sprite_shader, "use_tex", 0);
 
+	/* Draw the quad */
 	glBindVertexArray(renderer->quad_va);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 	glBindVertexArray(0);
@@ -2659,10 +2721,12 @@ void quo_draw_texture(quo_Renderer* renderer, quo_Texture* texture, quo_Rect src
 	assert(renderer != NULL);
 	assert(texture != NULL);
 
+	/* Setup the transform. */
 	quo_Matrix model = quo_identity();
 	model = quo_translate(model, (quo_vec3){dest.x, dest.y, 0});
 	model = quo_scale(model, (quo_vec3){dest.w, dest.h, 1});
 
+	/* Set shader uniforms */
 	quo_shader_set_matrix(renderer, renderer->sprite_shader, "model", model);
 	quo_shader_set_matrix(renderer, renderer->sprite_shader, "projection", renderer->projection);
 	quo_shader_set_color(renderer, renderer->sprite_shader, "color", color);
@@ -2671,9 +2735,11 @@ void quo_draw_texture(quo_Renderer* renderer, quo_Texture* texture, quo_Rect src
 	quo_shader_set_vec2(renderer, renderer->sprite_shader, "image_size", (quo_vec2){texture->width, texture->height});
 	quo_shader_set_vec4(renderer, renderer->sprite_shader, "source_rect", src.x, src.y, src.w, src.h);
 
+	/* Bind and set uniform texture */
 	quo_bind_texture(texture, 0);
 	quo_shader_set_int(renderer, renderer->sprite_shader, "tex", 0);
 
+	/* Draw the quad */
 	glBindVertexArray(renderer->quad_va);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 	glBindVertexArray(0);
@@ -2682,23 +2748,28 @@ void quo_draw_texture(quo_Renderer* renderer, quo_Texture* texture, quo_Rect src
 void quo_free_renderer(quo_Renderer* renderer) {
 	assert(renderer != NULL);
 
+	/* Delete all the shaders */
 	for (unsigned int i = 0; i < renderer->shader_count; i++) {
 		glDeleteProgram(&renderer->shaders[i]);
 	}
 
+	/* Delete the vertex array & buffer */
 	glDeleteVertexArrays(1, &renderer->quad_va);
 	glDeleteBuffers(1, &renderer->quad_vb);
 }
 
 void quo_clear_renderer(unsigned long color) {
+	/* Grab the 0-255 rgb colours */
 	int r = (color >> 16) & 0xFF;
 	int g = (color >> 8) & 0xFF;
 	int b = color & 0xFF;
 
+	/* Turn them into 0-1 range rgb colours */
 	float rf = (float)r / 255.0f;
 	float gf = (float)g / 255.0f;
 	float bf = (float)b / 255.0f;
 
+	/* Clear the screen */
 	glClearColor(rf, gf, bf, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
@@ -2706,6 +2777,7 @@ void quo_clear_renderer(unsigned long color) {
 quo_ShaderHandle quo_create_shader(quo_Renderer* renderer, const char* vertex_source, const char* fragment_source) {
 	assert(renderer != NULL);
 
+	/* Make sure this shader is allowed */
 	if (renderer->shader_count > QUO_MAX_SHADERS) {
 		fprintf(stderr, "Failed to create shader: Shader count too high (max %d)\n", QUO_MAX_SHADERS);
 		return 0;
@@ -2713,25 +2785,29 @@ quo_ShaderHandle quo_create_shader(quo_Renderer* renderer, const char* vertex_so
 
 	unsigned int program = glCreateProgram();
 
+	/* Create the vertex shader */
 	unsigned int vertex_shader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertex_shader, 1, &vertex_source, NULL);
 	glCompileShader(vertex_shader);
 	check_shader_errors(vertex_shader);
 
+	/* Create the fragment shader */
 	unsigned int fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragment_shader, 1, &fragment_source, NULL);
 	glCompileShader(fragment_shader);
 	check_shader_errors(fragment_shader);
 
+	/* Link the program */
 	glAttachShader(program, vertex_shader);
 	glAttachShader(program, fragment_shader);
 	glLinkProgram(program);
 
+	/* Delete the shaders */
 	glDeleteShader(vertex_shader);
 	glDeleteShader(fragment_shader);
 
+	/* Push back the shader into the renderer's shader array */
 	unsigned int index = renderer->shader_count++;
-
 	renderer->shaders[index] = program;
 
 	return index;
@@ -2751,14 +2827,17 @@ void quo_bind_default_shader(quo_Renderer* renderer) {
 }
 
 void quo_shader_set_color(quo_Renderer* renderer, quo_ShaderHandle shader, const char* uniform_name, unsigned long color) {
+	/* Grab the 0-255 rgb colours */
 	int r = (color >> 16) & 0xFF;
 	int g = (color >> 8) & 0xFF;
 	int b = color & 0xFF;
 
+	/* Turn them into 0-1 range rgb colours */
 	float rf = (float)r / 255.0f;
 	float gf = (float)g / 255.0f;
 	float bf = (float)b / 255.0f;
 
+	/* Set the uniform colour vec3 */
 	quo_shader_set_vec3(renderer, shader, uniform_name, (quo_vec3){rf, gf, bf});
 }
 
@@ -2825,6 +2904,7 @@ void quo_shader_set_vec4(quo_Renderer* renderer, quo_ShaderHandle shader, const 
 void quo_begin_vertex_buffer(quo_VertexBuffer* vb) {
 	assert(vb != NULL);
 
+	/* Create the vertex array and vertex & element buffers */
 	glGenVertexArrays(1, &vb->va_id);
 	glGenBuffers(1, &vb->vb_id);
 	glGenBuffers(1, &vb->ib_id);
@@ -2839,28 +2919,35 @@ void quo_finalise_vertex_buffer(quo_VertexBuffer* vb) {
 void quo_push_vertices(quo_VertexBuffer* vb, float* vertices, unsigned int array_size) {
 	assert(vb != NULL);
 
+	/* Make sure the vertex array and buffer are bound */
 	glBindVertexArray(vb->va_id);
-
 	glBindBuffer(GL_ARRAY_BUFFER, vb->vb_id);
+
+	/* Push the data into the buffer */
 	glBufferData(GL_ARRAY_BUFFER, array_size, vertices, GL_STATIC_DRAW);
 }
 
 void quo_push_indices(quo_VertexBuffer* vb, unsigned int* indices, unsigned int index_count) {
 	assert(vb != NULL);
 
+	/* Make sure the vertex array and buffer are bound */
 	glBindVertexArray(vb->va_id);
-
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vb->ib_id);
+
+	/* Push the data into the buffer */
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_count * sizeof(indices[0]), indices, GL_STATIC_DRAW);
 
+	/* Set the index count used for drawing */
 	vb->index_count = index_count;
 }
 
 void quo_configure_vertices(quo_VertexBuffer* vb, unsigned int index, unsigned int component_count, unsigned int stride, unsigned int start_offset) {
 	assert(vb != NULL);
 
+	/* Make sure the vertex array is bound */
 	glBindVertexArray(vb->va_id);
 
+	/* Setup the attrib pointer */
 	glVertexAttribPointer(index, component_count, GL_FLOAT, GL_FALSE, stride * sizeof(float), (void*)(long unsigned int)start_offset);
 	glEnableVertexAttribArray(index);
 }
@@ -2868,6 +2955,7 @@ void quo_configure_vertices(quo_VertexBuffer* vb, unsigned int index, unsigned i
 void quo_draw_vertex_buffer(quo_VertexBuffer* vb) {
 	assert(vb != NULL);
 
+	/* Draw the vertex array */
 	glBindVertexArray(vb->va_id);
 	glDrawElements(GL_TRIANGLES, vb->index_count, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
@@ -2888,6 +2976,7 @@ void quo_init_render_target(quo_RenderTarget* target, int width, int height) {
 	target->output.width = width;
 	target->output.height = height;
 
+	/* Initialise a new framebuffer, renderbuffer and output texture */
 	glGenFramebuffers(1, &target->frame_buffer);
 	glBindFramebuffer(GL_FRAMEBUFFER, target->frame_buffer);
 
@@ -2920,12 +3009,15 @@ void quo_free_render_target(quo_RenderTarget* target) {
 void quo_bind_render_target(quo_RenderTarget* target) {
 	assert(target != NULL);
 
+	/* Get the current viewport, so we can reset it
+	 * once the framebuffer is unbound without having
+	 * to pass a window pointer. */
 	int viewport[4];
 	glGetIntegerv(GL_VIEWPORT, viewport);
-
 	i_g_quo_old_frame_buffer_width = viewport[2];
 	i_g_quo_old_frame_buffer_height = viewport[3];
 
+	/* Bind and clear the framebuffer */
 	glBindFramebuffer(GL_FRAMEBUFFER, target->frame_buffer);
 	glBindRenderbuffer(GL_RENDERBUFFER, target->render_buffer);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -2936,6 +3028,7 @@ void quo_bind_default_render_target() {
 	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+	/* Reset the viewport */
 	glViewport(0, 0, i_g_quo_old_frame_buffer_width, i_g_quo_old_frame_buffer_height);
 }
 
@@ -2945,6 +3038,7 @@ void quo_resize_render_target(quo_RenderTarget* target, int width, int height) {
 	target->output.width = width;
 	target->output.height = height;
 
+	/* Resize the framebuffer's output texture */
 	glBindFramebuffer(GL_FRAMEBUFFER, target->frame_buffer);
 	glBindTexture(GL_TEXTURE_2D, target->output.id);
 
@@ -3061,6 +3155,7 @@ int quo_get_mouse_y() { return input_system.mouse_y; }
 void quo_init_byte_buffer(quo_ByteBuffer* buffer) {
 	assert(buffer != NULL);
 
+	/* Set the byte buffer's initial data */
 	buffer->data = malloc(QUO_BYTE_BUFFER_DEFAULT_CAPACITY);
 	memset(buffer->data, 0, QUO_BYTE_BUFFER_DEFAULT_CAPACITY);
 	buffer->capacity = QUO_BYTE_BUFFER_DEFAULT_CAPACITY;
@@ -3079,6 +3174,7 @@ void quo_free_byte_buffer(quo_ByteBuffer* buffer) {
 }
 
 void quo_resize_byte_buffer(quo_ByteBuffer* buffer, unsigned int capacity) {
+	/* Reallocate a byte buffer in order to contain more or less data */
 	buffer->data = realloc(buffer->data, capacity);
 }
 
@@ -3086,9 +3182,11 @@ void quo_byte_buffer_dump(quo_ByteBuffer* buffer, FILE* file) {
 	assert(buffer != NULL);
 	assert(file != NULL);
 
+	/* Write the header data (size and capacity) to the file */
 	fwrite(&buffer->size, 1, sizeof(uint32_t), file);
 	fwrite(&buffer->capacity, 1, sizeof(uint32_t), file);
 
+	/* Write the main data */
 	fwrite(buffer->data, 1, buffer->size, file);
 }
 
@@ -3096,18 +3194,23 @@ void quo_byte_buffer_read_file(quo_ByteBuffer* buffer, FILE* file) {
 	assert(buffer != NULL);
 	assert(file != NULL);
 
+	/* Read the header data (size and capacity) */
 	fread(&buffer->size, sizeof(uint32_t), 1, file);
 	fread(&buffer->capacity, sizeof(uint32_t), 1, file);
 
-	buffer->data = malloc(buffer->capacity);
+	/* Allocate the buffer's data. Realloc is used to avoid
+	 * a memory leak when using a pre-initialised byte buffer */
+	buffer->data = realloc(buffer->data, buffer->capacity);
 	memset(buffer->data, 0, buffer->capacity);
 
+	/* Read the body of the data */
 	fread(buffer->data, buffer->size, 1, file);
 
 	buffer->position = 0;
 }
 
 void i_quo_byte_buffer_write_impl(quo_ByteBuffer* buffer, void* data, unsigned int size) {
+	/* Resize the buffer if required. */
 	unsigned int total_write_size = buffer->position + size;
 	if (total_write_size >= buffer->capacity) {
 		unsigned int new_capacity = buffer->capacity ? buffer->capacity * 2 : QUO_BYTE_BUFFER_DEFAULT_CAPACITY;
@@ -3116,7 +3219,11 @@ void i_quo_byte_buffer_write_impl(quo_ByteBuffer* buffer, void* data, unsigned i
 		}
 		quo_resize_byte_buffer(buffer, new_capacity);
 	}
+
+	/* Copy the data into the buffer */
 	memcpy(buffer->data + buffer->position, data, size);
+
+	/* Increment position and size */
 	buffer->position += size;
 	buffer->size += size;
 }
