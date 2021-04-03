@@ -17,7 +17,7 @@ You can view the Doxygen generated documentation here: https://georgelamb.net/qu
  - Offscreen rendering
 
 ## Planned Features
- - Wayland and Android support
+ - Wayland, Emscripten and Android support
  - Audio
  - MacOS support (This is going to take a while, as it will mean adding support for Metal as well as OpenGL, since MacOS's OpenGL support is pretty shaky).
 
