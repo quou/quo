@@ -2,7 +2,7 @@
 
 **A single-header, zero dependency game library written in C**
 
-This library is standalone, meaning it doesn't depend on anything that doesn't come with the operating system.
+This library is standalone, meaning it doesn't depend on anything that doesn't come with the operating system. It is designed to be easy to use and beginner friendly, and can be used as a base for simple 2D game projects
 
 ## Documentation
 You can view the Doxygen generated documentation here: https://georgelamb.net/quo/html/quo_8h.html
