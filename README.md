@@ -31,7 +31,7 @@ On Windows with MSVC, linking is done automatically via `#pragma comment`s. On n
 ## Configuration
 For older computers, you can enable the use of GLSL version 1.3 in the default sprite shader, by `#defining QUO_LEGACY` before including the library.
 
-By default, Quo includes a bitmap loader, but if you want to load other formats such as PNG and JPEG images, you may enable the use of STB image by Sean Barret through the `#define QUO_USE_STB_IMAGE` macro. You must download [`stb_image.h`](https://github.com/nothings/stb/blob/master/stb_image.h) and place it next to `quo.h` first, though. The library's usage does not change, only the method of loading images.
+By default, Quo includes a bitmap loader, but if you want to load other formats such as PNG and JPEG images, you may enable the use of STB image by Sean Barret through the `#define QUO_USE_STB_IMAGE` macro. You must download [`stb_image.h`](https://github.com/nothings/stb/blob/master/stb_image.h) and place it next to `quo.h` first, though. The library's usage does not change, only the internal method of loading images.
 
 ## Example Usage
 See more complete examples in the [`examples`](https://github.com/georgelam6/quo/tree/master/examples) folder.
