@@ -269,6 +269,9 @@ typedef char quo_bool;
 #if defined(QUO_PLATFORM_X11)
 typedef GLXContext quo_GLDeviceContext;
 typedef GLXContext quo_GLRenderContext;
+typedef GLXContext (*glXCreateContextAttribsARBProc)
+    (Display*, GLXFBConfig, GLXContext, Bool, const int*);
+
 
 #define CALLSTYLE
 #define QUO_LOAD_GL_FUNC(t, n) (t*)glXGetProcAddress((unsigned char*)n)
@@ -1799,8 +1802,44 @@ static void quo_init_window_x11(quo_Window* window, int w, int h, quo_bool resiz
 	XMapRaised(window->display, window->window);
 
 	/* Create OpenGL context */
-	window->device_context = glXCreateContext(window->display, window->visual_info, NULL, GL_TRUE);
-	glXMakeCurrent(window->display, window->window, window->device_context);
+	{
+		static int visual_attribs[] = {
+			GLX_RENDER_TYPE, GLX_RGBA_BIT,
+			GLX_DRAWABLE_TYPE, GLX_WINDOW_BIT,
+			GLX_DOUBLEBUFFER, true,
+			GLX_RED_SIZE,       8,
+			GLX_GREEN_SIZE,     8,
+			GLX_BLUE_SIZE,      8,
+			GLX_ALPHA_SIZE,     8,
+			GLX_DEPTH_SIZE,     24,
+			GLX_STENCIL_SIZE,   8,
+			None
+		};
+
+		int num_fbc = 0;
+		GLXFBConfig *fbc = glXChooseFBConfig(window->display,  DefaultScreen(window->display), visual_attribs, &num_fbc);
+		if (!fbc) {
+			printf("glXChooseFBConfig() failed\n");
+			exit(1);
+		}
+
+		glXCreateContextAttribsARBProc glXCreateContextAttribsARB = 0;
+		glXCreateContextAttribsARB = (glXCreateContextAttribsARBProc) glXGetProcAddress((const GLubyte*)"glXCreateContextAttribsARB");
+
+		if (!glXCreateContextAttribsARB) {
+			printf("glXCreateContextAttribsARB() not found\n");
+			exit(1);
+		}
+
+		static int context_attribs[] = {
+			GLX_CONTEXT_MAJOR_VERSION_ARB, 3,
+			GLX_CONTEXT_MINOR_VERSION_ARB, 3,
+			None
+		};
+
+		window->device_context = glXCreateContextAttribsARB(window->display, fbc[0], NULL, true, context_attribs);
+		glXMakeCurrent(window->display, window->window, window->device_context);
+	}
 
 	/* Set width and height */
 	XWindowAttributes gwa;
