@@ -220,7 +220,7 @@ typedef char quo_bool;
 #define QUO_KEY_RIGHT_ALT          346
 #define QUO_KEY_RIGHT_SUPER        347
 #define QUO_KEY_MENU               348
-#define QUO_KEY_COUNT              QUO_KEY_MENU
+#define QUO_KEY_COUNT              QUO_KEY_MENU + 1
 
 #define QUO_MOUSE_BUTTON_1          0
 #define QUO_MOUSE_BUTTON_3          2
@@ -230,7 +230,7 @@ typedef char quo_bool;
 #define QUO_MOUSE_BUTTON_6          5
 #define QUO_MOUSE_BUTTON_7          6
 #define QUO_MOUSE_BUTTON_8          7
-#define QUO_MOUSE_BUTTON_COUNT      QUO_MOUSE_BUTTON_8
+#define QUO_MOUSE_BUTTON_COUNT      QUO_MOUSE_BUTTON_8 + 1
 #define QUO_MOUSE_BUTTON_LEFT       QUO_MOUSE_BUTTON_1
 #define QUO_MOUSE_BUTTON_RIGHT      QUO_MOUSE_BUTTON_2
 #define QUO_MOUSE_BUTTON_MIDDLE     QUO_MOUSE_BUTTON_3
