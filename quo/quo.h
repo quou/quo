@@ -73,7 +73,7 @@ int main() {
 }
 #endif
 
-#define QUO_VERSION "1.2.1"
+#define QUO_VERSION "1.2.4"
 
 /**
  * @file quo.h
