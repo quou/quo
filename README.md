@@ -1,4 +1,4 @@
-![q](https://github.com/georgelam6/quo/blob/master/q.png)
+![q](https://github.com/georgelam6/quo/blob/master/q.png =500x)
 
 **A single-header, zero dependency game library written in C**
 
