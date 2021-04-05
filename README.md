@@ -1,4 +1,4 @@
-# Quo
+![q](https://github.com/georgelam6/quo/blob/master/q.png)
 
 **A single-header, zero dependency game library written in C**
 
