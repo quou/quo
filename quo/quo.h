@@ -2489,6 +2489,8 @@ void quo_init_texture_from_bmp(quo_Texture* texture, quo_BitmapImage* bitmap, qu
 	int mode = GL_RGB;
 	if (bitmap->component_count == 4) {
 		mode = GL_RGBA;
+	} else if (bitmap->component_count == 0) {
+		mode = GL_ALPHA;
 	}
 
 	/* Push the data onto the GPU */

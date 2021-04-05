@@ -31,7 +31,7 @@ int main() {
 		quo_clear_renderer(0x000000);
 
 		/* Draw the texture */
-		quo_draw_texture(&renderer, &texture, (quo_Rect){0, 0, texture.width, texture.height}, (quo_Rect){100, 100, 50, 50}, 0xffffff);
+		quo_draw_texture(&renderer, &texture, (quo_Rect){0, 0, 13, 13}, (quo_Rect){100, 100, 50, 50}, 0xffffff);
 
 		/* Update the window & renderer */
 		quo_update_renderer(&renderer);
