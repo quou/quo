@@ -1,6 +1,6 @@
 ![q](https://github.com/georgelam6/quo/blob/master/q.png)
 
-**A single-header, zero dependency game library written in C**
+**A single-header, zero dependency game library written in C99**
 
 This library is standalone, meaning it doesn't depend on anything that doesn't come with the operating system. It is designed to be easy to use and beginner friendly, and can be used as a base for simple 2D game projects
 
@@ -18,7 +18,7 @@ You can view the Doxygen generated documentation here: https://georgelamb.net/qu
 
 ## Planned Features
  - Wayland, Emscripten and Android support
- - Audio
+ - Audio API
  - MacOS support (This is going to take a while, as it will mean adding support for Metal as well as OpenGL, since MacOS's OpenGL support is pretty shaky).
 
 ## Compiling
