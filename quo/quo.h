@@ -27,8 +27,8 @@
 
 /* CONFIGURATION OPTIONS
  * 	QUO_USE_STB_IMAGE - Allows loading of any image, not just
- * 	bmp files. Make sure `stb_image.h' is in the same directory
- * 	as this file. */
+ * 	bmp files. Make sure `stb_image.h' (from https://github.com/nothings/stb)
+ * 	is in the same directory as this file. */
 
 /* COMPLETE EXAMPLE to render a red rectangle on the screen, seen in the
  * below preprocessor #if */
