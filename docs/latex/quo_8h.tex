@@ -34,7 +34,7 @@ struct \mbox{\hyperlink{structquo__Rect}{quo\+\_\+\+Rect}}
 struct \mbox{\hyperlink{structquo__BitmapImage}{quo\+\_\+\+Bitmap\+Image}}
 \begin{DoxyCompactList}\small\item\em Represents a bitmap image, containing it\textquotesingle{}s raw pixel data, it\textquotesingle{}s width and height and it\textquotesingle{}s component count. \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{structquo__Texture}{quo\+\_\+\+Texture}}
-\begin{DoxyCompactList}\small\item\em A texture that lives on the GPU. Should be created from a bitmap image. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em A texture that lives on the G\+PU. Should be created from a bitmap image. \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}}
 \begin{DoxyCompactList}\small\item\em Responsible for drawing things to the screen. \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}}
@@ -49,7 +49,7 @@ struct \mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{quo_8h_ae32c8fde491a25ecccb09f346fce82ca}\label{quo_8h_ae32c8fde491a25ecccb09f346fce82ca}} 
-\#define {\bfseries QUO\+\_\+\+VERSION}~\char`\"{}1.\+2.\+1\char`\"{}
+\#define {\bfseries Q\+U\+O\+\_\+\+V\+E\+R\+S\+I\+ON}~\char`\"{}1.\+3.\+2\char`\"{}
 \item 
 \mbox{\Hypertarget{quo_8h_a41f9c5fb8b08eb5dc3edce4dcb37fee7}\label{quo_8h_a41f9c5fb8b08eb5dc3edce4dcb37fee7}} 
 \#define {\bfseries true}~1
@@ -58,415 +58,415 @@ struct \mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}}
 \#define {\bfseries false}~0
 \item 
 \mbox{\Hypertarget{quo_8h_ac97e3f0423a50209055c85c8f9e1380f}\label{quo_8h_ac97e3f0423a50209055c85c8f9e1380f}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+UNKNOWN}~-\/1
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+U\+N\+K\+N\+O\+WN}~-\/1
 \item 
 \mbox{\Hypertarget{quo_8h_a1963c1d9b924c94fc4f79c69eb52949e}\label{quo_8h_a1963c1d9b924c94fc4f79c69eb52949e}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+SPACE}~32
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+S\+P\+A\+CE}~32
 \item 
 \mbox{\Hypertarget{quo_8h_a0156b5a17bd6fd2bb16112549a289f34}\label{quo_8h_a0156b5a17bd6fd2bb16112549a289f34}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+APOSTROPHE}~39  /$\ast$ \textquotesingle{} $\ast$/
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+A\+P\+O\+S\+T\+R\+O\+P\+HE}~39  /$\ast$ \textquotesingle{} $\ast$/
 \item 
 \mbox{\Hypertarget{quo_8h_a301d0ad17c05be97f08be765e7c50b5e}\label{quo_8h_a301d0ad17c05be97f08be765e7c50b5e}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+COMMA}~44  /$\ast$ , $\ast$/
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+C\+O\+M\+MA}~44  /$\ast$ , $\ast$/
 \item 
 \mbox{\Hypertarget{quo_8h_aae8e60d24ad5bac01bc00fbb148d9eb5}\label{quo_8h_aae8e60d24ad5bac01bc00fbb148d9eb5}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+MINUS}~45  /$\ast$ -\/ $\ast$/
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+M\+I\+N\+US}~45  /$\ast$ -\/ $\ast$/
 \item 
 \mbox{\Hypertarget{quo_8h_a4e0b47c6492395af85df8e04c9b4ea59}\label{quo_8h_a4e0b47c6492395af85df8e04c9b4ea59}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+PERIOD}~46  /$\ast$ . $\ast$/
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+P\+E\+R\+I\+OD}~46  /$\ast$ . $\ast$/
 \item 
 \mbox{\Hypertarget{quo_8h_a4c92c579ab824d296963f5c723b270f4}\label{quo_8h_a4c92c579ab824d296963f5c723b270f4}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+SLASH}~47  /$\ast$ / $\ast$/
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+S\+L\+A\+SH}~47  /$\ast$ / $\ast$/
 \item 
 \mbox{\Hypertarget{quo_8h_a045d6ca375715945e28bc97ec52d03b5}\label{quo_8h_a045d6ca375715945e28bc97ec52d03b5}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+0}~48
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+0}~48
 \item 
 \mbox{\Hypertarget{quo_8h_a1070516255ea847711903b62f493838c}\label{quo_8h_a1070516255ea847711903b62f493838c}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+1}~49
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+1}~49
 \item 
 \mbox{\Hypertarget{quo_8h_a0cb7c895d1c52872c16d32f9d061346e}\label{quo_8h_a0cb7c895d1c52872c16d32f9d061346e}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+2}~50
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+2}~50
 \item 
 \mbox{\Hypertarget{quo_8h_a4d0bc2bb709016a505f535856bc1f482}\label{quo_8h_a4d0bc2bb709016a505f535856bc1f482}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+3}~51
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+3}~51
 \item 
 \mbox{\Hypertarget{quo_8h_adc0be13de7d4b6f5027023db2258fb92}\label{quo_8h_adc0be13de7d4b6f5027023db2258fb92}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+4}~52
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+4}~52
 \item 
 \mbox{\Hypertarget{quo_8h_a66eb5c6c5de2bfb2281ca70be6fbff1e}\label{quo_8h_a66eb5c6c5de2bfb2281ca70be6fbff1e}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+5}~53
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+5}~53
 \item 
 \mbox{\Hypertarget{quo_8h_a7a65534d30aa4dfef0e63cc7d442c2a7}\label{quo_8h_a7a65534d30aa4dfef0e63cc7d442c2a7}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+6}~54
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+6}~54
 \item 
 \mbox{\Hypertarget{quo_8h_a33efb76c49286035ffe1a097f5a56193}\label{quo_8h_a33efb76c49286035ffe1a097f5a56193}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+7}~55
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+7}~55
 \item 
 \mbox{\Hypertarget{quo_8h_a9b1cd8a981418bac6a740dd95ed8a7e2}\label{quo_8h_a9b1cd8a981418bac6a740dd95ed8a7e2}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+8}~56
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+8}~56
 \item 
 \mbox{\Hypertarget{quo_8h_a47ddae9799cf735fce511a56ad957689}\label{quo_8h_a47ddae9799cf735fce511a56ad957689}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+9}~57
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+9}~57
 \item 
 \mbox{\Hypertarget{quo_8h_a969759e394b4c96a6b8b233ac35c7888}\label{quo_8h_a969759e394b4c96a6b8b233ac35c7888}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+SEMICOLON}~59  /$\ast$ ; $\ast$/
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+S\+E\+M\+I\+C\+O\+L\+ON}~59  /$\ast$ ; $\ast$/
 \item 
 \mbox{\Hypertarget{quo_8h_a18940791dac489f1b0554fcb24332ef9}\label{quo_8h_a18940791dac489f1b0554fcb24332ef9}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+EQUAL}~61  /$\ast$ = $\ast$/
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+E\+Q\+U\+AL}~61  /$\ast$ = $\ast$/
 \item 
 \mbox{\Hypertarget{quo_8h_addc8ed4e942f5f7a487d89e258bf3ff7}\label{quo_8h_addc8ed4e942f5f7a487d89e258bf3ff7}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+A}~65
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+A}~65
 \item 
 \mbox{\Hypertarget{quo_8h_a1f0c026eec708df74d0e1661b190c224}\label{quo_8h_a1f0c026eec708df74d0e1661b190c224}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+B}~66
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+B}~66
 \item 
 \mbox{\Hypertarget{quo_8h_adfad133616378b321815ebb4b1b1ebb1}\label{quo_8h_adfad133616378b321815ebb4b1b1ebb1}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+C}~67
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+C}~67
 \item 
 \mbox{\Hypertarget{quo_8h_a3c7a09afbf8d293566924b06d0c6ac63}\label{quo_8h_a3c7a09afbf8d293566924b06d0c6ac63}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+D}~68
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+D}~68
 \item 
 \mbox{\Hypertarget{quo_8h_aef0b5d698ebe341f180addb6d2992785}\label{quo_8h_aef0b5d698ebe341f180addb6d2992785}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+E}~69
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+E}~69
 \item 
 \mbox{\Hypertarget{quo_8h_a4dafd72fdfa2d4a401cc0568bc09ce74}\label{quo_8h_a4dafd72fdfa2d4a401cc0568bc09ce74}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+F}~70
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+F}~70
 \item 
 \mbox{\Hypertarget{quo_8h_aab14568a4aa063944966f47deeee982e}\label{quo_8h_aab14568a4aa063944966f47deeee982e}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+G}~71
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+G}~71
 \item 
 \mbox{\Hypertarget{quo_8h_a87f0b0e9bfd06ac36206d0b9e0c5e565}\label{quo_8h_a87f0b0e9bfd06ac36206d0b9e0c5e565}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+H}~72
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+H}~72
 \item 
 \mbox{\Hypertarget{quo_8h_a93afd74fff69a68e7d45bafe1ae35818}\label{quo_8h_a93afd74fff69a68e7d45bafe1ae35818}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+I}~73
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+I}~73
 \item 
 \mbox{\Hypertarget{quo_8h_a25352c66591d6577b88619d5ca88d8c9}\label{quo_8h_a25352c66591d6577b88619d5ca88d8c9}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+J}~74
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+J}~74
 \item 
 \mbox{\Hypertarget{quo_8h_a311643428c666da7c34b521e599b1621}\label{quo_8h_a311643428c666da7c34b521e599b1621}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+K}~75
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+K}~75
 \item 
 \mbox{\Hypertarget{quo_8h_a39e34d8c30c02a79ae7d38c981f62a72}\label{quo_8h_a39e34d8c30c02a79ae7d38c981f62a72}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+L}~76
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+L}~76
 \item 
 \mbox{\Hypertarget{quo_8h_a1a4f137667e77e2762094d368b5b5c8b}\label{quo_8h_a1a4f137667e77e2762094d368b5b5c8b}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+M}~77
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+M}~77
 \item 
 \mbox{\Hypertarget{quo_8h_a1af43a70afd8e7ed7df326ee9e936838}\label{quo_8h_a1af43a70afd8e7ed7df326ee9e936838}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+N}~78
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+N}~78
 \item 
 \mbox{\Hypertarget{quo_8h_af1c0be68db07e32c498a99e95948b401}\label{quo_8h_af1c0be68db07e32c498a99e95948b401}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+O}~79
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+O}~79
 \item 
 \mbox{\Hypertarget{quo_8h_a45584d0155f4d61783b1b1d7e405c861}\label{quo_8h_a45584d0155f4d61783b1b1d7e405c861}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+P}~80
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+P}~80
 \item 
 \mbox{\Hypertarget{quo_8h_ac60fc04fad0ac913d86b81336cd735af}\label{quo_8h_ac60fc04fad0ac913d86b81336cd735af}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+Q}~81
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+Q}~81
 \item 
 \mbox{\Hypertarget{quo_8h_a748dbbd3685db4a3c2c124f8e9718688}\label{quo_8h_a748dbbd3685db4a3c2c124f8e9718688}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+R}~82
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+R}~82
 \item 
 \mbox{\Hypertarget{quo_8h_af6ed57b74bc7a540256d3b9ccbd7eb27}\label{quo_8h_af6ed57b74bc7a540256d3b9ccbd7eb27}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+S}~83
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+S}~83
 \item 
 \mbox{\Hypertarget{quo_8h_abd9d15338fd5dd36d6efc6551057a662}\label{quo_8h_abd9d15338fd5dd36d6efc6551057a662}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+T}~84
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+T}~84
 \item 
 \mbox{\Hypertarget{quo_8h_a302a7c77fa306ce8166b5300bdb27aae}\label{quo_8h_a302a7c77fa306ce8166b5300bdb27aae}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+U}~85
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+U}~85
 \item 
 \mbox{\Hypertarget{quo_8h_ac319a0717e3e149fc91ac1d6a7e6a894}\label{quo_8h_ac319a0717e3e149fc91ac1d6a7e6a894}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+V}~86
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+V}~86
 \item 
 \mbox{\Hypertarget{quo_8h_a4d568dd5cbeddb89fc8f5cdbca82da1a}\label{quo_8h_a4d568dd5cbeddb89fc8f5cdbca82da1a}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+W}~87
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+W}~87
 \item 
 \mbox{\Hypertarget{quo_8h_aea9343dd40fab14b31f3d0879937d7e2}\label{quo_8h_aea9343dd40fab14b31f3d0879937d7e2}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+X}~88
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+X}~88
 \item 
 \mbox{\Hypertarget{quo_8h_a5bf0aedebe92b6463606f9222a457603}\label{quo_8h_a5bf0aedebe92b6463606f9222a457603}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+Y}~89
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+Y}~89
 \item 
 \mbox{\Hypertarget{quo_8h_acfbdf7ce7a69f7e15bfa8e5e1553d335}\label{quo_8h_acfbdf7ce7a69f7e15bfa8e5e1553d335}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+Z}~90
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+Z}~90
 \item 
 \mbox{\Hypertarget{quo_8h_ae5fb8388ee8c137f6bba41ffa3b5abae}\label{quo_8h_ae5fb8388ee8c137f6bba41ffa3b5abae}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+LEFT\+\_\+\+BRACKET}~91  /$\ast$ \mbox{[} $\ast$/
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+L\+E\+F\+T\+\_\+\+B\+R\+A\+C\+K\+ET}~91  /$\ast$ \mbox{[} $\ast$/
 \item 
 \mbox{\Hypertarget{quo_8h_a4898e9607de643da43f783fda5b267c9}\label{quo_8h_a4898e9607de643da43f783fda5b267c9}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+BACKSLASH}~92  /$\ast$ \textbackslash{} $\ast$/
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+B\+A\+C\+K\+S\+L\+A\+SH}~92  /$\ast$ \textbackslash{} $\ast$/
 \item 
 \mbox{\Hypertarget{quo_8h_ac45f061dba85d0db362a8e74beff77e5}\label{quo_8h_ac45f061dba85d0db362a8e74beff77e5}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+RIGHT\+\_\+\+BRACKET}~93  /$\ast$ \mbox{]} $\ast$/
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+R\+I\+G\+H\+T\+\_\+\+B\+R\+A\+C\+K\+ET}~93  /$\ast$ \mbox{]} $\ast$/
 \item 
 \mbox{\Hypertarget{quo_8h_ab435abdc4f5ce9aa3e814f8f7ab5ecb1}\label{quo_8h_ab435abdc4f5ce9aa3e814f8f7ab5ecb1}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+GRAVE\+\_\+\+ACCENT}~96  /$\ast$ \`{} $\ast$/
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+G\+R\+A\+V\+E\+\_\+\+A\+C\+C\+E\+NT}~96  /$\ast$ \`{} $\ast$/
 \item 
 \mbox{\Hypertarget{quo_8h_a5bcb0a20881187ef260e1324cec6b89d}\label{quo_8h_a5bcb0a20881187ef260e1324cec6b89d}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+WORLD\+\_\+1}~161 /$\ast$ non-\/US \#1 $\ast$/
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+W\+O\+R\+L\+D\+\_\+1}~161 /$\ast$ non-\/US \#1 $\ast$/
 \item 
 \mbox{\Hypertarget{quo_8h_a1d4f14bef778a22173324f4bc4d79900}\label{quo_8h_a1d4f14bef778a22173324f4bc4d79900}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+WORLD\+\_\+2}~162 /$\ast$ non-\/US \#2 $\ast$/
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+W\+O\+R\+L\+D\+\_\+2}~162 /$\ast$ non-\/US \#2 $\ast$/
 \item 
 \mbox{\Hypertarget{quo_8h_a515fa558c7303238f25f2485dba36d0d}\label{quo_8h_a515fa558c7303238f25f2485dba36d0d}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+ESCAPE}~256
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+E\+S\+C\+A\+PE}~256
 \item 
 \mbox{\Hypertarget{quo_8h_a5b0ccf23830bcb90547f57594d62ac40}\label{quo_8h_a5b0ccf23830bcb90547f57594d62ac40}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+ENTER}~257
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+E\+N\+T\+ER}~257
 \item 
 \mbox{\Hypertarget{quo_8h_a203d333e7d74af0036e4e02f7b931fc2}\label{quo_8h_a203d333e7d74af0036e4e02f7b931fc2}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+TAB}~258
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+T\+AB}~258
 \item 
 \mbox{\Hypertarget{quo_8h_a99614af9065ea306be459738327b2021}\label{quo_8h_a99614af9065ea306be459738327b2021}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+BACKSPACE}~259
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+B\+A\+C\+K\+S\+P\+A\+CE}~259
 \item 
 \mbox{\Hypertarget{quo_8h_af3c78fa8f2dbd8d241789f230332dda7}\label{quo_8h_af3c78fa8f2dbd8d241789f230332dda7}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+INSERT}~260
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+I\+N\+S\+E\+RT}~260
 \item 
 \mbox{\Hypertarget{quo_8h_ab2093a5bc93bf6d54015d91f489493b2}\label{quo_8h_ab2093a5bc93bf6d54015d91f489493b2}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+DELETE}~261
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+D\+E\+L\+E\+TE}~261
 \item 
 \mbox{\Hypertarget{quo_8h_acd0fd835d7c5c32ceeeedb79220d259c}\label{quo_8h_acd0fd835d7c5c32ceeeedb79220d259c}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+RIGHT}~262
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+R\+I\+G\+HT}~262
 \item 
 \mbox{\Hypertarget{quo_8h_aaad3210b953751b49a0d6b70cc4c4b04}\label{quo_8h_aaad3210b953751b49a0d6b70cc4c4b04}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+LEFT}~263
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+L\+E\+FT}~263
 \item 
 \mbox{\Hypertarget{quo_8h_a3cf2154f1847654be6b2d903ab056c6e}\label{quo_8h_a3cf2154f1847654be6b2d903ab056c6e}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+DOWN}~264
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+D\+O\+WN}~264
 \item 
 \mbox{\Hypertarget{quo_8h_a7c5f5c51d82f6c94e15ce4a2c2091c87}\label{quo_8h_a7c5f5c51d82f6c94e15ce4a2c2091c87}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+UP}~265
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+UP}~265
 \item 
 \mbox{\Hypertarget{quo_8h_a31655e819aba21c487d8637e7af35dcb}\label{quo_8h_a31655e819aba21c487d8637e7af35dcb}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+PAGE\+\_\+\+UP}~266
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+P\+A\+G\+E\+\_\+\+UP}~266
 \item 
 \mbox{\Hypertarget{quo_8h_ad9da0d43bb02f44a3fa04b59d910ee6e}\label{quo_8h_ad9da0d43bb02f44a3fa04b59d910ee6e}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+PAGE\+\_\+\+DOWN}~267
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+P\+A\+G\+E\+\_\+\+D\+O\+WN}~267
 \item 
 \mbox{\Hypertarget{quo_8h_ae5a1c673bc2cba8e261a31231d533363}\label{quo_8h_ae5a1c673bc2cba8e261a31231d533363}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+HOME}~268
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+H\+O\+ME}~268
 \item 
 \mbox{\Hypertarget{quo_8h_a9cb25563d1817e658696977ddae9c758}\label{quo_8h_a9cb25563d1817e658696977ddae9c758}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+END}~269
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+E\+ND}~269
 \item 
 \mbox{\Hypertarget{quo_8h_a29cc3a854b14608211468cdeaffc15f5}\label{quo_8h_a29cc3a854b14608211468cdeaffc15f5}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+CAPS\+\_\+\+LOCK}~280
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+C\+A\+P\+S\+\_\+\+L\+O\+CK}~280
 \item 
 \mbox{\Hypertarget{quo_8h_a31a47f3bfb7755dfae7482f40b62dbb7}\label{quo_8h_a31a47f3bfb7755dfae7482f40b62dbb7}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+SCROLL\+\_\+\+LOCK}~281
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+S\+C\+R\+O\+L\+L\+\_\+\+L\+O\+CK}~281
 \item 
 \mbox{\Hypertarget{quo_8h_a3f25af6dd718c24406782b5c2f095c21}\label{quo_8h_a3f25af6dd718c24406782b5c2f095c21}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NUM\+\_\+\+LOCK}~282
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+N\+U\+M\+\_\+\+L\+O\+CK}~282
 \item 
 \mbox{\Hypertarget{quo_8h_aea74b84cc0f7c3b409fadfc00216c01f}\label{quo_8h_aea74b84cc0f7c3b409fadfc00216c01f}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+PRINT\+\_\+\+SCREEN}~283
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+P\+R\+I\+N\+T\+\_\+\+S\+C\+R\+E\+EN}~283
 \item 
 \mbox{\Hypertarget{quo_8h_a1b286072f21fcacdc9daae4f8c82ba31}\label{quo_8h_a1b286072f21fcacdc9daae4f8c82ba31}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+PAUSE}~284
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+P\+A\+U\+SE}~284
 \item 
 \mbox{\Hypertarget{quo_8h_adab224ba949041c4b1967cf92db2ac08}\label{quo_8h_adab224ba949041c4b1967cf92db2ac08}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F1}~290
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F1}~290
 \item 
 \mbox{\Hypertarget{quo_8h_a832cf114fa932d117d589e5a106547f9}\label{quo_8h_a832cf114fa932d117d589e5a106547f9}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F2}~291
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F2}~291
 \item 
 \mbox{\Hypertarget{quo_8h_a4fb748af7fbcbf5c25179089e57096ae}\label{quo_8h_a4fb748af7fbcbf5c25179089e57096ae}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F3}~292
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F3}~292
 \item 
 \mbox{\Hypertarget{quo_8h_a63096d6a010c2b33f8690f36dbe64621}\label{quo_8h_a63096d6a010c2b33f8690f36dbe64621}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F4}~293
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F4}~293
 \item 
 \mbox{\Hypertarget{quo_8h_aea7adf213d1fe3f5799e7b9c31bbe0a4}\label{quo_8h_aea7adf213d1fe3f5799e7b9c31bbe0a4}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F5}~294
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F5}~294
 \item 
 \mbox{\Hypertarget{quo_8h_aa9384498cb86cb47838b3d9d1e22c368}\label{quo_8h_aa9384498cb86cb47838b3d9d1e22c368}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F6}~295
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F6}~295
 \item 
 \mbox{\Hypertarget{quo_8h_a1566630a1772e865899a0a39f35640db}\label{quo_8h_a1566630a1772e865899a0a39f35640db}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F7}~296
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F7}~296
 \item 
 \mbox{\Hypertarget{quo_8h_aa7d2d8973c6d3730ffce951fe28638c4}\label{quo_8h_aa7d2d8973c6d3730ffce951fe28638c4}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F8}~297
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F8}~297
 \item 
 \mbox{\Hypertarget{quo_8h_a7e56608ff0257fd9c9a07869c842d440}\label{quo_8h_a7e56608ff0257fd9c9a07869c842d440}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F9}~298
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F9}~298
 \item 
 \mbox{\Hypertarget{quo_8h_a8942276341959e9f750f9e92185b76e1}\label{quo_8h_a8942276341959e9f750f9e92185b76e1}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F10}~299
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F10}~299
 \item 
 \mbox{\Hypertarget{quo_8h_addedb0c9102c98f992c77c7bb8347ff0}\label{quo_8h_addedb0c9102c98f992c77c7bb8347ff0}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F11}~300
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F11}~300
 \item 
 \mbox{\Hypertarget{quo_8h_af25cbb37cd96d60475e64a69b593a98c}\label{quo_8h_af25cbb37cd96d60475e64a69b593a98c}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F12}~301
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F12}~301
 \item 
 \mbox{\Hypertarget{quo_8h_ac54bbaf4ced04a3ec0b3cc10b4ff8e02}\label{quo_8h_ac54bbaf4ced04a3ec0b3cc10b4ff8e02}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F13}~302
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F13}~302
 \item 
 \mbox{\Hypertarget{quo_8h_acebf214e8d462cba0f4a05469d6113b6}\label{quo_8h_acebf214e8d462cba0f4a05469d6113b6}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F14}~303
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F14}~303
 \item 
 \mbox{\Hypertarget{quo_8h_a58eb3787ce6ca240549e171605295f10}\label{quo_8h_a58eb3787ce6ca240549e171605295f10}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F15}~304
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F15}~304
 \item 
 \mbox{\Hypertarget{quo_8h_afca8f219d9f1a7358272901e413bcdd5}\label{quo_8h_afca8f219d9f1a7358272901e413bcdd5}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F16}~305
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F16}~305
 \item 
 \mbox{\Hypertarget{quo_8h_ad6d6d354c31f9b1b2849f3de58dc244e}\label{quo_8h_ad6d6d354c31f9b1b2849f3de58dc244e}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F17}~306
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F17}~306
 \item 
 \mbox{\Hypertarget{quo_8h_a4710bd9f790f28c2f553f7ce07782c42}\label{quo_8h_a4710bd9f790f28c2f553f7ce07782c42}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F18}~307
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F18}~307
 \item 
 \mbox{\Hypertarget{quo_8h_a14c842993a861bc6c5b217258a174d23}\label{quo_8h_a14c842993a861bc6c5b217258a174d23}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F19}~308
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F19}~308
 \item 
 \mbox{\Hypertarget{quo_8h_a4a08f71ea211480e3e37722edddadc28}\label{quo_8h_a4a08f71ea211480e3e37722edddadc28}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F20}~309
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F20}~309
 \item 
 \mbox{\Hypertarget{quo_8h_a0a885a449d57e789c398cafd2f5fabbb}\label{quo_8h_a0a885a449d57e789c398cafd2f5fabbb}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F21}~310
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F21}~310
 \item 
 \mbox{\Hypertarget{quo_8h_a7a7e5652daedc607665edcbd353869ef}\label{quo_8h_a7a7e5652daedc607665edcbd353869ef}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F22}~311
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F22}~311
 \item 
 \mbox{\Hypertarget{quo_8h_aafe3ebb0df4d7e5b6d6f41f956fd9d81}\label{quo_8h_aafe3ebb0df4d7e5b6d6f41f956fd9d81}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F23}~312
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F23}~312
 \item 
 \mbox{\Hypertarget{quo_8h_a76f25a6cf8b299ab648bb539065f9eb9}\label{quo_8h_a76f25a6cf8b299ab648bb539065f9eb9}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F24}~313
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F24}~313
 \item 
 \mbox{\Hypertarget{quo_8h_adb3988c041c278b577c0ac56cb6ab071}\label{quo_8h_adb3988c041c278b577c0ac56cb6ab071}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+F25}~314
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+F25}~314
 \item 
 \mbox{\Hypertarget{quo_8h_a88e343d2611f7998b85559fb79cb7410}\label{quo_8h_a88e343d2611f7998b85559fb79cb7410}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+0}~320
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+N\+P\+\_\+0}~320
 \item 
 \mbox{\Hypertarget{quo_8h_a38174a76ddc3a0f2d5ce4b5c9af4a3de}\label{quo_8h_a38174a76ddc3a0f2d5ce4b5c9af4a3de}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+1}~321
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+N\+P\+\_\+1}~321
 \item 
 \mbox{\Hypertarget{quo_8h_aaa0db6e2c349fde6af5b2fbc9f022200}\label{quo_8h_aaa0db6e2c349fde6af5b2fbc9f022200}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+2}~322
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+N\+P\+\_\+2}~322
 \item 
 \mbox{\Hypertarget{quo_8h_aeb9ea6524c7123a2fedcc21419b67676}\label{quo_8h_aeb9ea6524c7123a2fedcc21419b67676}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+3}~323
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+N\+P\+\_\+3}~323
 \item 
 \mbox{\Hypertarget{quo_8h_a974d30c72f6570633cfc6fd7e89a0ff2}\label{quo_8h_a974d30c72f6570633cfc6fd7e89a0ff2}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+4}~324
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+N\+P\+\_\+4}~324
 \item 
 \mbox{\Hypertarget{quo_8h_a08a4dc5edbe497757d63ca158ca97031}\label{quo_8h_a08a4dc5edbe497757d63ca158ca97031}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+5}~325
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+N\+P\+\_\+5}~325
 \item 
 \mbox{\Hypertarget{quo_8h_a54a1c84f6c1a5dfe99752e5b82d8c3ef}\label{quo_8h_a54a1c84f6c1a5dfe99752e5b82d8c3ef}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+6}~326
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+N\+P\+\_\+6}~326
 \item 
 \mbox{\Hypertarget{quo_8h_a686887f834a1dfd6fe752ccf563b6b86}\label{quo_8h_a686887f834a1dfd6fe752ccf563b6b86}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+7}~327
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+N\+P\+\_\+7}~327
 \item 
 \mbox{\Hypertarget{quo_8h_a467694dfe668b66e990a86e836a8c5d1}\label{quo_8h_a467694dfe668b66e990a86e836a8c5d1}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+8}~328
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+N\+P\+\_\+8}~328
 \item 
 \mbox{\Hypertarget{quo_8h_a45d8b39a5ff4885a98aa4f47694ffe33}\label{quo_8h_a45d8b39a5ff4885a98aa4f47694ffe33}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+9}~329
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+N\+P\+\_\+9}~329
 \item 
 \mbox{\Hypertarget{quo_8h_af1bb54f3e74fec62fd8f3f3ed29de556}\label{quo_8h_af1bb54f3e74fec62fd8f3f3ed29de556}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+\+DECIMAL}~330
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+N\+P\+\_\+\+D\+E\+C\+I\+M\+AL}~330
 \item 
 \mbox{\Hypertarget{quo_8h_a40a0246c5edee70ae9cbda105e8b3970}\label{quo_8h_a40a0246c5edee70ae9cbda105e8b3970}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+\+DIVIDE}~331
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+N\+P\+\_\+\+D\+I\+V\+I\+DE}~331
 \item 
 \mbox{\Hypertarget{quo_8h_a60f7678575e347106622fe82aa7d2e47}\label{quo_8h_a60f7678575e347106622fe82aa7d2e47}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+\+MULTIPLY}~332
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+N\+P\+\_\+\+M\+U\+L\+T\+I\+P\+LY}~332
 \item 
 \mbox{\Hypertarget{quo_8h_a5d7194397bef533cb9e1a3501407b6b9}\label{quo_8h_a5d7194397bef533cb9e1a3501407b6b9}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+\+SUBTRACT}~333
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+N\+P\+\_\+\+S\+U\+B\+T\+R\+A\+CT}~333
 \item 
 \mbox{\Hypertarget{quo_8h_a4bdb3220cae5d710f96affeceb9d6740}\label{quo_8h_a4bdb3220cae5d710f96affeceb9d6740}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+\+ADD}~334
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+N\+P\+\_\+\+A\+DD}~334
 \item 
 \mbox{\Hypertarget{quo_8h_a1ded84480563d0b4d5331818805880b8}\label{quo_8h_a1ded84480563d0b4d5331818805880b8}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+\+ENTER}~335
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+N\+P\+\_\+\+E\+N\+T\+ER}~335
 \item 
 \mbox{\Hypertarget{quo_8h_a39b654ee36b466cc6633f3e8d6abda4a}\label{quo_8h_a39b654ee36b466cc6633f3e8d6abda4a}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+NP\+\_\+\+EQUAL}~336
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+N\+P\+\_\+\+E\+Q\+U\+AL}~336
 \item 
 \mbox{\Hypertarget{quo_8h_aa0a65fe37f98da859eb9eee6069c9d1c}\label{quo_8h_aa0a65fe37f98da859eb9eee6069c9d1c}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+LEFT\+\_\+\+SHIFT}~340
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+L\+E\+F\+T\+\_\+\+S\+H\+I\+FT}~340
 \item 
 \mbox{\Hypertarget{quo_8h_a0c73f6eaea94d0650696839125891b29}\label{quo_8h_a0c73f6eaea94d0650696839125891b29}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+LEFT\+\_\+\+CONTROL}~341
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+L\+E\+F\+T\+\_\+\+C\+O\+N\+T\+R\+OL}~341
 \item 
 \mbox{\Hypertarget{quo_8h_a594b938a86651d09eba40df3ec9da64b}\label{quo_8h_a594b938a86651d09eba40df3ec9da64b}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+LEFT\+\_\+\+ALT}~342
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+L\+E\+F\+T\+\_\+\+A\+LT}~342
 \item 
 \mbox{\Hypertarget{quo_8h_a127c9ad1fb54655687c224d21a1b4dc3}\label{quo_8h_a127c9ad1fb54655687c224d21a1b4dc3}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+LEFT\+\_\+\+SUPER}~343
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+L\+E\+F\+T\+\_\+\+S\+U\+P\+ER}~343
 \item 
 \mbox{\Hypertarget{quo_8h_abb1e9f4797674bf072bfbcf11fd77c43}\label{quo_8h_abb1e9f4797674bf072bfbcf11fd77c43}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+RIGHT\+\_\+\+SHIFT}~344
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+R\+I\+G\+H\+T\+\_\+\+S\+H\+I\+FT}~344
 \item 
 \mbox{\Hypertarget{quo_8h_aaac32b5eff3b65e72b17aadf5c3dab96}\label{quo_8h_aaac32b5eff3b65e72b17aadf5c3dab96}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+RIGHT\+\_\+\+CONTROL}~345
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+R\+I\+G\+H\+T\+\_\+\+C\+O\+N\+T\+R\+OL}~345
 \item 
 \mbox{\Hypertarget{quo_8h_ac1018ee661b863e4ced001590641856f}\label{quo_8h_ac1018ee661b863e4ced001590641856f}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+RIGHT\+\_\+\+ALT}~346
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+R\+I\+G\+H\+T\+\_\+\+A\+LT}~346
 \item 
 \mbox{\Hypertarget{quo_8h_a03bed45e047843cd069571340867ab95}\label{quo_8h_a03bed45e047843cd069571340867ab95}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+RIGHT\+\_\+\+SUPER}~347
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+R\+I\+G\+H\+T\+\_\+\+S\+U\+P\+ER}~347
 \item 
 \mbox{\Hypertarget{quo_8h_a88c0fcfe42794dc06eb7ada24f0848da}\label{quo_8h_a88c0fcfe42794dc06eb7ada24f0848da}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+MENU}~348
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+M\+E\+NU}~348
 \item 
 \mbox{\Hypertarget{quo_8h_ab738cb4e68db1500da575d251e987864}\label{quo_8h_ab738cb4e68db1500da575d251e987864}} 
-\#define {\bfseries QUO\+\_\+\+KEY\+\_\+\+COUNT}~QUO\+\_\+\+KEY\+\_\+\+MENU
+\#define {\bfseries Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+C\+O\+U\+NT}~Q\+U\+O\+\_\+\+K\+E\+Y\+\_\+\+M\+E\+NU + 1
 \item 
 \mbox{\Hypertarget{quo_8h_a3dad6ec4d18585af4f9f04e6e55e9111}\label{quo_8h_a3dad6ec4d18585af4f9f04e6e55e9111}} 
-\#define {\bfseries QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+1}~0
+\#define {\bfseries Q\+U\+O\+\_\+\+M\+O\+U\+S\+E\+\_\+\+B\+U\+T\+T\+O\+N\+\_\+1}~0
 \item 
 \mbox{\Hypertarget{quo_8h_a5938b74e7a257625723cf50b8c553c66}\label{quo_8h_a5938b74e7a257625723cf50b8c553c66}} 
-\#define {\bfseries QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+3}~2
+\#define {\bfseries Q\+U\+O\+\_\+\+M\+O\+U\+S\+E\+\_\+\+B\+U\+T\+T\+O\+N\+\_\+3}~2
 \item 
 \mbox{\Hypertarget{quo_8h_ae1dcd79c162b3a41009b9da66d128cb9}\label{quo_8h_ae1dcd79c162b3a41009b9da66d128cb9}} 
-\#define {\bfseries QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+2}~1
+\#define {\bfseries Q\+U\+O\+\_\+\+M\+O\+U\+S\+E\+\_\+\+B\+U\+T\+T\+O\+N\+\_\+2}~1
 \item 
 \mbox{\Hypertarget{quo_8h_a4021c2d0a90d0ca2f5f4755549e4d653}\label{quo_8h_a4021c2d0a90d0ca2f5f4755549e4d653}} 
-\#define {\bfseries QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+4}~3
+\#define {\bfseries Q\+U\+O\+\_\+\+M\+O\+U\+S\+E\+\_\+\+B\+U\+T\+T\+O\+N\+\_\+4}~3
 \item 
 \mbox{\Hypertarget{quo_8h_a041e0b9550e7c9cc4f532b0c2329b9af}\label{quo_8h_a041e0b9550e7c9cc4f532b0c2329b9af}} 
-\#define {\bfseries QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+5}~4
+\#define {\bfseries Q\+U\+O\+\_\+\+M\+O\+U\+S\+E\+\_\+\+B\+U\+T\+T\+O\+N\+\_\+5}~4
 \item 
 \mbox{\Hypertarget{quo_8h_adf28229a41d0e13c41ee75d456381ddc}\label{quo_8h_adf28229a41d0e13c41ee75d456381ddc}} 
-\#define {\bfseries QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+6}~5
+\#define {\bfseries Q\+U\+O\+\_\+\+M\+O\+U\+S\+E\+\_\+\+B\+U\+T\+T\+O\+N\+\_\+6}~5
 \item 
 \mbox{\Hypertarget{quo_8h_ab34a62b14a39654d25be82e23ceeea66}\label{quo_8h_ab34a62b14a39654d25be82e23ceeea66}} 
-\#define {\bfseries QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+7}~6
+\#define {\bfseries Q\+U\+O\+\_\+\+M\+O\+U\+S\+E\+\_\+\+B\+U\+T\+T\+O\+N\+\_\+7}~6
 \item 
 \mbox{\Hypertarget{quo_8h_aebfb878a0796735ce20f96bfff67b7c4}\label{quo_8h_aebfb878a0796735ce20f96bfff67b7c4}} 
-\#define {\bfseries QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+8}~7
+\#define {\bfseries Q\+U\+O\+\_\+\+M\+O\+U\+S\+E\+\_\+\+B\+U\+T\+T\+O\+N\+\_\+8}~7
 \item 
 \mbox{\Hypertarget{quo_8h_a7fd768aa89037ff552d057fc5da88d21}\label{quo_8h_a7fd768aa89037ff552d057fc5da88d21}} 
-\#define {\bfseries QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+\+COUNT}~QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+8
+\#define {\bfseries Q\+U\+O\+\_\+\+M\+O\+U\+S\+E\+\_\+\+B\+U\+T\+T\+O\+N\+\_\+\+C\+O\+U\+NT}~Q\+U\+O\+\_\+\+M\+O\+U\+S\+E\+\_\+\+B\+U\+T\+T\+O\+N\+\_\+8 + 1
 \item 
 \mbox{\Hypertarget{quo_8h_ad8f3b3c5e6e3f88c4ebed5057027981e}\label{quo_8h_ad8f3b3c5e6e3f88c4ebed5057027981e}} 
-\#define {\bfseries QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+\+LEFT}~QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+1
+\#define {\bfseries Q\+U\+O\+\_\+\+M\+O\+U\+S\+E\+\_\+\+B\+U\+T\+T\+O\+N\+\_\+\+L\+E\+FT}~Q\+U\+O\+\_\+\+M\+O\+U\+S\+E\+\_\+\+B\+U\+T\+T\+O\+N\+\_\+1
 \item 
 \mbox{\Hypertarget{quo_8h_a7d0e187de260509be1d319cd261d3e01}\label{quo_8h_a7d0e187de260509be1d319cd261d3e01}} 
-\#define {\bfseries QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+\+RIGHT}~QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+2
+\#define {\bfseries Q\+U\+O\+\_\+\+M\+O\+U\+S\+E\+\_\+\+B\+U\+T\+T\+O\+N\+\_\+\+R\+I\+G\+HT}~Q\+U\+O\+\_\+\+M\+O\+U\+S\+E\+\_\+\+B\+U\+T\+T\+O\+N\+\_\+2
 \item 
 \mbox{\Hypertarget{quo_8h_ad4af67fb0e90bd3d7b0266dde3b0df34}\label{quo_8h_ad4af67fb0e90bd3d7b0266dde3b0df34}} 
-\#define {\bfseries QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+\+MIDDLE}~QUO\+\_\+\+MOUSE\+\_\+\+BUTTON\+\_\+3
+\#define {\bfseries Q\+U\+O\+\_\+\+M\+O\+U\+S\+E\+\_\+\+B\+U\+T\+T\+O\+N\+\_\+\+M\+I\+D\+D\+LE}~Q\+U\+O\+\_\+\+M\+O\+U\+S\+E\+\_\+\+B\+U\+T\+T\+O\+N\+\_\+3
 \item 
 \mbox{\Hypertarget{quo_8h_a3784ca58f718010d950dd30ca63a4439}\label{quo_8h_a3784ca58f718010d950dd30ca63a4439}} 
-\#define {\bfseries QUO\+\_\+\+PI}~3.\+14159265358f
+\#define {\bfseries Q\+U\+O\+\_\+\+PI}~3.\+14159265358f
 \item 
 \mbox{\Hypertarget{quo_8h_ac8e3a16bb26617693d2754747854e1a2}\label{quo_8h_ac8e3a16bb26617693d2754747854e1a2}} 
-\#define \mbox{\hyperlink{quo_8h_ac8e3a16bb26617693d2754747854e1a2}{QUO\+\_\+\+MAX\+\_\+\+SHADERS}}~10
+\#define \mbox{\hyperlink{quo_8h_ac8e3a16bb26617693d2754747854e1a2}{Q\+U\+O\+\_\+\+M\+A\+X\+\_\+\+S\+H\+A\+D\+E\+RS}}~10
 \begin{DoxyCompactList}\small\item\em Maximum amount of shaders that can be created. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{quo_8h_a5bb3c825ce47a067bc49b899447d41fe}\label{quo_8h_a5bb3c825ce47a067bc49b899447d41fe}} 
-\#define \mbox{\hyperlink{quo_8h_a5bb3c825ce47a067bc49b899447d41fe}{QUO\+\_\+\+BYTE\+\_\+\+BUFFER\+\_\+\+DEFAULT\+\_\+\+CAPACITY}}~1024
+\#define \mbox{\hyperlink{quo_8h_a5bb3c825ce47a067bc49b899447d41fe}{Q\+U\+O\+\_\+\+B\+Y\+T\+E\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+C\+A\+P\+A\+C\+I\+TY}}~1024
 \begin{DoxyCompactList}\small\item\em The default size of a byte buffer. \end{DoxyCompactList}\item 
 \#define \mbox{\hyperlink{quo_8h_a99ac6db25386417803a7b1d3e07f1846}{quo\+\_\+byte\+\_\+buffer\+\_\+write}}(\+\_\+buffer,  \+\_\+type,  \+\_\+val)
 \begin{DoxyCompactList}\small\item\em Write some data to a byte buffer at the current position. \end{DoxyCompactList}\item 
@@ -507,13 +507,16 @@ typedef enum quo\+\_\+\+Texture\+Flags {\bfseries quo\+\_\+\+Texture\+Flags}
 \item 
 \mbox{\Hypertarget{quo_8h_a5c00cb5f1d8811e5f7f4a14b3b46aad7}\label{quo_8h_a5c00cb5f1d8811e5f7f4a14b3b46aad7}} 
 typedef struct \mbox{\hyperlink{structquo__Texture}{quo\+\_\+\+Texture}} \mbox{\hyperlink{quo_8h_a5c00cb5f1d8811e5f7f4a14b3b46aad7}{quo\+\_\+\+Texture}}
-\begin{DoxyCompactList}\small\item\em A texture that lives on the GPU. Should be created from a bitmap image. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em A texture that lives on the G\+PU. Should be created from a bitmap image. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{quo_8h_a6c48124a8ce2225be23f46043eccd910}\label{quo_8h_a6c48124a8ce2225be23f46043eccd910}} 
 typedef unsigned int \mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}}
 \begin{DoxyCompactList}\small\item\em To be used as an index into the renderer\textquotesingle{}s shader array. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{quo_8h_a370e7745513bf46694319ab62c3cd560}\label{quo_8h_a370e7745513bf46694319ab62c3cd560}} 
 typedef struct \mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} \mbox{\hyperlink{quo_8h_a370e7745513bf46694319ab62c3cd560}{quo\+\_\+\+Renderer}}
 \begin{DoxyCompactList}\small\item\em Responsible for drawing things to the screen. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{quo_8h_a9aa43669d923e49403f6222c37933681}\label{quo_8h_a9aa43669d923e49403f6222c37933681}} 
+typedef enum \mbox{\hyperlink{quo_8h_afc7c3fcb47ad9e53f06d4a8b7bdcaacc}{quo\+\_\+\+Vertex\+Buffer\+Flags}} \mbox{\hyperlink{quo_8h_a9aa43669d923e49403f6222c37933681}{quo\+\_\+\+Vertex\+Buffer\+Flags}}
+\begin{DoxyCompactList}\small\item\em Flags for the vertex buffer. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{quo_8h_a8dccfb72abd950a28b20b77f91b707ab}\label{quo_8h_a8dccfb72abd950a28b20b77f91b707ab}} 
 typedef struct \mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} \mbox{\hyperlink{quo_8h_a8dccfb72abd950a28b20b77f91b707ab}{quo\+\_\+\+Vertex\+Buffer}}
 \begin{DoxyCompactList}\small\item\em A buffer for vertices. \end{DoxyCompactList}\item 
@@ -533,10 +536,19 @@ typedef struct \mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{quo_8h_af2debe1e65dc9bda6465e52e19943212}\label{quo_8h_af2debe1e65dc9bda6465e52e19943212}} 
-enum {\bfseries quo\+\_\+\+Texture\+Flags} \{ {\bfseries QUO\+\_\+\+TEXTUREFLAGS\+\_\+\+ANTIALIASED} = 1 $<$$<$ 0
-, {\bfseries QUO\+\_\+\+TEXTUREFLAGS\+\_\+\+ALIASED} = 1 $<$$<$ 1
+enum {\bfseries quo\+\_\+\+Texture\+Flags} \{ {\bfseries Q\+U\+O\+\_\+\+T\+E\+X\+T\+U\+R\+E\+F\+L\+A\+G\+S\+\_\+\+A\+N\+T\+I\+A\+L\+I\+A\+S\+ED} = 1 $<$$<$ 0, 
+{\bfseries Q\+U\+O\+\_\+\+T\+E\+X\+T\+U\+R\+E\+F\+L\+A\+G\+S\+\_\+\+A\+L\+I\+A\+S\+ED} = 1 $<$$<$ 1
  \}
-\end{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{quo_8h_afc7c3fcb47ad9e53f06d4a8b7bdcaacc}{quo\+\_\+\+Vertex\+Buffer\+Flags}} \{ \newline
+\mbox{\hyperlink{quo_8h_afc7c3fcb47ad9e53f06d4a8b7bdcaacca858a8b6dd820742b91212720c3f7edb9}{Q\+U\+O\+\_\+\+V\+E\+R\+T\+E\+X\+B\+U\+F\+F\+E\+R\+F\+L\+A\+G\+S\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+D\+R\+AW}} = 1 $<$$<$ 0, 
+\mbox{\hyperlink{quo_8h_afc7c3fcb47ad9e53f06d4a8b7bdcaacca58bafd793a016619fd1b7bae97a8925a}{Q\+U\+O\+\_\+\+V\+E\+R\+T\+E\+X\+B\+U\+F\+F\+E\+R\+F\+L\+A\+G\+S\+\_\+\+D\+Y\+N\+A\+M\+I\+C\+\_\+\+D\+R\+AW}} = 1 $<$$<$ 1, 
+\mbox{\hyperlink{quo_8h_afc7c3fcb47ad9e53f06d4a8b7bdcaacca9b89701294904570c365e011bdc51b09}{Q\+U\+O\+\_\+\+V\+E\+R\+T\+E\+X\+B\+U\+F\+F\+E\+R\+F\+L\+A\+G\+S\+\_\+\+D\+R\+A\+W\+\_\+\+L\+I\+N\+ES}} = 1 $<$$<$ 2, 
+\mbox{\hyperlink{quo_8h_afc7c3fcb47ad9e53f06d4a8b7bdcaacca1ae0c1e6cfb5abbb7748eb7c368a58d2}{Q\+U\+O\+\_\+\+V\+E\+R\+T\+E\+X\+B\+U\+F\+F\+E\+R\+F\+L\+A\+G\+S\+\_\+\+D\+R\+A\+W\+\_\+\+L\+I\+N\+E\+\_\+\+S\+T\+R\+IP}} = 1 $<$$<$ 3, 
+\newline
+\mbox{\hyperlink{quo_8h_afc7c3fcb47ad9e53f06d4a8b7bdcaaccacd999f216ac7945746e0127d77569777}{Q\+U\+O\+\_\+\+V\+E\+R\+T\+E\+X\+B\+U\+F\+F\+E\+R\+F\+L\+A\+G\+S\+\_\+\+D\+R\+A\+W\+\_\+\+T\+R\+I\+A\+N\+G\+L\+ES}} = 1 $<$$<$ 4
+ \}
+\begin{DoxyCompactList}\small\item\em Flags for the vertex buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -657,7 +669,7 @@ void \mbox{\hyperlink{quo_8h_a965f6a42b6c3d16b56f7c658304fdb60}{quo\+\_\+shader\
 \begin{DoxyCompactList}\small\item\em Set a uniform 3D vector. Note\+: Shader must be bound before calling this function. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{quo_8h_a4b35f564178f80fb821d3671b4b543cf}{quo\+\_\+shader\+\_\+set\+\_\+vec4}} (\mbox{\hyperlink{structquo__Renderer}{quo\+\_\+\+Renderer}} $\ast$renderer, \mbox{\hyperlink{quo_8h_a6c48124a8ce2225be23f46043eccd910}{quo\+\_\+\+Shader\+Handle}} shader, const char $\ast$uniform\+\_\+name, float x, float y, float z, float w)
 \begin{DoxyCompactList}\small\item\em Set a uniform vector. Note\+: Shader must be bound before calling this function. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{quo_8h_abdbae99ad6969e1e665c24982d07d804}{quo\+\_\+begin\+\_\+vertex\+\_\+buffer}} (\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$vb)
+void \mbox{\hyperlink{quo_8h_a99286fb10b26379c02d02c30ba26becc}{quo\+\_\+begin\+\_\+vertex\+\_\+buffer}} (\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$vb, \mbox{\hyperlink{quo_8h_afc7c3fcb47ad9e53f06d4a8b7bdcaacc}{quo\+\_\+\+Vertex\+Buffer\+Flags}} flags)
 \begin{DoxyCompactList}\small\item\em Start the initialisation of a vertex buffer. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{quo_8h_a843b49016d7b1775efd4eda8784cce0a}{quo\+\_\+finalise\+\_\+vertex\+\_\+buffer}} (\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$vb)
 \begin{DoxyCompactList}\small\item\em End the initialisation of a vertex buffer. \end{DoxyCompactList}\item 
@@ -665,6 +677,10 @@ void \mbox{\hyperlink{quo_8h_aae360d1746f9a552704e5099e731d1de}{quo\+\_\+push\+\
 \begin{DoxyCompactList}\small\item\em Push an array of vertices into the vertex buffer. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{quo_8h_a1fc3a05f2e978ec8e3a66b4a57009fc4}{quo\+\_\+push\+\_\+indices}} (\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$vb, unsigned int $\ast$indices, unsigned int index\+\_\+count)
 \begin{DoxyCompactList}\small\item\em Push an array of indices into the vertex buffer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a98ff723902bddbce7742e29b95b85c2a}{quo\+\_\+update\+\_\+vertices}} (\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$vb, float $\ast$vertices, unsigned int array\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Update the vertex data in a vertex buffer. Make sure quo\+\_\+push\+\_\+vertices has been called and the vertex buffer has enough space for the new data. For dynamic buffers, quo\+\_\+push\+\_\+vertices can be used with N\+U\+LL as an allocator. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_abbafca90c8b12aa168f674e16fcabfda}{quo\+\_\+update\+\_\+indices}} (\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$vb, unsigned int $\ast$indices, unsigned int index\+\_\+count)
+\begin{DoxyCompactList}\small\item\em Update the index data in a vertex buffer. Make sure quo\+\_\+push\+\_\+indices has been called and the vertex buffer has enough space for the new data. For dynamic buffers, quo\+\_\+push\+\_\+indices can be used with N\+U\+LL as an allocator. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{quo_8h_a02effba0537e8f5b7be350d7587cb6fb}{quo\+\_\+configure\+\_\+vertices}} (\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$vb, unsigned int index, unsigned int component\+\_\+count, unsigned int stride, unsigned int start\+\_\+offset)
 \begin{DoxyCompactList}\small\item\em Configure the kayout of the vertices in the buffer; You can set the location of positions, normals, texture coordinates, etc. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{quo_8h_a5f551a4e2cd493a116c84f8d21dff138}{quo\+\_\+draw\+\_\+vertex\+\_\+buffer}} (\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$vb)
@@ -711,41 +727,41 @@ int \mbox{\hyperlink{quo_8h_a8d1248d8d6146136461913a71bef5e7d}{quo\+\_\+get\+\_\
 \begin{DoxyCompactList}\small\item\em Get the mouse\textquotesingle{}s y coordinate relative to the window. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{quo_8h_a76826bad982a1f189949859cd3945948}\label{quo_8h_a76826bad982a1f189949859cd3945948}} 
 void \mbox{\hyperlink{quo_8h_a76826bad982a1f189949859cd3945948}{i\+\_\+quo\+\_\+set\+\_\+key\+\_\+held\+\_\+state}} (int key, quo\+\_\+bool status)
-\begin{DoxyCompactList}\small\item\em FOR INTERNAL USE ONLY. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em F\+OR I\+N\+T\+E\+R\+N\+AL U\+SE O\+N\+LY. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{quo_8h_a436b39f8b0972d5a4df148a207c8e1ba}\label{quo_8h_a436b39f8b0972d5a4df148a207c8e1ba}} 
 void \mbox{\hyperlink{quo_8h_a436b39f8b0972d5a4df148a207c8e1ba}{i\+\_\+quo\+\_\+set\+\_\+key\+\_\+down\+\_\+state}} (int key, quo\+\_\+bool status)
-\begin{DoxyCompactList}\small\item\em FOR INTERNAL USE ONLY. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em F\+OR I\+N\+T\+E\+R\+N\+AL U\+SE O\+N\+LY. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{quo_8h_a15937d9064995e098b4ea59ec3746fa6}\label{quo_8h_a15937d9064995e098b4ea59ec3746fa6}} 
 void \mbox{\hyperlink{quo_8h_a15937d9064995e098b4ea59ec3746fa6}{i\+\_\+quo\+\_\+set\+\_\+key\+\_\+up\+\_\+state}} (int key, quo\+\_\+bool status)
-\begin{DoxyCompactList}\small\item\em FOR INTERNAL USE ONLY. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em F\+OR I\+N\+T\+E\+R\+N\+AL U\+SE O\+N\+LY. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{quo_8h_ab64785ebc736098dedbfc8cf1be0aa0c}\label{quo_8h_ab64785ebc736098dedbfc8cf1be0aa0c}} 
 void \mbox{\hyperlink{quo_8h_ab64785ebc736098dedbfc8cf1be0aa0c}{i\+\_\+quo\+\_\+set\+\_\+mouse\+\_\+button\+\_\+held\+\_\+state}} (int button, quo\+\_\+bool status)
-\begin{DoxyCompactList}\small\item\em FOR INTERNAL USE ONLY. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em F\+OR I\+N\+T\+E\+R\+N\+AL U\+SE O\+N\+LY. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{quo_8h_a617f61f9f7a6ce64e866e445af14ad6f}\label{quo_8h_a617f61f9f7a6ce64e866e445af14ad6f}} 
 void \mbox{\hyperlink{quo_8h_a617f61f9f7a6ce64e866e445af14ad6f}{i\+\_\+quo\+\_\+set\+\_\+mouse\+\_\+button\+\_\+down\+\_\+state}} (int button, quo\+\_\+bool status)
-\begin{DoxyCompactList}\small\item\em FOR INTERNAL USE ONLY. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em F\+OR I\+N\+T\+E\+R\+N\+AL U\+SE O\+N\+LY. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{quo_8h_ad0a6f1deb9514c9dac292e0eee151c13}\label{quo_8h_ad0a6f1deb9514c9dac292e0eee151c13}} 
 void \mbox{\hyperlink{quo_8h_ad0a6f1deb9514c9dac292e0eee151c13}{i\+\_\+quo\+\_\+set\+\_\+mouse\+\_\+button\+\_\+up\+\_\+state}} (int button, quo\+\_\+bool status)
-\begin{DoxyCompactList}\small\item\em FOR INTERNAL USE ONLY. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em F\+OR I\+N\+T\+E\+R\+N\+AL U\+SE O\+N\+LY. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{quo_8h_a805a7d0b877b9ddd9f5c16d62e295549}\label{quo_8h_a805a7d0b877b9ddd9f5c16d62e295549}} 
 void \mbox{\hyperlink{quo_8h_a805a7d0b877b9ddd9f5c16d62e295549}{i\+\_\+quo\+\_\+update\+\_\+mouse\+\_\+pos}} (int x, int y)
-\begin{DoxyCompactList}\small\item\em FOR INTERNAL USE ONLY. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em F\+OR I\+N\+T\+E\+R\+N\+AL U\+SE O\+N\+LY. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{quo_8h_a9b4454f93a8f31bfb7d887a567054ad3}\label{quo_8h_a9b4454f93a8f31bfb7d887a567054ad3}} 
 void \mbox{\hyperlink{quo_8h_a9b4454f93a8f31bfb7d887a567054ad3}{i\+\_\+quo\+\_\+call\+\_\+char\+\_\+callback}} (char $\ast$characters)
-\begin{DoxyCompactList}\small\item\em FOR INTERNAL USE ONLY. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{quo_8h_a6e78bb4006a62fda91dd477a2668ec0d}{quo\+\_\+byte\+\_\+buffer\+\_\+dump}} (\mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} $\ast$buffer, FILE $\ast$file)
+\begin{DoxyCompactList}\small\item\em F\+OR I\+N\+T\+E\+R\+N\+AL U\+SE O\+N\+LY. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{quo_8h_a6e78bb4006a62fda91dd477a2668ec0d}{quo\+\_\+byte\+\_\+buffer\+\_\+dump}} (\mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} $\ast$buffer, F\+I\+LE $\ast$file)
 \begin{DoxyCompactList}\small\item\em Dump the contents of a byte buffer to a file. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{quo_8h_a56024746c8c08be18b0ec3bf7deda0ad}{quo\+\_\+byte\+\_\+buffer\+\_\+read\+\_\+file}} (\mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} $\ast$buffer, FILE $\ast$file)
+void \mbox{\hyperlink{quo_8h_a56024746c8c08be18b0ec3bf7deda0ad}{quo\+\_\+byte\+\_\+buffer\+\_\+read\+\_\+file}} (\mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} $\ast$buffer, F\+I\+LE $\ast$file)
 \begin{DoxyCompactList}\small\item\em Read a dumped buffer back from a file. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{quo_8h_a28ac3df224cf30209f359391ad00cd7d}{quo\+\_\+init\+\_\+byte\+\_\+buffer}} (\mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} $\ast$buffer)
-\begin{DoxyCompactList}\small\item\em Initialise a new byte buffer, with a capacity of QUO\+\_\+\+BYTE\+\_\+\+BUFFER\+\_\+\+DEFAULT\+\_\+\+CAPACITY. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Initialise a new byte buffer, with a capacity of Q\+U\+O\+\_\+\+B\+Y\+T\+E\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+C\+A\+P\+A\+C\+I\+TY. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{quo_8h_a4926047538d8e6c5c191d32c3230abc6}{quo\+\_\+free\+\_\+byte\+\_\+buffer}} (\mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} $\ast$buffer)
 \begin{DoxyCompactList}\small\item\em Free a byte buffer\textquotesingle{}s memory. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{quo_8h_ae684eeb1e92384573855dbb668227aba}{quo\+\_\+resize\+\_\+byte\+\_\+buffer}} (\mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} $\ast$buffer, unsigned int capacity)
 \begin{DoxyCompactList}\small\item\em Resize a byte buffer to contain more elements. This happens automatically when writing. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{quo_8h_a548d0bcb6eb7f9ebcf3d3be3ef9ef96e}\label{quo_8h_a548d0bcb6eb7f9ebcf3d3be3ef9ef96e}} 
 void \mbox{\hyperlink{quo_8h_a548d0bcb6eb7f9ebcf3d3be3ef9ef96e}{i\+\_\+quo\+\_\+byte\+\_\+buffer\+\_\+write\+\_\+impl}} (\mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} $\ast$buffer, void $\ast$data, unsigned int size)
-\begin{DoxyCompactList}\small\item\em FOR INTERNAL USE ONLY. Use the quo\+\_\+byte\+\_\+buffer\+\_\+write macro instead. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em F\+OR I\+N\+T\+E\+R\+N\+AL U\+SE O\+N\+LY. Use the quo\+\_\+byte\+\_\+buffer\+\_\+write macro instead. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -814,6 +830,41 @@ Write some data to a byte buffer at the current position.
 \end{DoxyParams}
 
 
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{quo_8h_afc7c3fcb47ad9e53f06d4a8b7bdcaacc}\label{quo_8h_afc7c3fcb47ad9e53f06d4a8b7bdcaacc}} 
+\index{quo.h@{quo.h}!quo\_VertexBufferFlags@{quo\_VertexBufferFlags}}
+\index{quo\_VertexBufferFlags@{quo\_VertexBufferFlags}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_VertexBufferFlags}{quo\_VertexBufferFlags}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{quo_8h_afc7c3fcb47ad9e53f06d4a8b7bdcaacc}{quo\+\_\+\+Vertex\+Buffer\+Flags}}}
+
+
+
+Flags for the vertex buffer. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{QUO\_VERTEXBUFFERFLAGS\_STATIC\_DRAW@{QUO\_VERTEXBUFFERFLAGS\_STATIC\_DRAW}!quo.h@{quo.h}}\index{quo.h@{quo.h}!QUO\_VERTEXBUFFERFLAGS\_STATIC\_DRAW@{QUO\_VERTEXBUFFERFLAGS\_STATIC\_DRAW}}}\mbox{\Hypertarget{quo_8h_afc7c3fcb47ad9e53f06d4a8b7bdcaacca858a8b6dd820742b91212720c3f7edb9}\label{quo_8h_afc7c3fcb47ad9e53f06d4a8b7bdcaacca858a8b6dd820742b91212720c3f7edb9}} 
+Q\+U\+O\+\_\+\+V\+E\+R\+T\+E\+X\+B\+U\+F\+F\+E\+R\+F\+L\+A\+G\+S\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+D\+R\+AW&Use if the vertices/indices in this buffer will never change \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{QUO\_VERTEXBUFFERFLAGS\_DYNAMIC\_DRAW@{QUO\_VERTEXBUFFERFLAGS\_DYNAMIC\_DRAW}!quo.h@{quo.h}}\index{quo.h@{quo.h}!QUO\_VERTEXBUFFERFLAGS\_DYNAMIC\_DRAW@{QUO\_VERTEXBUFFERFLAGS\_DYNAMIC\_DRAW}}}\mbox{\Hypertarget{quo_8h_afc7c3fcb47ad9e53f06d4a8b7bdcaacca58bafd793a016619fd1b7bae97a8925a}\label{quo_8h_afc7c3fcb47ad9e53f06d4a8b7bdcaacca58bafd793a016619fd1b7bae97a8925a}} 
+Q\+U\+O\+\_\+\+V\+E\+R\+T\+E\+X\+B\+U\+F\+F\+E\+R\+F\+L\+A\+G\+S\+\_\+\+D\+Y\+N\+A\+M\+I\+C\+\_\+\+D\+R\+AW&Use if you plan to call quo\+\_\+update\+\_\+vertices or quo\+\_\+update\+\_\+indices on this buffer \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{QUO\_VERTEXBUFFERFLAGS\_DRAW\_LINES@{QUO\_VERTEXBUFFERFLAGS\_DRAW\_LINES}!quo.h@{quo.h}}\index{quo.h@{quo.h}!QUO\_VERTEXBUFFERFLAGS\_DRAW\_LINES@{QUO\_VERTEXBUFFERFLAGS\_DRAW\_LINES}}}\mbox{\Hypertarget{quo_8h_afc7c3fcb47ad9e53f06d4a8b7bdcaacca9b89701294904570c365e011bdc51b09}\label{quo_8h_afc7c3fcb47ad9e53f06d4a8b7bdcaacca9b89701294904570c365e011bdc51b09}} 
+Q\+U\+O\+\_\+\+V\+E\+R\+T\+E\+X\+B\+U\+F\+F\+E\+R\+F\+L\+A\+G\+S\+\_\+\+D\+R\+A\+W\+\_\+\+L\+I\+N\+ES&Draw a wireframe \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{QUO\_VERTEXBUFFERFLAGS\_DRAW\_LINE\_STRIP@{QUO\_VERTEXBUFFERFLAGS\_DRAW\_LINE\_STRIP}!quo.h@{quo.h}}\index{quo.h@{quo.h}!QUO\_VERTEXBUFFERFLAGS\_DRAW\_LINE\_STRIP@{QUO\_VERTEXBUFFERFLAGS\_DRAW\_LINE\_STRIP}}}\mbox{\Hypertarget{quo_8h_afc7c3fcb47ad9e53f06d4a8b7bdcaacca1ae0c1e6cfb5abbb7748eb7c368a58d2}\label{quo_8h_afc7c3fcb47ad9e53f06d4a8b7bdcaacca1ae0c1e6cfb5abbb7748eb7c368a58d2}} 
+Q\+U\+O\+\_\+\+V\+E\+R\+T\+E\+X\+B\+U\+F\+F\+E\+R\+F\+L\+A\+G\+S\+\_\+\+D\+R\+A\+W\+\_\+\+L\+I\+N\+E\+\_\+\+S\+T\+R\+IP&Draw a more complete wireframe \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{QUO\_VERTEXBUFFERFLAGS\_DRAW\_TRIANGLES@{QUO\_VERTEXBUFFERFLAGS\_DRAW\_TRIANGLES}!quo.h@{quo.h}}\index{quo.h@{quo.h}!QUO\_VERTEXBUFFERFLAGS\_DRAW\_TRIANGLES@{QUO\_VERTEXBUFFERFLAGS\_DRAW\_TRIANGLES}}}\mbox{\Hypertarget{quo_8h_afc7c3fcb47ad9e53f06d4a8b7bdcaaccacd999f216ac7945746e0127d77569777}\label{quo_8h_afc7c3fcb47ad9e53f06d4a8b7bdcaaccacd999f216ac7945746e0127d77569777}} 
+Q\+U\+O\+\_\+\+V\+E\+R\+T\+E\+X\+B\+U\+F\+F\+E\+R\+F\+L\+A\+G\+S\+\_\+\+D\+R\+A\+W\+\_\+\+T\+R\+I\+A\+N\+G\+L\+ES&Draw full triangles \\
+\hline
+
+\end{DoxyEnumFields}
+
+
 \doxysubsection{Function Documentation}
 \mbox{\Hypertarget{quo_8h_aa385f9ba3950f3675036edea653e7552}\label{quo_8h_aa385f9ba3950f3675036edea653e7552}} 
 \index{quo.h@{quo.h}!quo\_add\_vec2@{quo\_add\_vec2}}
@@ -855,11 +906,11 @@ Add two quo\+\_\+vec3s together.
 \begin{DoxyReturn}{Returns}
 Result of addition 
 \end{DoxyReturn}
-\mbox{\Hypertarget{quo_8h_abdbae99ad6969e1e665c24982d07d804}\label{quo_8h_abdbae99ad6969e1e665c24982d07d804}} 
+\mbox{\Hypertarget{quo_8h_a99286fb10b26379c02d02c30ba26becc}\label{quo_8h_a99286fb10b26379c02d02c30ba26becc}} 
 \index{quo.h@{quo.h}!quo\_begin\_vertex\_buffer@{quo\_begin\_vertex\_buffer}}
 \index{quo\_begin\_vertex\_buffer@{quo\_begin\_vertex\_buffer}!quo.h@{quo.h}}
 \doxysubsubsection{\texorpdfstring{quo\_begin\_vertex\_buffer()}{quo\_begin\_vertex\_buffer()}}
-{\footnotesize\ttfamily void quo\+\_\+begin\+\_\+vertex\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$}]{vb }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void quo\+\_\+begin\+\_\+vertex\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$}]{vb,  }\item[{\mbox{\hyperlink{quo_8h_afc7c3fcb47ad9e53f06d4a8b7bdcaacc}{quo\+\_\+\+Vertex\+Buffer\+Flags}}}]{flags }\end{DoxyParamCaption})}
 
 
 
@@ -936,7 +987,7 @@ Bind a texture to a texture unit.
 \index{quo.h@{quo.h}!quo\_byte\_buffer\_dump@{quo\_byte\_buffer\_dump}}
 \index{quo\_byte\_buffer\_dump@{quo\_byte\_buffer\_dump}!quo.h@{quo.h}}
 \doxysubsubsection{\texorpdfstring{quo\_byte\_buffer\_dump()}{quo\_byte\_buffer\_dump()}}
-{\footnotesize\ttfamily void quo\+\_\+byte\+\_\+buffer\+\_\+dump (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} $\ast$}]{buffer,  }\item[{FILE $\ast$}]{file }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void quo\+\_\+byte\+\_\+buffer\+\_\+dump (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} $\ast$}]{buffer,  }\item[{F\+I\+LE $\ast$}]{file }\end{DoxyParamCaption})}
 
 
 
@@ -953,7 +1004,7 @@ Dump the contents of a byte buffer to a file.
 \index{quo.h@{quo.h}!quo\_byte\_buffer\_read\_file@{quo\_byte\_buffer\_read\_file}}
 \index{quo\_byte\_buffer\_read\_file@{quo\_byte\_buffer\_read\_file}!quo.h@{quo.h}}
 \doxysubsubsection{\texorpdfstring{quo\_byte\_buffer\_read\_file()}{quo\_byte\_buffer\_read\_file()}}
-{\footnotesize\ttfamily void quo\+\_\+byte\+\_\+buffer\+\_\+read\+\_\+file (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} $\ast$}]{buffer,  }\item[{FILE $\ast$}]{file }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void quo\+\_\+byte\+\_\+buffer\+\_\+read\+\_\+file (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__ByteBuffer}{quo\+\_\+\+Byte\+Buffer}} $\ast$}]{buffer,  }\item[{F\+I\+LE $\ast$}]{file }\end{DoxyParamCaption})}
 
 
 
@@ -1372,7 +1423,7 @@ A new identity matrix
 
 
 
-Initialise a new byte buffer, with a capacity of QUO\+\_\+\+BYTE\+\_\+\+BUFFER\+\_\+\+DEFAULT\+\_\+\+CAPACITY. 
+Initialise a new byte buffer, with a capacity of Q\+U\+O\+\_\+\+B\+Y\+T\+E\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+C\+A\+P\+A\+C\+I\+TY. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -1523,7 +1574,7 @@ Load a bitmap from a file. The file must not have a colour space written to it\t
 \hline
 {\em image} & Raw image data \\
 \hline
-{\em components} & Component count, 3 for RGB, 4 for RGBA \\
+{\em components} & Component count, 3 for R\+GB, 4 for R\+G\+BA \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -2070,6 +2121,25 @@ Translate a matrix.
 \begin{DoxyReturn}{Returns}
 The translated matrix 
 \end{DoxyReturn}
+\mbox{\Hypertarget{quo_8h_abbafca90c8b12aa168f674e16fcabfda}\label{quo_8h_abbafca90c8b12aa168f674e16fcabfda}} 
+\index{quo.h@{quo.h}!quo\_update\_indices@{quo\_update\_indices}}
+\index{quo\_update\_indices@{quo\_update\_indices}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_update\_indices()}{quo\_update\_indices()}}
+{\footnotesize\ttfamily void quo\+\_\+update\+\_\+indices (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$}]{vb,  }\item[{unsigned int $\ast$}]{indices,  }\item[{unsigned int}]{index\+\_\+count }\end{DoxyParamCaption})}
+
+
+
+Update the index data in a vertex buffer. Make sure quo\+\_\+push\+\_\+indices has been called and the vertex buffer has enough space for the new data. For dynamic buffers, quo\+\_\+push\+\_\+indices can be used with N\+U\+LL as an allocator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vb} & Pointer to the vertex buffer \\
+\hline
+{\em indices} & Array of indices \\
+\hline
+{\em index\+\_\+count} & Number of indices \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{quo_8h_a1ea781ff70f0b0d450b159e571dfcb89}\label{quo_8h_a1ea781ff70f0b0d450b159e571dfcb89}} 
 \index{quo.h@{quo.h}!quo\_update\_renderer@{quo\_update\_renderer}}
 \index{quo\_update\_renderer@{quo\_update\_renderer}!quo.h@{quo.h}}
@@ -2083,6 +2153,25 @@ Update a renderer. Should be called before quo\+\_\+update\+\_\+window.
 
 \begin{DoxyParams}{Parameters}
 {\em renderer} & Pointer to renderer to be updated \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{quo_8h_a98ff723902bddbce7742e29b95b85c2a}\label{quo_8h_a98ff723902bddbce7742e29b95b85c2a}} 
+\index{quo.h@{quo.h}!quo\_update\_vertices@{quo\_update\_vertices}}
+\index{quo\_update\_vertices@{quo\_update\_vertices}!quo.h@{quo.h}}
+\doxysubsubsection{\texorpdfstring{quo\_update\_vertices()}{quo\_update\_vertices()}}
+{\footnotesize\ttfamily void quo\+\_\+update\+\_\+vertices (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structquo__VertexBuffer}{quo\+\_\+\+Vertex\+Buffer}} $\ast$}]{vb,  }\item[{float $\ast$}]{vertices,  }\item[{unsigned int}]{array\+\_\+size }\end{DoxyParamCaption})}
+
+
+
+Update the vertex data in a vertex buffer. Make sure quo\+\_\+push\+\_\+vertices has been called and the vertex buffer has enough space for the new data. For dynamic buffers, quo\+\_\+push\+\_\+vertices can be used with N\+U\+LL as an allocator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vb} & Pointer to the vertex buffer \\
+\hline
+{\em vertices} & Array of vertices \\
+\hline
+{\em array\+\_\+size} & Number of elements in the array of vertices \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{quo_8h_a200f5e3fa4c5e7dc26cc9fe3a601ee3e}\label{quo_8h_a200f5e3fa4c5e7dc26cc9fe3a601ee3e}} 
