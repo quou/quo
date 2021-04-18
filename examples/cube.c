@@ -58,8 +58,8 @@ int main() {
 		 1.0f,  1.0f, -1.0f, 	0.625, 0.500,
 		-1.0f,  1.0f,  1.0f, 	0.875, 0.750,
 		 1.0f,  1.0f,  1.0f, 	0.625, 0.750,
-		1.0f,  -1.0f,  1.0f, 	0.375, 0.750,
-		1.0f,   1.0f,  1.0f, 	0.625, 0.750,
+		 1.0f, -1.0f,  1.0f, 	0.375, 0.750,
+		 1.0f,  1.0f,  1.0f, 	0.625, 0.750,
 		-1.0f,  1.0f,  1.0f, 	0.625, 1.0f,
 		 1.0f, -1.0f,  1.0f, 	0.375, 0.750,
 		-1.0f,  1.0f,  1.0f, 	0.625, 1.0f,
@@ -102,7 +102,12 @@ int main() {
 
 	/* Create the vertex buffer */
 	quo_VertexBuffer cube_vb;
-	quo_begin_vertex_buffer(&cube_vb);
+	quo_begin_vertex_buffer(&cube_vb,
+		QUO_VERTEXBUFFERFLAGS_DRAW_TRIANGLES | QUO_VERTEXBUFFERFLAGS_STATIC_DRAW);
+
+	/* NOTE: You can use QUO_VERTEXBUFFERFLAGS_DRAW_LINES to draw a wireframe model.
+	 * Use QUO_VERTEXBUFFERFLAGS_DYNAMIC_DRAW instead of QUO_VERTEXBUFFERFLAGS_STATIC_DRAW
+	 * if you plan to call quo_update_vertices *or* quo_update_indices */
 
 	/* Add the vertices and indices */
 	quo_push_vertices(&cube_vb, vertices, sizeof(vertices));

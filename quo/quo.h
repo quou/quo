@@ -73,7 +73,7 @@ int main() {
 }
 #endif
 
-#define QUO_VERSION "1.2.4"
+#define QUO_VERSION "1.3.1"
 
 /**
  * @file quo.h
@@ -385,6 +385,7 @@ typedef void CALLSTYLE quo_gl_uniform_4_f(int, float, float, float, float);
 typedef void CALLSTYLE quo_gl_uniform_matrix_4_f_v(int, int, quo_bool, float*);
 typedef void CALLSTYLE quo_gl_use_program(unsigned int);
 typedef void CALLSTYLE quo_gl_vertex_attrib_pointer(unsigned int, int, unsigned int, quo_bool, int, const void*);
+typedef void CALLSTYLE quo_gl_buffer_sub_data(unsigned int, int offset, unsigned int size, void* data);
 
 /* Load all OpenGL functions */
 void quo_load_gl();
@@ -963,6 +964,17 @@ void quo_shader_set_vec3(quo_Renderer* renderer, quo_ShaderHandle shader, const 
 void quo_shader_set_vec4(quo_Renderer* renderer, quo_ShaderHandle shader, const char* uniform_name, float x, float y, float z, float w);
 
 /**
+ * @brief Flags for the vertex buffer
+ */
+typedef enum quo_VertexBufferFlags {
+	QUO_VERTEXBUFFERFLAGS_STATIC_DRAW = 1 << 0, /**< Use if the vertices/indices in this buffer will never change */
+	QUO_VERTEXBUFFERFLAGS_DYNAMIC_DRAW = 1 << 1, /**< Use if you plan to call quo_update_vertices or quo_update_indices on this buffer */
+	QUO_VERTEXBUFFERFLAGS_DRAW_LINES = 1 << 2, /**< Draw a wireframe */
+	QUO_VERTEXBUFFERFLAGS_DRAW_LINE_STRIP = 1 << 3, /**< Draw a more complete wireframe */
+	QUO_VERTEXBUFFERFLAGS_DRAW_TRIANGLES = 1 << 4, /**< Draw full triangles */
+} quo_VertexBufferFlags;
+
+/**
  * @brief A buffer for vertices
  */
 typedef struct quo_VertexBuffer {
@@ -970,13 +982,15 @@ typedef struct quo_VertexBuffer {
 	unsigned int vb_id; /**< OpenGL vertex buffer ID */
 	unsigned int ib_id; /**< OpenGL index buffer ID */
 	unsigned int index_count; /**< Stores the number of indices */
+
+	quo_VertexBufferFlags flags;
 } quo_VertexBuffer;
 
 /**
  * @brief Start the initialisation of a vertex buffer
  * @param vb Pointer to the vertex buffer
  */
-void quo_begin_vertex_buffer(quo_VertexBuffer* vb);
+void quo_begin_vertex_buffer(quo_VertexBuffer* vb, quo_VertexBufferFlags flags);
 
 /**
  * @brief End the initialisation of a vertex buffer
@@ -999,6 +1013,26 @@ void quo_push_vertices(quo_VertexBuffer* vb, float* vertices, unsigned int array
  * @param index_count Number of indices
  */
 void quo_push_indices(quo_VertexBuffer* vb, unsigned int* indices, unsigned int index_count);
+
+/**
+ * @brief Update the vertex data in a vertex buffer. Make sure quo_push_vertices
+ * has been called and the vertex buffer has enough space for the new data.
+ * For dynamic buffers, quo_push_vertices can be used with NULL as an allocator.
+ * @param vb Pointer to the vertex buffer
+ * @param vertices Array of vertices
+ * @param array_size Number of elements in the array of vertices
+ */
+void quo_update_vertices(quo_VertexBuffer* vb, float* vertices, unsigned int array_size);
+
+/**
+ * @brief Update the index data in a vertex buffer. Make sure quo_push_indices
+ * has been called and the vertex buffer has enough space for the new data.
+ * For dynamic buffers, quo_push_indices can be used with NULL as an allocator.
+ * @param vb Pointer to the vertex buffer
+ * @param indices Array of indices
+ * @param index_count Number of indices
+ */
+void quo_update_indices(quo_VertexBuffer* vb, unsigned int* indices, unsigned int index_count);
 
 /**
  * @brief Configure the kayout of the vertices in the buffer; You can set the location of positions, normals, texture coordinates, etc.
@@ -1363,6 +1397,7 @@ quo_gl_uniform_4_f* glUniform4f = NULL;
 quo_gl_uniform_matrix_4_f_v* glUniformMatrix4fv = NULL;
 quo_gl_use_program* glUseProgram = NULL;
 quo_gl_vertex_attrib_pointer* glVertexAttribPointer = NULL;
+quo_gl_buffer_sub_data* glBufferSubData = NULL;
 
 #ifdef QUO_PLATFORM_WINDOWS
 /* X11 already defines this, on Windows it has to be done manually */
@@ -1409,6 +1444,7 @@ void quo_load_gl() {
 	glUniformMatrix4fv = QUO_LOAD_GL_FUNC(quo_gl_uniform_matrix_4_f_v, "glUniformMatrix4fv");
 	glUseProgram = QUO_LOAD_GL_FUNC(quo_gl_use_program, "glUseProgram");
 	glVertexAttribPointer = QUO_LOAD_GL_FUNC(quo_gl_vertex_attrib_pointer, "glVertexAttribPointer");
+	glBufferSubData = QUO_LOAD_GL_FUNC(quo_gl_buffer_sub_data, "glBufferSubData");
 
 
 #ifdef QUO_PLATFORM_WINDOWS
@@ -2901,8 +2937,10 @@ void quo_shader_set_vec4(quo_Renderer* renderer, quo_ShaderHandle shader, const 
 	glUniform4f(location, x, y, z, w);
 }
 
-void quo_begin_vertex_buffer(quo_VertexBuffer* vb) {
+void quo_begin_vertex_buffer(quo_VertexBuffer* vb, quo_VertexBufferFlags flags) {
 	assert(vb != NULL);
+
+	vb->flags = flags;
 
 	/* Create the vertex array and vertex & element buffers */
 	glGenVertexArrays(1, &vb->va_id);
@@ -2919,25 +2957,56 @@ void quo_finalise_vertex_buffer(quo_VertexBuffer* vb) {
 void quo_push_vertices(quo_VertexBuffer* vb, float* vertices, unsigned int array_size) {
 	assert(vb != NULL);
 
+	int mode = GL_STATIC_DRAW;
+	if (vb->flags & QUO_VERTEXBUFFERFLAGS_DYNAMIC_DRAW) {
+		mode = GL_DYNAMIC_DRAW;
+	}
+
 	/* Make sure the vertex array and buffer are bound */
 	glBindVertexArray(vb->va_id);
 	glBindBuffer(GL_ARRAY_BUFFER, vb->vb_id);
 
 	/* Push the data into the buffer */
-	glBufferData(GL_ARRAY_BUFFER, array_size, vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, array_size, vertices, mode);
 }
 
 void quo_push_indices(quo_VertexBuffer* vb, unsigned int* indices, unsigned int index_count) {
 	assert(vb != NULL);
+
+	int mode = GL_STATIC_DRAW;
+	if (vb->flags & QUO_VERTEXBUFFERFLAGS_DYNAMIC_DRAW) {
+		mode = GL_DYNAMIC_DRAW;
+	}
 
 	/* Make sure the vertex array and buffer are bound */
 	glBindVertexArray(vb->va_id);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vb->ib_id);
 
 	/* Push the data into the buffer */
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_count * sizeof(indices[0]), indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_count * sizeof(indices[0]), indices, mode);
 
 	/* Set the index count used for drawing */
+	vb->index_count = index_count;
+}
+
+void quo_update_vertices(quo_VertexBuffer* vb, float* vertices, unsigned int array_size) {
+	assert(vb != NULL);
+
+	glBindVertexArray(vb->va_id);
+	glBindBuffer(GL_ARRAY_BUFFER, vb->vb_id);
+
+	glBufferSubData(GL_ARRAY_BUFFER, 0, array_size, vertices);
+}
+
+void quo_update_indices(quo_VertexBuffer* vb, unsigned int* indices, unsigned int index_count) {
+	assert(vb != NULL);
+
+	glBindVertexArray(vb->va_id);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vb->ib_id);
+
+	glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0,
+	index_count * sizeof(indices[0]), indices);
+
 	vb->index_count = index_count;
 }
 
@@ -2955,9 +3024,16 @@ void quo_configure_vertices(quo_VertexBuffer* vb, unsigned int index, unsigned i
 void quo_draw_vertex_buffer(quo_VertexBuffer* vb) {
 	assert(vb != NULL);
 
+	int draw_type = GL_TRIANGLES;
+	if (vb->flags & QUO_VERTEXBUFFERFLAGS_DRAW_LINES) {
+		draw_type = GL_LINES;
+	} else if (vb->flags & QUO_VERTEXBUFFERFLAGS_DRAW_LINE_STRIP) {
+		draw_type = GL_LINE_STRIP;
+	}
+
 	/* Draw the vertex array */
 	glBindVertexArray(vb->va_id);
-	glDrawElements(GL_TRIANGLES, vb->index_count, GL_UNSIGNED_INT, 0);
+	glDrawElements(draw_type, vb->index_count, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 }
 

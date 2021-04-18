@@ -89,7 +89,8 @@ int main() {
 	};
 
 	quo_VertexBuffer cube_vb;
-	quo_begin_vertex_buffer(&cube_vb);
+	quo_begin_vertex_buffer(&cube_vb,
+		QUO_VERTEXBUFFERFLAGS_DRAW_TRIANGLES | QUO_VERTEXBUFFERFLAGS_STATIC_DRAW);
 	quo_push_vertices(&cube_vb, vertices, sizeof(vertices));
 	quo_push_indices(&cube_vb, indices, sizeof(indices)/sizeof(indices[0]));
 	quo_configure_vertices(&cube_vb, 0, 3, 5, 0);
@@ -136,7 +137,7 @@ int main() {
 		quo_draw_texture(&renderer, &render_target.output, (quo_Rect){0, 0, 100, 100}, (quo_Rect){100, 240, 100, 100}, 0xffffff);
 		quo_draw_texture(&renderer, &render_target.output, (quo_Rect){0, 0, 100, 100}, (quo_Rect){300, 100, 100, 100}, 0xffffff);
 		quo_draw_texture(&renderer, &render_target.output, (quo_Rect){0, 0, 100, 100}, (quo_Rect){300, 300, 200, 200}, 0xffffff);
-		
+
 		quo_update_renderer(&renderer);
 		quo_update_window(&window);
 	}
