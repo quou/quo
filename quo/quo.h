@@ -73,7 +73,7 @@ int main() {
 }
 #endif
 
-#define QUO_VERSION "1.3.1"
+#define QUO_VERSION "1.3.2"
 
 /**
  * @file quo.h
@@ -356,6 +356,7 @@ typedef void CALLSTYLE quo_gl_bind_frame_buffer(unsigned int, unsigned int);
 typedef void CALLSTYLE quo_gl_bind_render_buffer(unsigned int, unsigned int);
 typedef void CALLSTYLE quo_gl_bind_vertex_array(unsigned int);
 typedef void CALLSTYLE quo_gl_buffer_data(unsigned int, int, const void*, unsigned int);
+typedef void CALLSTYLE quo_gl_buffer_sub_data(unsigned int, int offset, unsigned int size, void* data);
 typedef void CALLSTYLE quo_gl_compile_shader(unsigned int);
 typedef void CALLSTYLE quo_gl_delete_buffers(unsigned int, unsigned int*);
 typedef void CALLSTYLE quo_gl_delete_frame_buffers(unsigned int, unsigned int*);
@@ -385,7 +386,6 @@ typedef void CALLSTYLE quo_gl_uniform_4_f(int, float, float, float, float);
 typedef void CALLSTYLE quo_gl_uniform_matrix_4_f_v(int, int, quo_bool, float*);
 typedef void CALLSTYLE quo_gl_use_program(unsigned int);
 typedef void CALLSTYLE quo_gl_vertex_attrib_pointer(unsigned int, int, unsigned int, quo_bool, int, const void*);
-typedef void CALLSTYLE quo_gl_buffer_sub_data(unsigned int, int offset, unsigned int size, void* data);
 
 /* Load all OpenGL functions */
 void quo_load_gl();
@@ -1365,6 +1365,7 @@ quo_gl_bind_frame_buffer* glBindFramebuffer = NULL;
 quo_gl_bind_render_buffer* glBindRenderbuffer = NULL;
 quo_gl_bind_vertex_array* glBindVertexArray = NULL;
 quo_gl_buffer_data* glBufferData = NULL;
+quo_gl_buffer_sub_data* glBufferSubData = NULL;
 quo_gl_compile_shader* glCompileShader = NULL;
 quo_gl_create_program* glCreateProgram = NULL;
 quo_gl_create_shader* glCreateShader = NULL;
@@ -1397,7 +1398,6 @@ quo_gl_uniform_4_f* glUniform4f = NULL;
 quo_gl_uniform_matrix_4_f_v* glUniformMatrix4fv = NULL;
 quo_gl_use_program* glUseProgram = NULL;
 quo_gl_vertex_attrib_pointer* glVertexAttribPointer = NULL;
-quo_gl_buffer_sub_data* glBufferSubData = NULL;
 
 #ifdef QUO_PLATFORM_WINDOWS
 /* X11 already defines this, on Windows it has to be done manually */
@@ -1412,6 +1412,7 @@ void quo_load_gl() {
 	glBindRenderbuffer = QUO_LOAD_GL_FUNC(quo_gl_bind_render_buffer, "glBindRenderbuffer");
 	glBindVertexArray = QUO_LOAD_GL_FUNC(quo_gl_bind_vertex_array, "glBindVertexArray");
 	glBufferData = QUO_LOAD_GL_FUNC(quo_gl_buffer_data, "glBufferData");
+	glBufferSubData = QUO_LOAD_GL_FUNC(quo_gl_buffer_sub_data, "glBufferSubData");
 	glCompileShader = QUO_LOAD_GL_FUNC(quo_gl_compile_shader, "glCompileShader");
 	glCreateProgram = QUO_LOAD_GL_FUNC(quo_gl_create_program, "glCreateProgram");
 	glCreateShader = QUO_LOAD_GL_FUNC(quo_gl_create_shader, "glCreateShader");
@@ -1444,7 +1445,6 @@ void quo_load_gl() {
 	glUniformMatrix4fv = QUO_LOAD_GL_FUNC(quo_gl_uniform_matrix_4_f_v, "glUniformMatrix4fv");
 	glUseProgram = QUO_LOAD_GL_FUNC(quo_gl_use_program, "glUseProgram");
 	glVertexAttribPointer = QUO_LOAD_GL_FUNC(quo_gl_vertex_attrib_pointer, "glVertexAttribPointer");
-	glBufferSubData = QUO_LOAD_GL_FUNC(quo_gl_buffer_sub_data, "glBufferSubData");
 
 
 #ifdef QUO_PLATFORM_WINDOWS
