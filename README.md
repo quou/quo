@@ -4,6 +4,9 @@
 
 This library is standalone, meaning it doesn't depend on anything that doesn't come with the operating system. It is designed to be easy to use and beginner friendly, and can be used as a base for simple 2D game projects
 
+Inspired by MrFrenik's [Gunslinger](https://github.com/MrFrenik/gunslinger/) library, but smaller,
+simpler and easier to integrate into projects, though not nearly as powerful.
+
 ## Documentation
 You can view the Doxygen generated documentation here: https://georgelamb.net/quo/html/quo_8h.html
 
