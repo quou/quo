@@ -19,7 +19,6 @@ You can view the Doxygen generated documentation here: https://georgelamb.net/qu
 ## Planned Features
  - Wayland, Emscripten and Android support
  - Audio API
- - MacOS support (This is going to take a while, as it will mean adding support for Metal as well as OpenGL, since MacOS's OpenGL support is pretty shaky).
 
 ## Compiling
 You must `#define QUO_IMPL` in **one** c/cpp file before including the header, to provide an implementation.
