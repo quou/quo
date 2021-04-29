@@ -255,7 +255,6 @@ typedef char quo_bool;
 
 #if defined(QUO_PLATFORM_WINDOWS)
 #include <windows.h>
-#include <dwmapi.h>
 #include <GL/gl.h>
 
 #if _MSC_VER >= 1500
