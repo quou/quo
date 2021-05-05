@@ -3251,6 +3251,7 @@ void quo_free_byte_buffer(quo_ByteBuffer* buffer) {
 void quo_resize_byte_buffer(quo_ByteBuffer* buffer, unsigned int capacity) {
 	/* Reallocate a byte buffer in order to contain more or less data */
 	buffer->data = realloc(buffer->data, capacity);
+	buffer->capacity = capacity;
 }
 
 void quo_byte_buffer_dump(quo_ByteBuffer* buffer, FILE* file) {
