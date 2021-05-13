@@ -73,7 +73,7 @@ int main() {
 }
 #endif
 
-#define QUO_VERSION "1.3.2"
+#define QUO_VERSION "1.4.0"
 
 /**
  * @file quo.h
@@ -795,6 +795,99 @@ void quo_bind_texture(quo_Texture* texture, unsigned int unit);
 void quo_unbind_texture();
 
 /**
+ * @brief Flags for the vertex buffer
+ */
+typedef enum quo_VertexBufferFlags {
+	QUO_VERTEXBUFFERFLAGS_STATIC_DRAW = 1 << 0, /**< Use if the vertices/indices in this buffer will never change */
+	QUO_VERTEXBUFFERFLAGS_DYNAMIC_DRAW = 1 << 1, /**< Use if you plan to call quo_update_vertices or quo_update_indices on this buffer */
+	QUO_VERTEXBUFFERFLAGS_DRAW_LINES = 1 << 2, /**< Draw a wireframe */
+	QUO_VERTEXBUFFERFLAGS_DRAW_LINE_STRIP = 1 << 3, /**< Draw a more complete wireframe */
+	QUO_VERTEXBUFFERFLAGS_DRAW_TRIANGLES = 1 << 4, /**< Draw full triangles */
+} quo_VertexBufferFlags;
+
+/**
+ * @brief A buffer for vertices
+ */
+typedef struct quo_VertexBuffer {
+	unsigned int va_id; /**< OpenGL vertex array ID */
+	unsigned int vb_id; /**< OpenGL vertex buffer ID */
+	unsigned int ib_id; /**< OpenGL index buffer ID */
+	unsigned int index_count; /**< Stores the number of indices */
+
+	quo_VertexBufferFlags flags;
+} quo_VertexBuffer;
+
+/**
+ * @brief Start the initialisation of a vertex buffer
+ * @param vb Pointer to the vertex buffer
+ */
+void quo_begin_vertex_buffer(quo_VertexBuffer* vb, quo_VertexBufferFlags flags);
+
+/**
+ * @brief End the initialisation of a vertex buffer
+ * @param vb Pointer to the vertex buffer
+ */
+void quo_finalise_vertex_buffer(quo_VertexBuffer* vb);
+
+/**
+ * @brief Push an array of vertices into the vertex buffer
+ * @param vb Pointer to the vertex buffer
+ * @param vertices Array of vertices
+ * @param array_size Number of elements in the array of vertices
+ */
+void quo_push_vertices(quo_VertexBuffer* vb, float* vertices, unsigned int array_size);
+
+/**
+ * @brief Push an array of indices into the vertex buffer
+ * @param vb Pointer to the vertex buffer
+ * @param indices Array of indices
+ * @param index_count Number of indices
+ */
+void quo_push_indices(quo_VertexBuffer* vb, unsigned int* indices, unsigned int index_count);
+
+/**
+ * @brief Update the vertex data in a vertex buffer. Make sure quo_push_vertices
+ * has been called and the vertex buffer has enough space for the new data.
+ * For dynamic buffers, quo_push_vertices can be used with NULL as an allocator.
+ * @param vb Pointer to the vertex buffer
+ * @param vertices Array of vertices
+ * @param array_size Number of elements in the array of vertices
+ */
+void quo_update_vertices(quo_VertexBuffer* vb, float* vertices, unsigned int array_size);
+
+/**
+ * @brief Update the index data in a vertex buffer. Make sure quo_push_indices
+ * has been called and the vertex buffer has enough space for the new data.
+ * For dynamic buffers, quo_push_indices can be used with NULL as an allocator.
+ * @param vb Pointer to the vertex buffer
+ * @param indices Array of indices
+ * @param index_count Number of indices
+ */
+void quo_update_indices(quo_VertexBuffer* vb, unsigned int* indices, unsigned int index_count);
+
+/**
+ * @brief Configure the kayout of the vertices in the buffer; You can set the location of positions, normals, texture coordinates, etc.
+ * @param vb Pointer to the vertex buffer
+ * @param index Index of the layout, to be referenced in the shader
+ * @param component_count Number of components in the element; 2 for vec2, 3 for vec3, etc.
+ * @param stride The amount of elements until the next layout location
+ * @param start_offset Offset to start at
+ */
+void quo_configure_vertices(quo_VertexBuffer* vb, unsigned int index, unsigned int component_count, unsigned int stride, unsigned int start_offset);
+
+/**
+ * @brief Draw a vertex buffer
+ * @param vb Pointer to the vertex buffer
+ */
+void quo_draw_vertex_buffer(quo_VertexBuffer* vb);
+
+/**
+ * @brief Free a vertex buffer
+ * @param vb Pointer to the vertex buffer
+ */
+void quo_free_vertex_buffer(quo_VertexBuffer* vb);
+
+/**
  * @brief To be used as an index into the renderer's shader array
  */
 typedef unsigned int quo_ShaderHandle;
@@ -808,8 +901,7 @@ typedef struct quo_Renderer {
 
 	quo_ShaderHandle sprite_shader; /**< Default sprite shader */
 
-	unsigned int quad_va; /**< Default sprite vertex array */
-	unsigned int quad_vb; /**< Default sprite vertex buffer */
+	quo_VertexBuffer quad;
 
 	unsigned int shaders[QUO_MAX_SHADERS]; /**< Shader array */
 	unsigned int shader_count; /**< Stores the current number of shaders */
@@ -961,99 +1053,6 @@ void quo_shader_set_vec3(quo_Renderer* renderer, quo_ShaderHandle shader, const 
  * @param w W value to be set in the shader
  */
 void quo_shader_set_vec4(quo_Renderer* renderer, quo_ShaderHandle shader, const char* uniform_name, float x, float y, float z, float w);
-
-/**
- * @brief Flags for the vertex buffer
- */
-typedef enum quo_VertexBufferFlags {
-	QUO_VERTEXBUFFERFLAGS_STATIC_DRAW = 1 << 0, /**< Use if the vertices/indices in this buffer will never change */
-	QUO_VERTEXBUFFERFLAGS_DYNAMIC_DRAW = 1 << 1, /**< Use if you plan to call quo_update_vertices or quo_update_indices on this buffer */
-	QUO_VERTEXBUFFERFLAGS_DRAW_LINES = 1 << 2, /**< Draw a wireframe */
-	QUO_VERTEXBUFFERFLAGS_DRAW_LINE_STRIP = 1 << 3, /**< Draw a more complete wireframe */
-	QUO_VERTEXBUFFERFLAGS_DRAW_TRIANGLES = 1 << 4, /**< Draw full triangles */
-} quo_VertexBufferFlags;
-
-/**
- * @brief A buffer for vertices
- */
-typedef struct quo_VertexBuffer {
-	unsigned int va_id; /**< OpenGL vertex array ID */
-	unsigned int vb_id; /**< OpenGL vertex buffer ID */
-	unsigned int ib_id; /**< OpenGL index buffer ID */
-	unsigned int index_count; /**< Stores the number of indices */
-
-	quo_VertexBufferFlags flags;
-} quo_VertexBuffer;
-
-/**
- * @brief Start the initialisation of a vertex buffer
- * @param vb Pointer to the vertex buffer
- */
-void quo_begin_vertex_buffer(quo_VertexBuffer* vb, quo_VertexBufferFlags flags);
-
-/**
- * @brief End the initialisation of a vertex buffer
- * @param vb Pointer to the vertex buffer
- */
-void quo_finalise_vertex_buffer(quo_VertexBuffer* vb);
-
-/**
- * @brief Push an array of vertices into the vertex buffer
- * @param vb Pointer to the vertex buffer
- * @param vertices Array of vertices
- * @param array_size Number of elements in the array of vertices
- */
-void quo_push_vertices(quo_VertexBuffer* vb, float* vertices, unsigned int array_size);
-
-/**
- * @brief Push an array of indices into the vertex buffer
- * @param vb Pointer to the vertex buffer
- * @param indices Array of indices
- * @param index_count Number of indices
- */
-void quo_push_indices(quo_VertexBuffer* vb, unsigned int* indices, unsigned int index_count);
-
-/**
- * @brief Update the vertex data in a vertex buffer. Make sure quo_push_vertices
- * has been called and the vertex buffer has enough space for the new data.
- * For dynamic buffers, quo_push_vertices can be used with NULL as an allocator.
- * @param vb Pointer to the vertex buffer
- * @param vertices Array of vertices
- * @param array_size Number of elements in the array of vertices
- */
-void quo_update_vertices(quo_VertexBuffer* vb, float* vertices, unsigned int array_size);
-
-/**
- * @brief Update the index data in a vertex buffer. Make sure quo_push_indices
- * has been called and the vertex buffer has enough space for the new data.
- * For dynamic buffers, quo_push_indices can be used with NULL as an allocator.
- * @param vb Pointer to the vertex buffer
- * @param indices Array of indices
- * @param index_count Number of indices
- */
-void quo_update_indices(quo_VertexBuffer* vb, unsigned int* indices, unsigned int index_count);
-
-/**
- * @brief Configure the kayout of the vertices in the buffer; You can set the location of positions, normals, texture coordinates, etc.
- * @param vb Pointer to the vertex buffer
- * @param index Index of the layout, to be referenced in the shader
- * @param component_count Number of components in the element; 2 for vec2, 3 for vec3, etc.
- * @param stride The amount of elements until the next layout location
- * @param start_offset Offset to start at
- */
-void quo_configure_vertices(quo_VertexBuffer* vb, unsigned int index, unsigned int component_count, unsigned int stride, unsigned int start_offset);
-
-/**
- * @brief Draw a vertex buffer
- * @param vb Pointer to the vertex buffer
- */
-void quo_draw_vertex_buffer(quo_VertexBuffer* vb);
-
-/**
- * @brief Free a vertex buffer
- * @param vb Pointer to the vertex buffer
- */
-void quo_free_vertex_buffer(quo_VertexBuffer* vb);
 
 /**
  * @brief For offscreen rendering, ie. Rendering to a texture
@@ -2555,9 +2554,9 @@ void quo_unbind_texture() {
 }
 
 /* Legacy shaders. Doesn't work on some Windows AMD drivers */
-#ifdef QUO_LEGACY
+#if defined(QUO_LEGACY_SHADERS) || defined(QUO_LEGACY)
 static const char* g_quad_shader_vertex = "#version 130\n"
-"attribute vec4 vertex;\n"
+"attribute vec2 vertex;\n"
 
 "uniform mat4 projection = mat4(1.0);\n"
 "uniform mat4 model = mat4(1.0);\n"
@@ -2687,32 +2686,32 @@ void quo_init_renderer(quo_Renderer* renderer, quo_Window* window) {
 	/* Create the default sprite shader */
 	renderer->sprite_shader = quo_create_shader(renderer, g_quad_shader_vertex, g_quad_shader_fragment);
 
-	/* Quad vertices. Element buffer is not used, as it
-	 * is kind of pointless. There aren't enough vertices
-	 * to make duplicates have a performance impact. */
-	float vertices[] = {
-		0.0f, 1.0f, 0.0f, 1.0f,
-		1.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 0.0f,
-
-		0.0f, 1.0f, 0.0f, 1.0f,
-		1.0f, 1.0f, 1.0f, 1.0f,
-		1.0f, 0.0f, 1.0f, 0.0f
+	/* Quad vertices. */
+	float verts[] = {
+		/* position     UV */
+		1.0, 1.0, 	1.0f, 1.0f,
+		1.0, 0.0, 	1.0f, 0.0f,
+		0.0, 0.0, 	0.0f, 0.0f,
+		0.0, 1.0, 	0.0f, 1.0f
 	};
 
-	/* Create the quad vertex array. I plan to make this
-	 * use a quo_VertexBuffer in the future. */
-	glGenVertexArrays(1, &renderer->quad_va);
-	glGenBuffers(1, &renderer->quad_vb);
+	/* Quad indices */
+	unsigned int indices[] = {
+		0, 1, 3,
+		1, 2, 3
+	};
 
-	glBindBuffer(GL_ARRAY_BUFFER, renderer->quad_vb);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	/* Create the vertex buffer for the quad */
+	quo_begin_vertex_buffer(&renderer->quad,
+		QUO_VERTEXBUFFERFLAGS_STATIC_DRAW |
+		QUO_VERTEXBUFFERFLAGS_DRAW_TRIANGLES);
 
-	glBindVertexArray(renderer->quad_va);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), NULL);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
+	quo_push_vertices(&renderer->quad, verts, sizeof(verts));
+	quo_push_indices(&renderer->quad, indices, sizeof(indices)/sizeof(indices[0]));
+
+	quo_configure_vertices(&renderer->quad, 0, 4, 4, 0);
+
+	quo_finalise_vertex_buffer(&renderer->quad);
 
 	quo_bind_shader(renderer, renderer->sprite_shader);
 }
@@ -2747,9 +2746,7 @@ void quo_draw_rect(quo_Renderer* renderer, quo_Rect rect, unsigned long color) {
 	quo_shader_set_int(renderer, renderer->sprite_shader, "use_tex", 0);
 
 	/* Draw the quad */
-	glBindVertexArray(renderer->quad_va);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-	glBindVertexArray(0);
+	quo_draw_vertex_buffer(&renderer->quad);
 }
 
 void quo_draw_texture(quo_Renderer* renderer, quo_Texture* texture, quo_Rect src, quo_Rect dest, unsigned long color) {
@@ -2775,9 +2772,7 @@ void quo_draw_texture(quo_Renderer* renderer, quo_Texture* texture, quo_Rect src
 	quo_shader_set_int(renderer, renderer->sprite_shader, "tex", 0);
 
 	/* Draw the quad */
-	glBindVertexArray(renderer->quad_va);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-	glBindVertexArray(0);
+	quo_draw_vertex_buffer(&renderer->quad);
 }
 
 void quo_free_renderer(quo_Renderer* renderer) {
@@ -2789,8 +2784,7 @@ void quo_free_renderer(quo_Renderer* renderer) {
 	}
 
 	/* Delete the vertex array & buffer */
-	glDeleteVertexArrays(1, &renderer->quad_va);
-	glDeleteBuffers(1, &renderer->quad_vb);
+	quo_free_vertex_buffer(&renderer->quad);
 }
 
 void quo_clear_renderer(unsigned long color) {
