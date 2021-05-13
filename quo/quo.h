@@ -73,7 +73,7 @@ int main() {
 }
 #endif
 
-#define QUO_VERSION "1.4.0"
+#define QUO_VERSION "2.0.0"
 
 /**
  * @file quo.h
@@ -1453,7 +1453,7 @@ void quo_load_gl() {
 
 /* Get the time since the program started in seconds */
 double quo_get_elapsed_time() {
-	return ((double)clock() / (double)CLOCKS_PER_SEC);
+	return ((double)clock() / (double)CLOCKS_PER_SEC) * 1000.0;
 }
 
 /* -----------------------
@@ -2152,7 +2152,7 @@ void quo_update_window(quo_Window* window) {
 	window->frame_time = window->now_time - window->old_time;
 	window->old_time = window->now_time;
 
-	window->fps = 1.0f / window->frame_time;
+	window->fps = 1000.0 / window->frame_time;
 
 	/* Update the input system */
 	quo_update_input_system();

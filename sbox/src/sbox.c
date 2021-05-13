@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #define QUO_IMPL
 #include <quo.h>
 
@@ -32,6 +34,8 @@ int main() {
 
 		/* Draw the texture */
 		quo_draw_texture(&renderer, &texture, (quo_Rect){0, 0, 13, 13}, (quo_Rect){100, 100, 50, 50}, 0xffffff);
+
+		printf("%g\n", window.fps);
 
 		/* Update the window & renderer */
 		quo_update_renderer(&renderer);

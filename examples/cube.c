@@ -144,7 +144,7 @@ int main() {
 		quo_update_window_events(&window);
 
 		/* Increment the rotation and update the model matrix accordingly */
-		rotation += window.frame_time * 10000;
+		rotation += window.frame_time * 10;
 		cube_model = quo_rotate(cube_model, rotation, (quo_vec3){0.0f, 1.0f, 0.0f});
 
 		/* Clear the screen to black */

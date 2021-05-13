@@ -114,7 +114,7 @@ int main() {
 	while (window.is_open) {
 		quo_update_window_events(&window);
 
-		rotation += window.frame_time * 10000;
+		rotation += window.frame_time * 10.0;
 		cube_model = quo_rotate(cube_model, rotation, (quo_vec3){0.0f, 1.0f, 0.0f});
 
 		quo_bind_render_target(&render_target);
